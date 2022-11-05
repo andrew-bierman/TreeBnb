@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       //   as: 'Owner'
       // })
 
-      Spot.belongsTo(models.User)
+      Spot.belongsTo(models.User, { as: 'Owner' })
 
     }
   }
