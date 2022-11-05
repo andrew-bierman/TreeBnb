@@ -14,14 +14,16 @@ module.exports = (sequelize, DataTypes) => {
 
     Review.hasMany(models.ReviewImage, {
       foreignKey: 'reviewId',
-      onDelete: "CASCADE"
+      onDelete: 'CASCADE'
     })
 
-    Review.belongsTo(models.User, { foreignKey: 'userId' })
+    // Review.belongsTo(models.User, { foreignKey: 'userId' })
 
-    Review.belongsTo(models.Spot, {
-      foreignKey: 'spotId'
-    })
+    // Review.belongsTo(models.Spot, { foreignKey: 'spotId' })
+
+    Review.belongsTo(models.User)
+
+    Review.belongsTo(models.Spot)
 
     }
   }
