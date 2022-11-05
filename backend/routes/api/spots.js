@@ -319,7 +319,7 @@ router.post('/', restoreUser, requireAuth, validateSpotBody, async (req, res, ne
 
     } catch(err) {
 
-        // console.log(err)
+        console.log(err)
 
         res.status(400).json({
             message: "Validation Error",
