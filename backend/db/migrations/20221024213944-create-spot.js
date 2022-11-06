@@ -17,7 +17,9 @@ module.exports = {
             tableName: 'Users'
           },
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       address: {
         type: Sequelize.STRING,
