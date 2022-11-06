@@ -280,7 +280,8 @@ router.get('/:spotId', async (req, res, next) => {
             }
         ],
 
-        group:['Reviews.spotId', 'Spot.id', 'SpotImages.id', 'Owner.id'],
+        // group:['Reviews.spotId', 'Spot.id', 'SpotImages.id', 'Owner.id'],
+        group:['Reviews.spotId', 'Spot.id', 'SpotImages.id'],
 
     })
 
@@ -312,6 +313,8 @@ router.post('/', restoreUser, requireAuth, validateSpotBody, async (req, res, ne
 
     try {
         newSpotData.ownerId = user.id
+
+        // console.log(newSpotData)
 
         const addSpot = await Spot.create(newSpotData)
 
