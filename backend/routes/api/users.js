@@ -116,11 +116,10 @@ router.post(
 
     return res.json({
       id: user.dataValues.id,
-      username: user.dataValues.username,
-      email: user.dataValues.email,
       firstName: user.dataValues.firstName,
-      lastName: user.dataValues.lastName
-
+      lastName: user.dataValues.lastName,
+      email: user.dataValues.email,
+      username: user.dataValues.username
     });
   }
 );
