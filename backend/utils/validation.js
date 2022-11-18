@@ -4,7 +4,7 @@ const { validationResult } = require('express-validator');
 const myValidationResult = validationResult.withDefaults({
   formatter: error => {
     return {
-      myLocation: error.location,
+      // myLocation: error.location,
       statusCode: error.statusCode || 400
     };
   },
@@ -13,7 +13,8 @@ const myValidationResult = validationResult.withDefaults({
 // middleware for formatting errors from express-validator middleware
 // (to customize, see express-validator's documentation)
 const handleValidationErrors = (req, _res, next) => {
-  const validationErrors = myValidationResult(req);
+  // const validationErrors = myValidationResult(req);
+  const validationErrors = validationResult(req);
 
   if (!validationErrors.isEmpty()) {
     const errors = validationErrors
