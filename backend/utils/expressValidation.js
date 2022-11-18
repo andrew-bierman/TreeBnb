@@ -121,7 +121,7 @@ const validateFilters = [
                 throw new Error ('endDate cannot be on or before startDate');
             }
             return true;
-        })
+        }),
 
     handleValidationErrors
 
