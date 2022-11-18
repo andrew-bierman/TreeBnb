@@ -22,10 +22,10 @@ const handleValidationErrors = (req, _res, next) => {
       .map((error) => `${error.msg}`);
 
     const err = Error('Validation error');
-    // err.statusCode = 400
     err.errors = errors;
     err.status = 400;
     err.title = 'Validation error';
+    err.statusCode = 400
     next(err);
   }
   next();
