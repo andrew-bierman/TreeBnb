@@ -271,6 +271,7 @@ router.get('/:spotId', async (req, res, next) => {
       {
         model: SpotImage,
         attributes: ['id', 'url', 'preview'],
+        required: false,
       },
       {
         model: Review,
@@ -514,6 +515,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
       {
         model: ReviewImage,
         attributes: ['id', 'url'],
+        required: false,
       },
     ],
   });
