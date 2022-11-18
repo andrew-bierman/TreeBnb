@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
         isDate: true,             // only allow date strings
         dateValidator(value) {
           if (new Date(value) < new Date()) {
-            throw new Error("invalid date");
+            throw new Error("startDate cannot be in the past");
           }
         },
       }
@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
         isDate: true,             // only allow date strings
         dateValidator(value) {
           if (new Date(value) < this.startDate) {
-            throw new Error("invalid date");
+            throw new Error("endDate cannot be on or before startDate");
           }
         },
       }
