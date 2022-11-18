@@ -116,10 +116,10 @@ router.get('/', validateFilters, async (req, res) => {
       'name',
       'description',
       'price',
-      'createdAt',
-      'updatedAt',
       [sequelize.fn('avg', sequelize.col('stars')), 'avgRating'],
       [sequelize.fn('', sequelize.col('url')), 'previewImage'],
+      'createdAt',
+      'updatedAt',
     ],
     // sequelize code to include the url of the first image of the spot but only if the preview attribute is true otherwise it will be null
 
