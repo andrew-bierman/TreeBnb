@@ -78,8 +78,8 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
 
 
 // Edit a Booking
-// router.put('/:bookingId', restoreUser, requireAuth, validateBookingBody, async (req, res, next) => {
-router.put('/:bookingId', restoreUser, requireAuth, async (req, res, next) => {
+router.put('/:bookingId', restoreUser, requireAuth, validateBookingBody, async (req, res, next) => {
+// router.put('/:bookingId', restoreUser, requireAuth, async (req, res, next) => {
 
     const { user } = req
 
