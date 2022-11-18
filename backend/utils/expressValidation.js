@@ -114,8 +114,14 @@ const validateFilters = [
     body('endDate')
         .exists()
         .withMessage("endDate is required")
-        .isAfter('startDate')
-        .withMessage("endDate cannot be on or before startDate"),
+        // .isAfter('startDate')
+        // .withMessage("endDate cannot be on or before startDate"),
+        .custom((value, { req }) => {
+            if(new Date(value) <= new Date(req.body.startDate)) {
+                throw new Error ('endDate cannot be on or before startDate');
+            }
+            return true;
+        })
 
     handleValidationErrors
 
