@@ -722,7 +722,7 @@ router.post(
       // })
     }
 
-    if (!startDate || !endDate || new Date(startDate) > new Date(endDate)) {
+    if (!startDate || !endDate || new Date(startDate) > new Date(endDate) || startDate.getTime() > endDate.getTime()) {
       return res.status(400).json({
         message: 'Validation error',
         statusCode: 400,
