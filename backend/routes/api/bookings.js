@@ -95,6 +95,7 @@ router.put('/:bookingId', restoreUser, requireAuth, validateBookingBody, async (
         //     message: "Invalid Booking Id",
         //     statusCode: 404
         // })
+        
     }
 
     const {startDate, endDate} = bookingData
