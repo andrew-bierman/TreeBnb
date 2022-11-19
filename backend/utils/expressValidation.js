@@ -98,8 +98,7 @@ const validateFilters = [
   const validateReviewImageBody = [
     body('url')
         .exists()
-        .withMessage("URL is required")
-        .isURL(),
+        .withMessage("URL is required"),
 
     handleValidationErrors
 

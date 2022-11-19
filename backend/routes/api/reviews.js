@@ -62,7 +62,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
 
 
 // Add an Image to a Review based on the Review's id
-router.post('/:reviewId/images', restoreUser, requireAuth, validateReviewImageBody, async (req, res, next) => {
+router.post('/:reviewId/images', restoreUser, requireAuth, async (req, res, next) => {
 
     const { user } = req
 

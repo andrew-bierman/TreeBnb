@@ -15,23 +15,33 @@ const router = express.Router();
 
 // backend/routes/api/users.js
 // ...
+
+// validate([ {email: 'errMsg'}, {firstName: 'errMsg'}  ]);
+/* error = {
+  ...{email: 'errMsg'},
+  ...{firstName: 'errMsg'},
+} */
+
+
+// firstName check
+// lastName check
 const validateSignup = [
     check('email')
-      .exists({ checkFalsy: true })
+      .exists()
+      .withMessage('Email is required')
       .isEmail()
-      .withMessage('Please provide a valid email.'),
+      .withMessage('Invalid email'),
     check('username')
       .exists({ checkFalsy: true })
+      .withMessage('Username is required')
       .isLength({ min: 4 })
       .withMessage('Please provide a username with at least 4 characters.'),
-    check('username')
-      .not()
-      .isEmail()
-      .withMessage('Username cannot be an email.'),
-    check('password')
-      .exists({ checkFalsy: true })
-      .isLength({ min: 6 })
-      .withMessage('Password must be 6 characters or more.'),
+    check('firstName')
+      .exists()
+      .withMessage('First Name is required'),
+    check('lastName')
+      .exists()
+      .withMessage('Last Name is required'),
     handleValidationErrors
   ];
 
@@ -58,6 +68,9 @@ router.post(
 
 
 // Sign up a User
+
+// Fixing Required
+
 router.post(
   '/',
   validateSignup,
@@ -105,7 +118,7 @@ router.post(
         message: "User already exists",
         statusCode: 403,
         errors: {
-          email: "User with that username already exists"
+          username: "User with that username already exists"
         }
       })
     }

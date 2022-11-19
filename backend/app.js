@@ -85,11 +85,11 @@ app.use((err, _req, res, _next) => {
     res.status(err.status || 500);
     console.error(err);
     res.json({
-      title: err.title || 'Server Error',
+      // title: err.title || 'Server Error',
       statusCode: err.status || 500,
       message: err.message,
       errors: err.errors,
-      stack: isProduction ? null : err.stack
+      // stack: isProduction ? null : err.stack
     });
   });
 
