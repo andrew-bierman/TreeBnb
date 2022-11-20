@@ -118,9 +118,10 @@ router.get(
   router.get(
     '/',
     restoreUser,
-    requireAuth,
+    // requireAuth,
     (req, res) => {
       const { user } = req;
+      
       if (user) {
         // const { id, firstName, lastName, email, username } = user
 
