@@ -16,13 +16,6 @@ router.get("/api/csrf/restore", (req, res) => {
   // ...
 */
 
-  // alternative way to add csrf
-app.use((req, res, next) => {
-  res.cookie('XSRF-TOKEN', req.csrfToken())
-  next()
-  })
-  
-
 // backend/routes/index.js
 // ...
 const apiRouter = require('./api');
