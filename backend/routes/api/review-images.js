@@ -51,7 +51,7 @@ router.delete('/:imageId', restoreUser, requireAuth, async (req, res, next) => {
     const findReview = await Review.findByPk(findImage.dataValues.reviewId)
 
     if(findReview.dataValues.userId !== user.id){
-        return next(customErrorFormatter("Forbidden", 400))
+        return next(customErrorFormatter("Forbidden", 403))
 
         // return res.status(400).json({message: "validation error"})
     }

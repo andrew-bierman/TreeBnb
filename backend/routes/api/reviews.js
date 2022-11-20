@@ -90,18 +90,22 @@ router.post('/:reviewId/images', restoreUser, requireAuth, async (req, res, next
         // })
     }
 
-    if(findReview.userId !== user.id){
+    console.log({
+        review: findReview.userId,
+        user: user.id
+    })
+
+    if(findReview.dataValues.userId !== user.id){
         return next(customErrorFormatter("Forbidden", 403))
     }
 
-    // NEED LOGIC FOR MORE THAN 10 IMAGES
     const reviewImagesCount = await ReviewImage.count({
         where: {
             reviewId: reviewId
         }
     })
-
-    if(reviewImagesCount > 10){
+    console.log({reviewImagesCount})
+    if(reviewImagesCount >= 10){
         return next(customErrorFormatter("Maximum number of images for this resource was reached", 403))
     }
 
@@ -159,6 +163,11 @@ router.put('/:reviewId', restoreUser, requireAuth, validateReviewBody, async (re
         // })
     }
 
+    if(findReview.dataValues.userId !== user.id){
+        return next(customErrorFormatter("Forbidden", 403))
+    }
+
+
     findReview = await findReview.update({
         review: `${review}`,
         stars: `${stars}`
@@ -197,6 +206,10 @@ router.delete('/:reviewId', restoreUser, requireAuth, async (req, res, next) => 
         //     message: "Review couldn't be found",
         //     statusCode: 404
         // })
+    }
+
+    if(findReview.dataValues.userId !== user.id){
+        return next(customErrorFormatter("Forbidden", 403))
     }
 
     await findReview.destroy()

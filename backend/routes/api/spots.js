@@ -317,33 +317,41 @@ router.post(
     const { token } = req.params;
     const newSpotData = req.body;
 
-    try {
-      newSpotData.ownerId = user.id;
+    newSpotData.ownerId = user.id;
 
-      // console.log(newSpotData)
+    const addSpot = await Spot.create(newSpotData);
 
-      const addSpot = await Spot.create(newSpotData);
+    return res.json(addSpot);
 
-      return res.json(addSpot);
-    } catch (err) {
-      console.log(err);
+    // try {
+    //   newSpotData.ownerId = user.id;
 
-      res.status(400).json({
-        message: 'Validation Error',
-        statusCode: 400,
-        errors: {
-          address: 'Street address is required',
-          city: 'City is required',
-          state: 'State is required',
-          country: 'Country is required',
-          lat: 'Latitude is not valid',
-          lng: 'Longitude is not valid',
-          name: 'Name must be less than 50 characters',
-          description: 'Description is required',
-          price: 'Price per day is required',
-        },
-      });
-    }
+    //   // console.log(newSpotData)
+
+    //   const addSpot = await Spot.create(newSpotData);
+
+    //   return res.json(addSpot);
+
+    // } catch (err) {
+    //   console.log(err);
+
+    //   res.status(400).json({
+    //     message: 'Validation Error',
+    //     statusCode: 400,
+    //     errors: {
+    //       address: 'Street address is required',
+    //       city: 'City is required',
+    //       state: 'State is required',
+    //       country: 'Country is required',
+    //       lat: 'Latitude is not valid',
+    //       lng: 'Longitude is not valid',
+    //       name: 'Name must be less than 50 characters',
+    //       description: 'Description is required',
+    //       price: 'Price per day is required',
+    //     },
+    //   });
+    // }
+
   }
 );
 
@@ -373,12 +381,14 @@ router.post(
         //     statusCode: 404
         // })
       } else if (findSpot.ownerId !== user.id) {
-        return res.status(400).json({ message: 'Forbidden' });
+        return next(customErrorFormatter("Forbidden", 403));
+        // return res.status(400).json({ message: 'Forbidden' });
       }
 
       const addImage = await SpotImage.create(newImageData);
 
       return res.json(addImage);
+
     } catch (err) {
       console.log(err);
     }
@@ -392,6 +402,9 @@ router.put(
   requireAuth,
   validateSpotBody,
   async (req, res, next) => {
+
+    const { user } = req
+
     const spotId = req.params.spotId;
 
     const newSpotData = req.body;
@@ -436,17 +449,11 @@ router.put(
       });
     }
 
-    let editSpot = await Spot.update(newSpotData, {
-      where: {
-        id: spotId,
-      },
-    });
+    let findSpot = await Spot.findByPk(spotId)
 
-    // await editSpot.save()
+    console.log({findSpot})
 
-    editSpot = await Spot.findByPk(spotId);
-
-    if (!editSpot) {
+    if (!findSpot) {
       return next(customErrorFormatter("Spot couldn't be found", 404));
 
       // return res.status(404).json({
@@ -455,7 +462,24 @@ router.put(
       // })
     }
 
-    // console.log('EDIT SPOT ----- ', editSpot)
+    if(findSpot.dataValues.ownerId !== user.id){
+      return next(customErrorFormatter("Forbidden", 403))
+    }
+
+
+    let editSpot = await Spot.update(newSpotData, {
+      where: {
+        id: spotId,
+      },
+      // returning: true,
+      // plain: true
+    });
+
+    // console.log({editSpot})
+
+    // await editSpot.save()
+
+    editSpot = await Spot.findByPk(spotId);
 
     return res.status(200).json(editSpot);
   }
@@ -724,7 +748,7 @@ router.post(
       // })
     }
 
-    if (!startDate || !endDate || new Date(startDate) > new Date(endDate)) {
+    if (!startDate || !endDate || new Date(startDate) >= new Date(endDate)) {
       return res.status(400).json({
         message: 'Validation error',
         statusCode: 400,

@@ -95,10 +95,10 @@ router.put('/:bookingId', restoreUser, requireAuth, validateBookingBody, async (
         //     message: "Invalid Booking Id",
         //     statusCode: 404
         // })
-        
+
     }
 
-    const {startDate, endDate} = bookingData
+    const { startDate, endDate } = bookingData
 
     const findBooking = await Booking.findByPk(bookingId)
 
@@ -109,7 +109,7 @@ router.put('/:bookingId', restoreUser, requireAuth, validateBookingBody, async (
         })
     }
 
-    if(!startDate || !endDate || (new Date(startDate) > new Date(endDate))){
+    if(!startDate || !endDate || (new Date(startDate) >= new Date(endDate))){
         return res.status(403).json({
             message: "Validation error",
             statusCode: 403,
@@ -173,15 +173,17 @@ router.put('/:bookingId', restoreUser, requireAuth, validateBookingBody, async (
             }
         })
 
-    let updatedBooking
-    if(editBooking){
-        updatedBooking = {id: bookingId, ...bookingData}
-    };
+    // let updatedBooking
+    // if(editBooking){
+    //     updatedBooking = {id: bookingId, ...bookingData}
+    // };
 
     // await editBooking.save()
 
+    let findNewBooking = await Booking.findByPk(bookingId)
+
     return res.status(200).json({
-        updatedBooking
+        ...findNewBooking.dataValues
     })
 
 })
@@ -215,7 +217,7 @@ router.delete('/:bookingId', restoreUser, requireAuth, async (req, res, next) =>
     }
 
     if(findBooking.dataValues.userId !== user.id){
-        return next(customErrorFormatter("Forbidden", 400))
+        return next(customErrorFormatter("Forbidden", 403))
 
         // return res.status(400).json({
         //     message: "Validation error",
