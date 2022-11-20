@@ -1,7 +1,7 @@
 // backend/routes/api/session.js
 const express = require('express');
 
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
 // backend/routes/api/session.js
@@ -118,6 +118,7 @@ router.get(
   router.get(
     '/',
     restoreUser,
+    requireAuth,
     (req, res) => {
       const { user } = req;
       if (user) {
