@@ -45,7 +45,7 @@ app.use(
 app.use((req, res, next) => {
   res.cookie('XSRF-TOKEN', req.csrfToken())
   next()
-  })
+})
 
 
 // backend/app.js
