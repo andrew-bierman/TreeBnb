@@ -90,17 +90,28 @@ router.post('/:reviewId/images', restoreUser, requireAuth, async (req, res, next
         // })
     }
 
-    // NEED LOGIC FOR MORE THAN 10 IMAGES
-
-    if(findReview.userId === user.id){
-        const createReviewImage = await ReviewImage.create({
-            reviewId: reviewId,
-            ...imageData
-        })
-
-        return res.status(200).json(createReviewImage)
+    if(findReview.userId !== user.id){
+        return next(customErrorFormatter("Forbidden", 403))
     }
 
+    // NEED LOGIC FOR MORE THAN 10 IMAGES
+    const reviewImagesCount = await ReviewImage.count({
+        where: {
+            reviewId: reviewId
+        }
+    })
+
+    if(reviewImagesCount > 10){
+        return next(customErrorFormatter("Maximum number of images for this resource was reached", 403))
+    }
+
+
+    const createReviewImage = await ReviewImage.create({
+        reviewId: reviewId,
+        ...imageData
+    })
+
+    return res.status(200).json(createReviewImage)
 
 })
 
