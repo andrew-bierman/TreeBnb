@@ -245,6 +245,10 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
 router.get('/:spotId', async (req, res, next) => {
   const spotId = req.params.spotId;
 
+  if (!spotId || spotId === 'null') {
+    return next(customErrorFormatter("Spot couldn't be found", 404));
+  }
+
   const theSpot = await Spot.findByPk(spotId, {
     attributes: [
       'id',

@@ -33,20 +33,21 @@ app.use(
 app.use(
   csurf({
     cookie: {
-      // secure: false,
-      secure: isProduction,
+      secure: false,
+      // secure: isProduction,
       sameSite: isProduction && "Lax",
       httpOnly: true
     }
   })
 );
 
+/*
 // alternative way to add a csrf token
 app.use((req, res, next) => {
   res.cookie('XSRF-TOKEN', req.csrfToken())
   next()
 })
-
+*/
 
 // backend/app.js
 const routes = require('./routes');
