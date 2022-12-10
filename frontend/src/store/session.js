@@ -31,6 +31,17 @@ export const login = (user) => async (dispatch) => {
   return response;
 };
 
+// frontend/src/store/session.js
+// ...
+export const restoreUser = () => async dispatch => {
+    const response = await csrfFetch('/api/session');
+    const data = await response.json();
+    dispatch(setUser(data.user));
+    return response;
+  };
+  // ...
+
+
 const initialState = { user: null };
 
 const sessionReducer = (state = initialState, action) => {
@@ -48,5 +59,6 @@ const sessionReducer = (state = initialState, action) => {
       return state;
   }
 };
+
 
 export default sessionReducer;
