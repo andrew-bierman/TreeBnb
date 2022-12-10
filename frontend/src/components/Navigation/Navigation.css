@@ -56,3 +56,8 @@ ul {
     color: #333;
     font-size: 18px;
   }
+
+  
+* {
+  font-family: "font-awesome-font", sans-serif;
+}
