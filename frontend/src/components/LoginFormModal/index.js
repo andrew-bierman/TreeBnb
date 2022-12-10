@@ -43,6 +43,7 @@ function LoginFormModal() {
             required
           />
         </label>
+        <br></br>
         <label>
           Password
           <input
@@ -52,6 +53,7 @@ function LoginFormModal() {
             required
           />
         </label>
+        <br></br>
         <button type="submit">Log In</button>
       </form>
     </>
