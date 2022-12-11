@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { NavLink, Route, useParams } from 'react-router-dom';
 
 import { getOneSpot } from '../../store/spots';
-// import './Spots.css'
+import './SpotDetails.css'
 
 const SpotDetailsComponent = () => {
     const dispatch = useDispatch();
@@ -31,7 +31,12 @@ const SpotDetailsComponent = () => {
         return null
     }
 
-    // spot = Object.values(spot)
+    const previewImage = spot.SpotImages.find( ({ preview }) => preview === true );
+    let secondaryImages;
+
+    if(previewImage){
+        secondaryImages = spot.SpotImages.find( ({ id }) => id !== previewImage.id );
+    }
 
     console.log('spot details ----', {spot})
 
@@ -41,25 +46,35 @@ const SpotDetailsComponent = () => {
             {spot && (
                 <div className='spot-details-comp'>
                     <h4>{spot.name}</h4>
-                    <br></br>
                     <div className='secondary-details'>
-                        <div className='review-stats'>
-                            <i className="fas fa-solid fa-star"></i>
-                            <p>{spot.avgRating}</p>
-                        </div>
+                        <div className='review-and-location'>
+                            <div className='review-stats'>
+                                <i className="fas fa-solid fa-star"></i>
+                                <p>{spot.avgRating}</p>
+                            </div>
 
-                        <div className='location-details'>
-                            <p>{spot.city}</p>
-                            <p>{spot.country}</p>
+                            <div className='location-details'>
+                                <p>{spot.city}, {spot.state}</p>
+                            </div>
                         </div>
 
                         <div className='images'>
-                            {/* <img src={spot.SpotImages[0]} alt='preview image'></img> */}
+                            {previewImage && (
+                                <img src={previewImage.url} alt='preview-image'></img>
+
+                            )}
+                            {secondaryImages && (
+                                secondaryImages.map(image => {
+                                    <img key={image.id} src={image.url} alt='secondary-image'></img>
+                                })
+                            )}
 
                         </div>
 
                         <div className='host-details'>
-                            <p>{`Hosted by ${spot.Owner.firstName}`}</p>
+                            {spot.Owner.firstName && (
+                                <p>{`Hosted by ${spot.Owner.firstName}`}</p>
+                            )}
                         </div>
 
                     </div>
