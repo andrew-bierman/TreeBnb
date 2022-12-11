@@ -13,6 +13,19 @@ ul {
     margin: 0 10px;
   }
 
+  .logoName {
+    display: flex;
+    align-items: center;
+  }
+
+  .logoName i {
+    padding-right: 10px;
+  }
+
+  .logoName p {
+    font-weight: 600;
+  }
+
   a {
     text-decoration: none;
     color: #222222;
