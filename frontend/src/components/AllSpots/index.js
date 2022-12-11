@@ -2,14 +2,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react'
 import { NavLink, Route, useParams } from 'react-router-dom';
 
-import { getAllSpots } from '../../store/spots';
+import { getAllSpots, getOneSpot } from '../../store/spots';
 import './Spots.css'
 
-const SpotsComponent = () => {
+const AllSpotsComponent = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log("dispatching getAllShots()")
+        // console.log("dispatching getAllShots()")
         dispatch(getAllSpots());
     }, [dispatch]);
 
@@ -53,4 +53,4 @@ const SpotsComponent = () => {
     );
 }
 
-export default SpotsComponent
+export default AllSpotsComponent

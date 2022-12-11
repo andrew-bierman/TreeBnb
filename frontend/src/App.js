@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Switch } from "react-router-dom";
+import { Switch, Redirect, Route  } from "react-router-dom";
+
+
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
-import SpotsComponent from "./components/Spots";
+import AllSpotsComponent from "./components/AllSpots";
+import SpotDetailsComponent from "./components/SpotDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,7 +23,21 @@ function App() {
         <Switch>
         </Switch>
       )}
-      <SpotsComponent/>
+      <Switch>
+        <Route exact path="/">
+          <AllSpotsComponent/>
+          {/* <Home /> */}
+        </Route>
+
+        <Route path="/spots/:spotId">
+          <SpotDetailsComponent />
+        </Route>
+
+        <Route>
+          <p>Page Not Found</p>
+        </Route>
+
+      </Switch>
     </>
   );
 }
