@@ -1,6 +1,6 @@
 .spot-details {
     /* Set the size of the container */
-    width: 100%;
+    width: 80%;
     /* max-width: 1200px; */
 
     /* Center the container on the page */
@@ -16,13 +16,7 @@
   }
 
   .secondary-details {
-    /* Divide the container into two columns */
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-
-    /* Add some space between the elements */
-    margin: 20px 0;
+    width: 100%
   }
 
 
@@ -45,25 +39,65 @@
 
 
   .images {
-    /* Make the images a flex container */
+    /* Divide the container into two columns */
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    flex-direction: column;
     width: 100%;
+    height: 550px;
+
+    /* Add some space between the elements */
+    margin: 20px 0;
 
     /* Divide the container equally between the images */
     flex-direction: row;
   }
 
 
-  .preview-image,
-  .secondary-images {
+  .preview-image-container,
+  .secondary-images-container {
     /* Set the size of the images */
     width: calc(50% - 10px);
     height: calc(50% - 10px);
 
     /* Add some space between the images */
     margin: 5px;
+
+    border-radius: 25px;
+
+  }
+
+  .secondary-images-container {
+    width: 50%;
+    flex-shrink: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .secondary-images-container .secondary-image {
+    flex-shrink: 1;
+    margin: 5px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 25px;
+  }
+
+
+
+
+  .preview-image,
+  .secondary-image {
+    /* Set the size of the images */
+    /* width: 100%; */
+
+    /* Add some space between the images */
+    margin: 5px;
+
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 25px;
   }
 
   .review-stats {
