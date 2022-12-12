@@ -38,12 +38,12 @@ const AllSpotsComponent = () => {
         <div className='spots-list'>
 
             {allSpots && allSpots.map(spot => (
-                <NavLink key={spot.id} to={`/spots/${spot.id}`}>
+                <NavLink key={spot.id} to={`/spots/${spot.id}`} className='spot-container'>
                     <div key={spot.id}>
                         <img src={spot.previewImage} alt='Preview Image'></img>
                         <h4>{spot.name}</h4>
-                        <p>{spot.city}</p>
-                        <p>{`$${spot.price}`}</p>
+                        <p>{spot.city}, {spot.state}</p>
+                        <p>{`$${spot.price} night`}</p>
                     </div>
                 </NavLink>
             ))}

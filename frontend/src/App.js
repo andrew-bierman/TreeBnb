@@ -7,6 +7,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import AllSpotsComponent from "./components/AllSpots";
 import SpotDetailsComponent from "./components/SpotDetails";
+import CreateSpotForm from "./components/CreateSpotForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,9 +30,14 @@ function App() {
           {/* <Home /> */}
         </Route>
 
-        <Route path="/spots/:spotId">
-          <SpotDetailsComponent />
+        <Route path="/spots/create">
+          <CreateSpotForm />
         </Route>
+
+        <Route path="/spots/:spotId">
+          <SpotDetailsComponent isLoaded={isLoaded}/>
+        </Route>
+
 
         <Route>
           <p>Page Not Found</p>
