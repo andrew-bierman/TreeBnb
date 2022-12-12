@@ -13,6 +13,17 @@ ul {
     margin: 0 10px;
   }
 
+  .right-side {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  #list-your-home .right-side .list-your-home-p {
+    font-size: 12px;
+  }
+
   .logoName {
     display: flex;
     align-items: center;

@@ -25,11 +25,19 @@ function Navigation({ isLoaded }){
           )}
         </NavLink>
       </li>
-      {isLoaded && (
-        <li>
-          <ProfileButton user={sessionUser} />
-        </li>
-      )}
+
+      <div className='right-side'>
+        <p className='list-your-home-p' id='list-your-home'>
+          <NavLink className='list-your-home' exact to="/spots/create">
+            List your home
+          </NavLink>
+        </p>
+        {isLoaded && (
+          <li>
+            <ProfileButton user={sessionUser} />
+          </li>
+        )}
+      </div>
     </ul>
   );
 }
