@@ -61,6 +61,20 @@ module.exports = {
         price: 150.00,
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        ownerId: 3,
+        address: '8523 Lees Ridge Road',
+        city: 'Volcano',
+        state: 'HI',
+        country: 'United States',
+        lat: 19.41,
+        lng: -155.28,
+        name: 'Peaceful Rainforest Treehouse Retreat',
+        description: "Our Retreat is a labor of our love and was built as such. A getaway to relax, hike the nearby beaches, forests, and volcanoes and to simply enjoy life. Our place is a peaceful spot completely off the grid in nature. It is 8 miles to Hawai'i Volcanoes National Park. You’ll love our place because of the location, the ambiance, and the outdoor space. Our goal was to bring the outdoors in and the indoors outside. Our place is good for couples and solo adventurers.",
+        price: 175.00,
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
 
     ]);
