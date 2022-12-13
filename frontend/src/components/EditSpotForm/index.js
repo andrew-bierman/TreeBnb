@@ -2,12 +2,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react'
 import { NavLink, Route, useParams, useHistory } from 'react-router-dom';
 
-import { createSpot } from '../../store/spots';
-import './CreateSpotForm.css'
+import { deleteSpot } from '../../store/spots';
+import './EditSpotForm.css'
 
 import React, { useState } from 'react';
 
-const CreateSpotForm = ({isLoaded}) => {
+const EditSpotForm = ({isLoaded}) => {
 
   const dispatch = useDispatch();
 
@@ -15,10 +15,16 @@ const CreateSpotForm = ({isLoaded}) => {
     // console.log(state)
 
     return state.session.user
-})
+  })
+
+
+
+  const { spotId } = useParams()
+  // console.log(spotId)
 
 
   const history = useHistory();
+
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
@@ -151,13 +157,23 @@ const CreateSpotForm = ({isLoaded}) => {
           price
         };
 
-        let createdSpot = await dispatch(createSpot(payload))
+        // let createdSpot = await dispatch(updateSpot(payload))
 
-        if (createdSpot) {
-          history.push(`/spots/${createdSpot.id}`);
-        }
+        // if (createdSpot) {
+        //   history.push(`/spots/${createdSpot.id}`);
+        // }
     }
   };
+
+  const confirmDelete = async () => {
+    if (window.confirm("Please confirm you would like to delete a spot, this action cannot be undone.") == true) {
+      let deleteSpotResponse = await dispatch(deleteSpot(spotId))
+      // console.log(deleteSpotResponse)
+      history.push('/')
+    }
+  }
+
+
 
   let isLoggedIn
 
@@ -297,8 +313,10 @@ const CreateSpotForm = ({isLoaded}) => {
 
           </div>
 
+          <br></br>
+
           <div className='delete-spot-button'>
-            <button>
+            <button onClick={confirmDelete}>
                 Delete Spot
             </button>
           </div>
@@ -310,4 +328,4 @@ const CreateSpotForm = ({isLoaded}) => {
   );
 };
 
-export default CreateSpotForm
+export default EditSpotForm
