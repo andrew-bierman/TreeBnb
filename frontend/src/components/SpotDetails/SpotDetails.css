@@ -42,14 +42,17 @@
     /* Divide the container into two columns */
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 550px;
+    width: auto;
+    /* height: 550px; */
 
     /* Add some space between the elements */
-    margin: 20px 0;
+    /* margin: 20px 0; */
 
     /* Divide the container equally between the images */
     flex-direction: row;
+
+    max-width: 100%;
+    max-height: 400px;
   }
 
 
@@ -59,28 +62,57 @@
     width: calc(50% - 10px);
     height: calc(50% - 10px);
 
+    /* Set the maximum size of the images */
+    max-width: 50%;
+    max-height: 50%;
+
     /* Add some space between the images */
     margin: 5px;
 
     border-radius: 25px;
 
-  }
 
-  .secondary-images-container {
-    width: 50%;
-    flex-shrink: 1;
+    flex-basis: 50%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+
+  }
+
+  .preview-image-container {
+    flex-basis: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    max-width: 50%;
+  }
+
+  .secondary-images-container {
+    flex-basis: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    max-width: 50%;
   }
 
   .secondary-images-container .secondary-image {
     flex-shrink: 1;
     margin: 5px;
-    width: 100%;
-    height: 100%;
+    width: auto;
+    height: 150px;
     object-fit: cover;
     border-radius: 25px;
+
+    height: 40vh;
+  }
+
+  .secondary-images-container .secondary-image img {
+    max-height: 100%;
+    min-width: 100%;
+    object-fit: cover;
+    vertical-align: bottom;
   }
 
 
@@ -95,7 +127,7 @@
     margin: 5px;
 
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
     border-radius: 25px;
   }

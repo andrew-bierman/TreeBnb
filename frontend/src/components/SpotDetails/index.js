@@ -1,28 +1,25 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react'
-import { NavLink, Route, useParams } from 'react-router-dom';
+import { NavLink, Route, useParams, useHistory } from 'react-router-dom';
 
 import { getOneSpot } from '../../store/spots';
+import { getOneSpotReviews } from '../../store/reviews';
 import './SpotDetails.css'
 
 const SpotDetailsComponent = () => {
     const dispatch = useDispatch();
 
-    const {spotId} = useParams()
+    const history = useHistory()
+
+    const { spotId } = useParams()
 
     useEffect(() => {
         // console.log("dispatching getAllShots()")
         dispatch(getOneSpot(spotId));
+        dispatch(getOneSpotReviews(spotId))
     }, [dispatch]);
 
     let spot = useSelector(state => {
-        // console.log(state)
-
-        // const spots = state.spots.allSpots.forEach(spot => )
-        // const { spotId } =
-
-
-        // return state.spots.allSpots.map(spotId => state.allSpots[spotId]);
 
         return state.spots.singleSpot
     })
@@ -34,6 +31,17 @@ const SpotDetailsComponent = () => {
         return state.session.user
     })
 
+    let reviews = useSelector(state => {
+        // console.log(state)
+
+        return state.reviews.spot
+    })
+
+    let reviewsValues
+    if(reviews){
+        reviewsValues = Object.keys(reviews).map(e => reviews[e])
+    }
+
     if(!spot) {
         return null
     }
@@ -41,7 +49,7 @@ const SpotDetailsComponent = () => {
     const previewImage = spot.SpotImages.find( ({ preview }) => preview === true );
 
     let secondaryImages;
-    let secondaryImagesKeys;
+    // let secondaryImagesKeys;
     let secondaryImagesValues
 
     if(previewImage){
@@ -49,19 +57,23 @@ const SpotDetailsComponent = () => {
 
         if(Object.keys(secondaryImages).length > 1){
             // secondaryImages = Object.values(secondaryImages)
-            console.log('values ---', Object.values(secondaryImages))
+            // console.log('values ---', Object.values(secondaryImages))
             // console.log('keys ---', Object.keys(secondaryImages))
             secondaryImagesValues = Object.keys(secondaryImages).map(e => secondaryImages[e])
-            secondaryImagesKeys = Object.keys(secondaryImages)
+            // secondaryImagesKeys = Object.keys(secondaryImages)
             // console.log('secondaryImagesKeys[1]', secondaryImagesKeys[1])
         }
 
     }
 
-    // console.log('spot details ----', {spot})
-    console.log('secondary images ----', secondaryImages, typeof secondaryImages)
 
-    console.log('secondary images values ----', secondaryImagesValues, 'isarray', Array.isArray(secondaryImagesValues))
+    const handleRoute = () =>{
+        history.push(`/spots/${spotId}/edit`);
+    }
+    // console.log('spot details ----', {spot})
+    // console.log('secondary images ----', secondaryImages, typeof secondaryImages)
+
+    // console.log('secondary images values ----', secondaryImagesValues, 'isarray', Array.isArray(secondaryImagesValues))
 
 
     let isLoggedIn
@@ -116,7 +128,7 @@ const SpotDetailsComponent = () => {
                             </div>
 
                             <div className='secondary-images-container'>
-                                {(secondaryImagesValues.length > 0) && (
+                                {(secondaryImagesValues) && (secondaryImagesValues.length > 0) && (
                                     secondaryImagesValues.map(image => (
                                         <img key={image.id} src={image.url} alt='secondary-image' className='secondary-image'></img>
                                     ))
@@ -133,11 +145,40 @@ const SpotDetailsComponent = () => {
                             )}
                         </div>
 
-                        {isSpotOwner && (
-                            <button>Edit this spot</button>
-                        )}
+                        <div className='edit-spot-button-container'>
+                            {isSpotOwner && (
+                                <button onClick={handleRoute}>Edit this spot</button>
+                                )}
+                        </div>
 
                     </div>
+
+                    <div className='reviews-container'>
+                        {reviewsValues && (
+                            reviewsValues.map(review => (
+                                <div className='review-container'>
+                                    <div className='review-stars'>
+                                        <i className="fas fa-solid fa-star"></i>
+                                        <p>
+                                            {
+                                                review.stars
+                                            }
+                                        </p>
+                                    </div>
+
+                                    <p>{ review.User.firstName }</p>
+                                    <p>{ review.review }</p>
+                                </div>
+                            ))
+                        )}
+                    </div>
+
+                    <div className='add-review-button-container'>
+                            {!isSpotOwner && (
+                                <button>Review this spot</button>
+                                )}
+                        </div>
+
                 </div>
 
             )}
