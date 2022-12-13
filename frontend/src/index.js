@@ -2,6 +2,8 @@
 import React from 'react';
 
 import './index.css';
+import './style/global-style/style.css'
+import './style/font-awesome-4.7.0/css/font-awesome.css'
 
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';

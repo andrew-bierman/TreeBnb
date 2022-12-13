@@ -9,6 +9,9 @@ import AllSpotsComponent from "./components/AllSpots";
 import SpotDetailsComponent from "./components/SpotDetails";
 import CreateSpotForm from "./components/CreateSpotForm";
 import EditSpotForm from "./components/EditSpotForm";
+import CreateReviewForm from "./components/CreateReviewForm";
+import CurrentUserReviews from "./components/CurrentUserReviews";
+import CurrentUserReviewsComponent from "./components/CurrentUserReviews";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,10 +28,10 @@ function App() {
         <Switch>
         </Switch>
       )}
+
       <Switch>
         <Route exact path="/">
           <AllSpotsComponent/>
-          {/* <Home /> */}
         </Route>
 
         <Route path="/spots/create">
@@ -39,9 +42,18 @@ function App() {
           <EditSpotForm/>
         </Route>
 
+        <Route path="/spots/:spotId/reviews/create">
+          <CreateReviewForm />
+        </Route>
+
         <Route path="/spots/:spotId">
           <SpotDetailsComponent/>
         </Route>
+
+        <Route path="/reviews/current">
+          <CurrentUserReviewsComponent/>
+        </Route>
+
 
 
         <Route>
