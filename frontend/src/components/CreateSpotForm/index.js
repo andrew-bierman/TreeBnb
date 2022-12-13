@@ -6,8 +6,9 @@ import { createSpot } from '../../store/spots';
 import './CreateSpotForm.css'
 
 import React, { useState } from 'react';
+import { validate } from 'uuid';
 
-const CreateSpotForm = ({isLoaded}) => {
+const CreateSpotForm = () => {
 
   const dispatch = useDispatch();
 
@@ -41,100 +42,157 @@ const CreateSpotForm = ({isLoaded}) => {
 
   const [errors, setErrors] = useState({});
 
+  const [shouldShowErrors, setShouldShowErrors] = useState(false);
+
 
   const validateForm = () => {
 
-    setErrors({})
+    // setErrors({})
+
+    const newErrors = {}
 
     if (!name) {
-      setErrors({
-        ...errors,
-        name: 'Name is required',
-      });
+      newErrors.name = 'Name is required'
+      // setErrors({
+      //   ...errors,
+      //   name: 'Name is required',
+      // });
     } else if ( name.length < 1 || name.length > 50){
-        setErrors({
-          ...errors,
-          name: 'Name must be less than 50 characters',
-        });
+        newErrors.name = 'Name must be less than 50 characters'
+        // setErrors({
+        //   ...errors,
+        //   name: 'Name must be less than 50 characters',
+        // });
+    } else {
+      newErrors.name = null
     }
 
     if(!address){
-      setErrors({
-        ...errors,
-        address: 'Street address is required',
-      });
+      newErrors.address = 'Street address is required'
+      // setErrors({
+      //   ...errors,
+      //   address: 'Street address is required',
+      // });
+    } else {
+        newErrors.address = null
     }
 
     if(!city){
-      setErrors({
-        ...errors,
-        city: 'City is required',
-      });
-    }
+      newErrors.city = 'City is required'
+      // setErrors({
+      //   ...errors,
+      //   city: 'City is required',
+      // });
+    } else {
+      newErrors.city = null
+  }
 
     if(!state){
-      setErrors({
-        ...errors,
-        state: 'State is required',
-      });
-    }
+      newErrors.state = 'State is required'
+      // setErrors({
+      //   ...errors,
+      //   state: 'State is required',
+      // });
+    } else {
+      newErrors.state = null
+  }
 
     if(!country){
-      setErrors({
-        ...errors,
-        country: 'Country is required',
-      });
-    }
+      newErrors.country = 'Country is required'
+      // setErrors({
+      //   ...errors,
+      //   country: 'Country is required',
+      // });
+    } else {
+      newErrors.country = null
+  }
 
     if(!lat){
-      setErrors({
-        ...errors,
-        lat: 'Latitude is required',
-      });
-    } else if (parseFloat(lat < -90) || parseFloat(lat > 90)){
-      console.log(lat)
-      setErrors({
-        ...errors,
-        lat: 'Latitude is not valid',
-      });
-    }
+      newErrors.lat = 'Latitude is required'
+      // setErrors({
+      //   ...errors,
+      //   lat: 'Latitude is required',
+      // });
+    } else if ((parseFloat(lat) < -90) || (parseFloat(lat) > 90)){
+      newErrors.lat = 'Latitude is not valid'
+      // setErrors({
+      //   ...errors,
+      //   lat: 'Latitude is not valid',
+      // });
+    } else {
+      newErrors.lat = null
+  }
 
     if(!lng){
-      setErrors({
-        ...errors,
-        lng: 'Longitude is required',
-      });
-    } else if (parseFloat(lng < -180) || parseFloat(lng > 180)){
-        setErrors({
-          ...errors,
-          lng: 'Longitude is not valid',
-        });
-    }
+      newErrors.lng = 'Longitude is required'
+      // setErrors({
+      //   ...errors,
+      //   lng: 'Longitude is required',
+      // });
+    } else if ((parseFloat(lng) < -180) || (parseFloat(lng) > 180)) {
+        newErrors.lng = 'Longitude is not valid'
+        // setErrors({
+        //   ...errors,
+        //   lng: 'Longitude is not valid',
+        // });
+    } else {
+      newErrors.lng = null
+  }
 
     if(!description){
-      setErrors({
-        ...errors,
-        description: 'Description is required',
-      });
-    }
+      newErrors.description = 'Description is required'
+      // setErrors({
+      //   ...errors,
+      //   description: 'Description is required',
+      // });
+    } else {
+      newErrors.description = null
+  }
 
     if(!price){
-      setErrors({
-        ...errors,
-        price: 'Description is required',
-      });
-    }
+      newErrors.price = 'Price is required'
+      // setErrors({
+      //   ...errors,
+      //   price: 'Price is required',
+      // });
 
-    console.log(errors)
+      // console.log(errors)
+    } else {
+      newErrors.price = null
+  }
+
+    setErrors({
+      // ...errors,
+      ...newErrors
+    })
+
+    if(errors.length > 0) console.log(errors)
 
 
   };
+
+  useEffect(() => {
+    validateForm()
+  }, [
+      name,
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      description,
+      price
+  ])
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     // Validate the form
+    setShouldShowErrors(true);
     validateForm();
+
 
     // If there are no errors, submit the form to your API
     if (Object.keys(errors).length === 0) {
@@ -182,17 +240,19 @@ const CreateSpotForm = ({isLoaded}) => {
         )}
       </div> */}
 
-      {isLoggedIn && (
+      {true && (
 
         <div className='form-component'>
 
           <h2>Create a Spot</h2>
 
-          {errors && (
-            Object.values(errors).map(err => {
-              <p>{err}</p>
-            })
-          )}
+          {/* Display error messages for all fields */}
+          {Object.keys(errors).map(fieldName => {
+            const errorMessage = errors[fieldName];
+            if (shouldShowErrors && errorMessage) {
+              return <p key={errorMessage} className="error">{errorMessage}</p>;
+            }
+          })}
 
           <div className='form-container'>
 
