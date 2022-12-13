@@ -67,8 +67,12 @@ const SpotDetailsComponent = () => {
     }
 
 
-    const handleRoute = () =>{
+    const handleEditSpotRoute = () =>{
         history.push(`/spots/${spotId}/edit`);
+    }
+
+    const handleCreateReviewRoute = () =>{
+        history.push(`/spots/${spotId}/reviews/create`);
     }
     // console.log('spot details ----', {spot})
     // console.log('secondary images ----', secondaryImages, typeof secondaryImages)
@@ -147,13 +151,17 @@ const SpotDetailsComponent = () => {
 
                         <div className='edit-spot-button-container'>
                             {isSpotOwner && (
-                                <button onClick={handleRoute}>Edit this spot</button>
+                                <button onClick={handleEditSpotRoute}>Edit this spot</button>
                                 )}
                         </div>
 
                     </div>
 
+                    <br></br>
+
                     <div className='reviews-container'>
+                        <h3>Reviews</h3>
+
                         {reviewsValues && (
                             reviewsValues.map(review => (
                                 <div className='review-container'>
@@ -175,7 +183,9 @@ const SpotDetailsComponent = () => {
 
                     <div className='add-review-button-container'>
                             {!isSpotOwner && (
-                                <button>Review this spot</button>
+                                // <NavLink to={`/spots/${spotId}/reviews/create`}>
+                                    <button onClick={handleCreateReviewRoute}>Review this spot</button>
+                                // </NavLink>
                                 )}
                         </div>
 
