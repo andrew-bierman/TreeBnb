@@ -22,7 +22,7 @@ module.exports = {
      return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        userId: 1,
+        userId: 2,
         review: "Wonderful stay",
         stars: 5,
         createdAt: new Date(),
@@ -30,7 +30,7 @@ module.exports = {
       },
       {
         spotId: 2,
-        userId: 2,
+        userId: 3,
         review: "Excellent stay",
         stars: 5,
         createdAt: new Date(),
@@ -38,7 +38,7 @@ module.exports = {
       },
       {
         spotId: 3,
-        userId: 3,
+        userId: 1,
         review: "Great stay",
         stars: 4,
         createdAt: new Date(),
