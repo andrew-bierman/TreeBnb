@@ -21,6 +21,13 @@
     padding-bottom: 10px
   }
 
+  form br {
+    display: none;
+    padding: 0px;
+    margin: 0px;
+    padding-bottom: 0px
+  }
+
   form label {
     padding: 10px;
   }
@@ -31,6 +38,13 @@
   }
 
   form button {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: block;
+  }
+
+  button {
     margin-left: auto;
     margin-right: auto;
     text-align: center;

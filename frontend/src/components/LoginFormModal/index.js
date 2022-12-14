@@ -1,5 +1,5 @@
 // frontend/src/components/LoginFormModal/index.js
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
@@ -24,6 +24,21 @@ function LoginFormModal() {
         }
       );
   };
+
+  const handleDemo = (e) => {
+    e.preventDefault();
+    setErrors([]);
+    // setCredential('demo@user.io')
+    // setPassword('password')
+    return dispatch(sessionActions.login({ credential: 'demo@user.io', password: 'password' }))
+      .then(closeModal)
+      .catch(
+        async (res) => {
+          const data = await res.json();
+          if (data && data.errors) setErrors(data.errors);
+        }
+      );
+  }
 
   return (
     <>
@@ -56,6 +71,8 @@ function LoginFormModal() {
         <br></br>
         <button type="submit">Log In</button>
       </form>
+
+      <button type='demo' onClick={handleDemo}>Demo User</button>
     </>
   );
 }
