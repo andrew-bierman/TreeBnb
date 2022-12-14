@@ -133,8 +133,11 @@ const SpotDetailsComponent = () => {
 
                             <div className='secondary-images-container'>
                                 {(secondaryImagesValues) && (secondaryImagesValues.length > 0) && (
-                                    secondaryImagesValues.map(image => (
-                                        <img key={image.id} src={image.url} alt='secondary-image' className='secondary-image'></img>
+                                    secondaryImagesValues.slice(0, 4).map(image => (
+                                        <div className='secondary-image-container'>
+                                            <img key={image.id} src={image.url} alt='secondary-image' className='secondary-image'></img>
+
+                                        </div>
                                     ))
                                 )}
                             </div>
