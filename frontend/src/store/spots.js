@@ -2,6 +2,7 @@ import { csrfFetch } from './csrf';
 
 const GET_ALL_SPOTS = 'spots/getAll';
 const GET_ONE_SPOT = 'spots/getOne'
+const GET_USER_SPOTS = 'spots/currentUser'
 const CREATE_SPOT = 'spots/createSpot'
 const EDIT_SPOT = 'spots/editSpot'
 const DELETE_SPOT = 'spots/deleteSpot'
@@ -16,6 +17,13 @@ const actionCreatorAllSpots = (spots) => {
 const actionCreatorOneSpot = (spot) => {
     return {
       type: GET_ONE_SPOT,
+      payload: spot,
+    };
+  };
+
+  const actionCreatorUserSpots = (spot) => {
+    return {
+      type: GET_USER_SPOTS,
       payload: spot,
     };
   };
@@ -50,6 +58,8 @@ export const getAllSpots = () => async (dispatch) => {
     if(response.ok){
         const spots = await response.json();
         dispatch(actionCreatorAllSpots(spots));
+
+        return spots
     }
 
   };
@@ -68,6 +78,20 @@ export const getOneSpot = (spotId) => async (dispatch) => {
 
 };
 
+export const getUserSpots = () => async (dispatch) => {
+
+  const response = await csrfFetch("/api/spots/current");
+  // console.log(response);
+
+  if(response.ok){
+      const spots = await response.json();
+      dispatch(actionCreatorUserSpots(spots));
+
+      return spots
+  }
+
+};
+
 export const createSpot = (spotData) => async (dispatch) => {
 
   const response = await csrfFetch(`/api/spots`, {
@@ -81,9 +105,37 @@ export const createSpot = (spotData) => async (dispatch) => {
 
   console.log(response);
 
+
   if(response.ok){
-      const spot = await response.json();
-      dispatch(actionCreatorCreateSpot(spot));
+      const spotRes = await response.json();
+
+      try {
+
+        const { previewImage } = spotData
+
+        if(previewImage && previewImage !== {} && previewImage !== ''){
+          const { id } = spotRes
+
+          const imageRes = await csrfFetch(`/api/spots/${id}/images`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              url: previewImage,
+              preview: true
+            })
+          });
+
+        }
+
+      } catch(e) {
+          console.log({e})
+      }
+
+
+      dispatch(actionCreatorCreateSpot(spotRes));
+      return spotRes
   }
 
 };
@@ -152,7 +204,7 @@ const spotsReducer = (state = initialState, action) => {
 
         return {...state, allSpots};
 
-    case GET_ONE_SPOT:
+    case GET_ONE_SPOT:{
         newState = { ...state }
 
         const singleSpot = action.payload["Spots"];
@@ -161,6 +213,18 @@ const spotsReducer = (state = initialState, action) => {
         // newState.spots.allSpots = allSpots;
 
         return {...state, singleSpot};
+    }
+
+    case GET_USER_SPOTS:{
+      newState = { ...state }
+
+      // const singleSpot = action.payload["Spots"];
+      // console.log(action.payload);
+
+      // newState.spots.allSpots = allSpots;
+
+      return {...newState};
+  }
 
     case CREATE_SPOT:
         newState = { ...state }
@@ -172,15 +236,16 @@ const spotsReducer = (state = initialState, action) => {
 
         return {...state, newSpot};
 
-    case EDIT_SPOT:
+    case EDIT_SPOT: {
         newState = { ...state }
 
-        const newSpot2 = action.payload.Spots;
+        const singleSpot = action.payload.Spots;
         // console.log(action.payload);
 
         // newState.spots.allSpots = allSpots;
 
-        return {...state, newSpot2};
+        return {...state, singleSpot};
+    }
 
     case DELETE_SPOT:
         newState = { ...state }

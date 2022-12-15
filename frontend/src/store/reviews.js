@@ -3,6 +3,7 @@ import { csrfFetch } from './csrf';
 const GET_ONE_SPOT_REVIEWS = 'reviews/getOne';
 const GET_CURRENT_USER_REVIEWS = 'reviews/getCurrentUserReviews'
 const CREATE_REVIEW = 'reviews/createReview';
+const UPDATE_REVIEW = 'reviews/updateReview';
 const DELETE_REVIEW = 'reviews/deleteReview'
 
 const actionCreatorGetOneReview = (reviews) => {
@@ -22,6 +23,13 @@ const actionCreatorGetCurrentUserReviews = (reviews) => {
 const actionCreatorCreateReview = (review) => {
   return {
     type: CREATE_REVIEW,
+    payload: review,
+  };
+};
+
+const actionCreatorUpdateReview = (review) => {
+  return {
+    type: UPDATE_REVIEW,
     payload: review,
   };
 };
@@ -80,6 +88,8 @@ export const deleteReview = (reviewId) => async (dispatch) => {
       // const reviewsArr = Object.values(reviews)
 
       dispatch(actionCreatorDeleteReview(reviewId));
+
+      return deleteReviewRes
   }
 
 };
@@ -107,6 +117,29 @@ export const createReview = (reviewData) => async (dispatch) => {
 
 };
 
+export const updateReview = (reviewData) => async (dispatch) => {
+
+  const { reviewId } = reviewData
+
+  const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(reviewData)
+  });
+
+
+  console.log(response);
+
+  if(response.ok){
+      const review = await response.json();
+      dispatch(actionCreatorUpdateReview(review));
+      return review
+  }
+
+};
+
 const initialState = {
     spot: {},
     user: {}
@@ -124,8 +157,6 @@ const reviewsReducer = (state = initialState, action) => {
           newState = { ...state }
 
           const spot = {}
-
-
 
           reviews = action.payload.Reviews
 
