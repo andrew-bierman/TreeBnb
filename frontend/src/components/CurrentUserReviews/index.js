@@ -96,7 +96,7 @@ const CurrentUserReviewsComponent = () => {
                 <div className='spot-details-comp'>
 
                     <div className='reviews-container'>
-                        <h3>Your Reviews</h3>
+                        <h2>Your Reviews</h2>
 
                         {reviewsValues && (
                             reviewsValues.map(review => (
