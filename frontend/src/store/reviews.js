@@ -153,7 +153,7 @@ const reviewsReducer = (state = initialState, action) => {
 
     switch (action.type) {
 
-      case GET_ONE_SPOT_REVIEWS:
+      case GET_ONE_SPOT_REVIEWS:{
           newState = { ...state }
 
           const spot = {}
@@ -182,8 +182,9 @@ const reviewsReducer = (state = initialState, action) => {
             return {...state, spot};
 
           }
+        }
 
-        case GET_CURRENT_USER_REVIEWS:
+        case GET_CURRENT_USER_REVIEWS:{
             newState = { ...state }
 
             let user = {}
@@ -204,11 +205,15 @@ const reviewsReducer = (state = initialState, action) => {
                     // const id = review.id
                     // const User = review.User
 
-                    console.log({user}, {id}, {review}, {User})
+                    // console.log({user}, {id}, {review}, {User})
 
                     user[id] = review
 
+                    // console.log({User})
+
                     user[id].User = User
+
+                    user[id].Spot = Spot
 
                     user[id].ReviewImages = ReviewImages
 
@@ -221,6 +226,82 @@ const reviewsReducer = (state = initialState, action) => {
               return {...state, user};
 
             }
+          }
+
+          case UPDATE_REVIEW: {
+              newState = { ...state }
+
+              let user = {}
+
+              let review = action.payload
+
+              console.log({review})
+
+              if(review.id && review.userId){
+
+                const { id, User, Spot, ReviewImages, spotId } = review
+
+                user[id] = review
+
+                user[id].User = User
+
+                // user[id].Spot = newState.allSpots[spotId]
+
+                user[id].ReviewImages = ReviewImages
+
+                return {...newState, user}
+
+              }
+
+              return {...newState, user};
+
+              }
+
+          case DELETE_REVIEW: {
+              newState = { ...state }
+
+              let user = {}
+
+              let reviewId = action.payload
+
+              let userReviews = Object.values(newState.user)
+
+              // console.log(user)
+
+              userReviews = userReviews.filter(review => review.id !== reviewId)
+
+              if(userReviews && Array.isArray(userReviews)){
+                // console.log('reviews', reviews)
+
+                // const { Spot, ReviewImages } = reviews
+
+                userReviews.forEach(review => {
+                  if(review.id && review.userId){
+
+                      const { id, User, Spot, ReviewImages } = review
+                      // const id = review.id
+                      // const User = review.User
+
+                      // console.log({user}, {id}, {review}, {User})
+
+                      user[id] = review
+
+                      user[id].User = User
+
+                      user[id].ReviewImages = ReviewImages
+
+                      // console.log({user})
+
+                    }
+
+                })
+
+                return {...state, user};
+              }
+
+              return {...state, user};
+
+              }
 
       default:
         return state;
