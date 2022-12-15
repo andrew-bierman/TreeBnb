@@ -101,7 +101,7 @@ const EditReviewForm = () => {
 
         if (updatedReview) {
           // history.push(`/reviews/${createdReview.id}`);
-          history.push(`/reviews/current`);
+          history.push(`/user/current`);
         }
     }
   };
