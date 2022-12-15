@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { NavLink, Route, useParams, useHistory } from 'react-router-dom';
 
 import { getOneSpot } from '../../store/spots';
-import { getOneSpotReviews } from '../../store/reviews';
+import { getOneSpotReviews, getCurrentUserReviews } from '../../store/reviews';
 import './SpotDetails.css'
 
 const SpotDetailsComponent = () => {
@@ -17,6 +17,7 @@ const SpotDetailsComponent = () => {
         // console.log("dispatching getAllShots()")
         dispatch(getOneSpot(spotId));
         dispatch(getOneSpotReviews(spotId))
+        dispatch(getCurrentUserReviews())
     }, [dispatch]);
 
     let spot = useSelector(state => {
@@ -68,12 +69,19 @@ const SpotDetailsComponent = () => {
 
 
     const handleEditSpotRoute = () =>{
+        // console.log('clicked')
         history.push(`/spots/${spotId}/edit`);
     }
 
     const handleCreateReviewRoute = () =>{
         history.push(`/spots/${spotId}/reviews/create`);
     }
+
+    const handleEditReviewRoute = (reviewId) =>{
+        // console.log('clicked')
+        history.push(`/reviews/${reviewId}/edit`);
+    }
+
     // console.log('spot details ----', {spot})
     // console.log('secondary images ----', secondaryImages, typeof secondaryImages)
 
@@ -82,6 +90,8 @@ const SpotDetailsComponent = () => {
 
     let isLoggedIn
     let isSpotOwner
+    let hasAlreadyReviewed
+    let isReviewOwner
 
     if(!user){
 
@@ -95,6 +105,20 @@ const SpotDetailsComponent = () => {
             isSpotOwner = true
         } else {
             isSpotOwner = false
+        }
+
+        const findUserReviews = reviewsValues.find(({User}) => User.id === user.id)
+        // const findUserReviewsForCurrentSpot = reviewsValues.find(({User}) => (
+        //     // User.id === user.id && spotId ===
+
+        //     ))
+
+        if(findUserReviews){
+            console.log({reviewsValues}, {findUserReviews})
+            hasAlreadyReviewed = true
+
+        } else {
+            hasAlreadyReviewed = false
         }
     }
 
@@ -110,7 +134,7 @@ const SpotDetailsComponent = () => {
         <div className='spot-details'>
             {spot && (
                 <div className='spot-details-comp'>
-                    <h4>{spot.name}</h4>
+                    <h2>{spot.name}</h2>
                     <div className='secondary-details'>
                         <div className='review-and-location'>
                             <div className='review-stats'>
@@ -179,13 +203,17 @@ const SpotDetailsComponent = () => {
 
                                     <p>{ review.User.firstName }</p>
                                     <p>{ review.review }</p>
+
+                                    { ( review.User.id === user.id ) && (
+                                        <button onClick={() => handleEditReviewRoute(review.id)}>Edit this review</button>
+                                    )}
                                 </div>
                             ))
                         )}
                     </div>
 
                     <div className='add-review-button-container'>
-                            {!isSpotOwner && (
+                            {(!isSpotOwner) && (!hasAlreadyReviewed) && (
                                 // <NavLink to={`/spots/${spotId}/reviews/create`}>
                                     <button onClick={handleCreateReviewRoute}>Review this spot</button>
                                 // </NavLink>

@@ -25,16 +25,12 @@
     display: flex;
     width: 100%;
 
-    margin: 10px;
-
     /* Align the items on the same line */
     align-items: center;
 
     /* Set the direction of the items to be on the same line */
     flex-direction: row;
 
-    /* Add space between the elements on the same line */
-    justify-content: space-between;
   }
 
 
@@ -45,133 +41,120 @@
     height: 30%;
     max-height: 600px;
 
-    border-radius: 25px;
+    /* border-radius: 25px; */
 
     overflow: hidden;
 
-    /* margin: 20px 0; */
+    flex-direction: row;
 
-    /* flex-direction: row; */
-
-    /* max-width: 100%; */
-    /* max-height: 400px; */
-
-    /* border: 1px solid red; */
-  }
-
-
-  .preview-image-container,
-  .secondary-images-container {
-
-    /* width: calc(50% - 10px);
-    height: calc(50% - 10px); */
-
-
-    max-width: 50%;
-    /* max-height: 50%; */
-    max-height: 600px;
-
-    /* border-radius: 25px; */
-
-
-    flex-basis: 50%;
-    display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
+    align-items: center;
+
+    box-sizing: border-box;
 
   }
+
 
   .preview-image-container {
-    /* flex-basis: 50%; */
-    /* flex:4; */
-    display: flex;
 
-    /* flex-wrap: wrap; */
-    /* justify-content: space-between; */
+    /* max-height: 600px; */
 
-    /* max-width: 50%; */
+    height: 100%;
+
+    box-sizing: border-box;
+
+    overflow: auto;
+
+
+
+  }
+
+  .preview-image img {
+
+    object-fit: cover !important;
+    object-position: center;
+
+    padding: 10px !important;
+
+    box-sizing: border-box;
+
+
+    /* width: 100%;
+    height: 100%; */
+
+    max-height: 100%;
+    /* max-width: 100%; */
+
+    object-fit: contain !important;
+    object-position: center;
+
   }
 
   .secondary-images-container {
-    /* flex-basis: 50%; */
-    display: flex;
-
-    /* flex: 1;
-    flex-grow: 1;
-    flex-shrink: 0;
-    flex-basis: 0; */
 
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    /* overflow-y:scroll; */
+
     overflow-x:scroll;
     overflow: hidden;
 
-    /* height: 100%; */
     justify-content: space-around;
 
 
-    /* max-width: 50%; */
+    max-width: 50%;
   }
 
   .secondary-image-container {
-    /* flex-shrink: 1; */
-    /* margin: 5px; */
 
-    /* flex: 1; */
-    /* flex-grow: 1;
-    flex-shrink: 0;
-    flex-basis: 0; */
     height: 300px;
     width: 50%;
+
+    object-fit: cover;
+    object-position: center;
+
+
     box-sizing: border-box;
-    /* margin: auto; */
-    /* margin-left: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px; */
 
-    /* padding: 10px; */
-
-    /* height: 150px; */
-    object-fit: contain;
-
-    /* border-radius: 25px; */
-
-    /* max-height: 16vh; */
-    /* min-height: 3vh; */
-    /* height: 50%; */
     max-width: 100%;
-    /* height: max-content; */
+
   }
 
-  .secondary-image img {
+  .secondary-image {
+    width: 100%;
+    height: 100%;
+
     max-height: 100%;
     max-width: 100%;
-    object-fit: contain;
 
-    padding: 10px;
+    object-fit: cover !important;
+    object-position: center ;
+
+    padding: 10px !important;
 
     box-sizing: border-box;
     display: block;
-    /* vertical-align: bottom; */
-    /* flex-grow: 1;
-    flex-shrink: 0;
-    flex-basis: 0; */
-    /* align-content: center; */
-    /* align-self: flex-start; */
 
   }
 
-
-  .preview-image {
-    /* width: 100%; */
-    /* margin: 5px; */
+  .secondary-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    /* border-radius: 25px; */
+
+    max-height: 100%;
+    max-width: 100%;
+
+    object-fit: cover !important;
+    /* object-position: center; */
+
+    padding: 5px !important;
+
+    box-sizing: border-box;
+    display: block;
+
+
   }
+
 
   .review-stats {
 
@@ -181,7 +164,7 @@
 
     flex-direction: row;
 
-    align-items:flex-start ;
+    align-items: center ;
 
     /* justify-content: space-between; */
 
