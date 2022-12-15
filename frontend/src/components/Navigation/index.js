@@ -32,6 +32,7 @@ function Navigation({ isLoaded }){
             List your home
           </NavLink>
         </p>
+
         {isLoaded && (
           <li>
             <ProfileButton user={sessionUser} />
