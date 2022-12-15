@@ -39,10 +39,11 @@ const AllSpotsComponent = () => {
 
             {allSpots && allSpots.map(spot => (
                 <NavLink key={spot.id} to={`/spots/${spot.id}`} className='spot-container'>
-                    <div key={spot.id}>
-                        <img src={spot.previewImage} alt='Preview Image'></img>
-                        <h4>{spot.name}</h4>
-                        <p>{spot.city}, {spot.state}</p>
+                    <div key={spot.id} className='spot-details-container'>
+                        <div className='spot-image-container'>
+                            <img src={spot.previewImage} alt='Preview Image'></img>
+                        </div>
+                        <h4>{spot.city}, {spot.state}</h4>
                         <p>{`$${spot.price} night`}</p>
                     </div>
                 </NavLink>
