@@ -14,10 +14,10 @@
   form {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 80%;
   }
 
-  .name,
+  /* .name,
   .address,
   .city,
   .state,
@@ -25,16 +25,17 @@
   .lat,
   .lng,
   .description,
-  .price {
+  .price,
+  .preview-image label{
     display: flex;
     align-items: center;
     flex-direction: row;
     margin: 5px 0;
-  }
+  } */
 
   label {
     font-weight: bold;
-    margin-right: 5px;
+    /* margin-right: 5px; */
   }
 
   input {
@@ -48,4 +49,9 @@
 
   input[type="submit"] {
     margin-top: auto;
+  }
+
+  .preview-image-preview-img img {
+    max-width: 300px;
+    max-height: 300px;
   }

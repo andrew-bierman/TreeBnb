@@ -20,6 +20,7 @@ const CreateSpotForm = () => {
 
 
   const history = useHistory();
+
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
@@ -29,6 +30,8 @@ const CreateSpotForm = () => {
   const [lng, setLng] = useState(0);
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0);
+  const [previewImage, setPreviewImage] = useState('');
+  const [images, setImages] = useState('');
 
   const updateName = (e) => setName(e.target.value);
   const updateAddress = (e) => setAddress(e.target.value);
@@ -39,6 +42,8 @@ const CreateSpotForm = () => {
   const updateLng = (e) => setLng(e.target.value);
   const updateDescription = (e) => setDescription(e.target.value);
   const updatePrice = (e) => setPrice(e.target.value);
+  const updatePreviewImage = (e) => setPreviewImage(e.target.value);
+  const updateImages = (e) => setImages(e.target.value);
 
   const [errors, setErrors] = useState({});
 
@@ -53,112 +58,86 @@ const CreateSpotForm = () => {
 
     if (!name) {
       newErrors.name = 'Name is required'
-      // setErrors({
-      //   ...errors,
-      //   name: 'Name is required',
-      // });
+
     } else if ( name.length < 1 || name.length > 50){
         newErrors.name = 'Name must be less than 50 characters'
-        // setErrors({
-        //   ...errors,
-        //   name: 'Name must be less than 50 characters',
-        // });
+
     } else {
       newErrors.name = null
+      delete newErrors.name
     }
 
     if(!address){
       newErrors.address = 'Street address is required'
-      // setErrors({
-      //   ...errors,
-      //   address: 'Street address is required',
-      // });
+
     } else {
         newErrors.address = null
+        delete newErrors.address
     }
 
     if(!city){
       newErrors.city = 'City is required'
-      // setErrors({
-      //   ...errors,
-      //   city: 'City is required',
-      // });
+
     } else {
       newErrors.city = null
+      delete newErrors.city
   }
 
     if(!state){
       newErrors.state = 'State is required'
-      // setErrors({
-      //   ...errors,
-      //   state: 'State is required',
-      // });
+
     } else {
       newErrors.state = null
+      delete newErrors.state
   }
 
     if(!country){
       newErrors.country = 'Country is required'
-      // setErrors({
-      //   ...errors,
-      //   country: 'Country is required',
-      // });
+
     } else {
       newErrors.country = null
+      delete newErrors.country
   }
 
-    if(!lat){
-      newErrors.lat = 'Latitude is required'
-      // setErrors({
-      //   ...errors,
-      //   lat: 'Latitude is required',
-      // });
-    } else if ((parseFloat(lat) < -90) || (parseFloat(lat) > 90)){
-      newErrors.lat = 'Latitude is not valid'
-      // setErrors({
-      //   ...errors,
-      //   lat: 'Latitude is not valid',
-      // });
-    } else {
-      newErrors.lat = null
-  }
+  //   if(!lat){
+  //     newErrors.lat = 'Latitude is required'
 
-    if(!lng){
-      newErrors.lng = 'Longitude is required'
-      // setErrors({
-      //   ...errors,
-      //   lng: 'Longitude is required',
-      // });
-    } else if ((parseFloat(lng) < -180) || (parseFloat(lng) > 180)) {
-        newErrors.lng = 'Longitude is not valid'
-        // setErrors({
-        //   ...errors,
-        //   lng: 'Longitude is not valid',
-        // });
-    } else {
-      newErrors.lng = null
-  }
+  //   } else if ((parseFloat(lat) < -90) || (parseFloat(lat) > 90)){
+  //     newErrors.lat = 'Latitude is not valid'
+
+  //   } else {
+  //     newErrors.lat = null
+  //     delete newErrors.lat
+  // }
+
+  //   if(!lng){
+  //     newErrors.lng = 'Longitude is required'
+
+  //   } else if ((parseFloat(lng) < -180) || (parseFloat(lng) > 180)) {
+  //       newErrors.lng = 'Longitude is not valid'
+
+  //   } else {
+  //     newErrors.lng = null
+  //     delete newErrors.lng
+  // }
 
     if(!description){
       newErrors.description = 'Description is required'
-      // setErrors({
-      //   ...errors,
-      //   description: 'Description is required',
-      // });
+
     } else {
       newErrors.description = null
+      delete newErrors.description
   }
 
     if(!price){
       newErrors.price = 'Price is required'
-      // setErrors({
-      //   ...errors,
-      //   price: 'Price is required',
-      // });
 
-      // console.log(errors)
+    } else if (parseFloat(price) < 1){
+      newErrors.price = 'Price must be greater than $1'
+
     } else {
       newErrors.price = null
+      delete newErrors.price
   }
 
     setErrors({
@@ -185,6 +164,11 @@ const CreateSpotForm = () => {
       price
   ])
 
+  const isValidURL = (string) => {
+    const res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    return (res !== null)
+  };
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -203,11 +187,14 @@ const CreateSpotForm = () => {
           city,
           state,
           country,
-          lat,
-          lng,
+          lat: `${lat}`,
+          lng: `${lng}`,
           description,
-          price
+          price,
+          ...((previewImage !== '') && isValidURL(previewImage) && {previewImage})
         };
+
+        console.log({payload})
 
         let createdSpot = await dispatch(createSpot(payload))
 
@@ -220,6 +207,8 @@ const CreateSpotForm = () => {
   let isLoggedIn
 
   if(!user){
+    isLoggedIn = false
+
     return (
       <div className='login-message'>
         <p>Please login or signup to list your home</p>
@@ -229,18 +218,14 @@ const CreateSpotForm = () => {
       isLoggedIn = true
   }
 
+  // console.log(errors)
 
 
   return (
 
     <div className='create-spot-page-component'>
-      {/* <div>
-        {!isLoaded && (
-          <p>Please login or signup to list your home</p>
-        )}
-      </div> */}
 
-      {true && (
+      {isLoggedIn && (
 
         <div className='form-component'>
 
@@ -307,7 +292,7 @@ const CreateSpotForm = () => {
               />
               {errors.country && <p>{errors.country}</p>}
 
-              <label className="lat">Latitude:</label>
+              {/* <label className="lat">Latitude:</label>
               <input
                 type="number"
                 id="lat"
@@ -317,9 +302,9 @@ const CreateSpotForm = () => {
                 value={lat}
                 onChange={updateLat}
               />
-              {errors.lat && <p>{errors.lat}</p>}
+              {errors.lat && <p>{errors.lat}</p>} */}
 
-              <label className="lng">Longitude:</label>
+              {/* <label className="lng">Longitude:</label>
               <input
                 type="number"
                 id="lng"
@@ -329,7 +314,7 @@ const CreateSpotForm = () => {
                 value={lng}
                 onChange={updateLng}
               />
-              {errors.lng && <p>{errors.lng}</p>}
+              {errors.lng && <p>{errors.lng}</p>} */}
 
               <label className="description">Description:</label>
               <input
@@ -346,10 +331,41 @@ const CreateSpotForm = () => {
                 type="number"
                 id="price"
                 name="price"
+                min='1'
                 value={price}
                 onChange={updatePrice}
               />
               {errors.price && <p>{errors.price}</p>}
+
+              <label className="preview-image">Preview Image:</label>
+              <input
+                type="url"
+                id="previewI-iage"
+                name="preview-image"
+                value={previewImage}
+                onChange={updatePreviewImage}
+              />
+              <div className='preview-image-preview-img'>
+                { (previewImage !== '') && ( isValidURL(previewImage) ) && (
+                  <img src={previewImage}></img>
+                ) }
+              </div>
+
+              {/* <label className="additional-images">Additional Images:</label>
+              <input
+                type="url"
+                id="additional-images"
+                name="additional-images"
+                value={previewImage}
+                onChange={updatePreviewImage}
+              />
+              <div className='preview-image-preview-img'>
+                { (previewImage !== '') && ( isValidURL(previewImage) ) && (
+                  <img src={previewImage}></img>
+                ) }
+              </div> */}
+
+              <br></br>
 
               <input type="submit" value="Submit"></input>
 
