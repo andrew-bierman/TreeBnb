@@ -4,7 +4,8 @@ import { NavLink, Route, useParams, useHistory } from 'react-router-dom';
 
 import CurrentUserReviewsComponent from "../CurrentUserReviews";
 
-import { getUserSpots } from '../../store/spots';
+import * as sessionActions from "../../store/session";
+import { getUserSpots, getAllSpots } from '../../store/spots';
 import { getCurrentUserReviews, deleteReview } from '../../store/reviews';
 import './Profile.css'
 
@@ -20,7 +21,8 @@ const Profile = () => {
     // }, [reviewsValues])
 
     useEffect(() => {
-
+        dispatch(sessionActions.restoreUser())
+        dispatch(getAllSpots());
         dispatch(getCurrentUserReviews());
         dispatch(getUserSpots())
 
@@ -45,9 +47,10 @@ const Profile = () => {
         return state.spots.allSpots
     })
 
-    let userSpots = getUserSpots();
+    let userSpots
+    // let userSpots = getUserSpots();
 
-    console.log({userSpots})
+    // console.log({userSpots})
 
     // let userSpots = dispatch(getUserSpots())
     // userSpots = userSpots.Spots
@@ -58,7 +61,9 @@ const Profile = () => {
     // const [reviewsState, setReviewsState] = useState([])
     // const [ userSpotsState, setUserSpotsState ] = useState([])
 
-    allSpots = Object.values(allSpots)
+    if(allSpots){
+        allSpots = Object.values(allSpots)
+    }
 
     if (allSpots && allSpots.length > 0){
 
