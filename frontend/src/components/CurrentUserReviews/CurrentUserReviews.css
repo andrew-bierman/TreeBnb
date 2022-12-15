@@ -1,0 +1,10 @@
+.reviews-details-comp .reviews-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reviews-details-comp .reviews-container button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

@@ -90,10 +90,10 @@ const CurrentUserReviewsComponent = () => {
 
     return (
 
-        <div className='spot-details'>
+        <div className='reviews-details'>
 
             {user && (
-                <div className='spot-details-comp'>
+                <div className='reviews-details-comp'>
 
                     <div className='reviews-container'>
                         <h2>Your Reviews</h2>
