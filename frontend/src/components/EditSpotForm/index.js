@@ -43,6 +43,8 @@ const EditSpotForm = ({isLoaded}) => {
   const [lng, setLng] = useState(0);
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0);
+  const [previewImage, setPreviewImage] = useState('');
+  const [images, setImages] = useState('');
 
   const updateName = (e) => setName(e.target.value);
   const updateAddress = (e) => setAddress(e.target.value);
@@ -53,6 +55,8 @@ const EditSpotForm = ({isLoaded}) => {
   const updateLng = (e) => setLng(e.target.value);
   const updateDescription = (e) => setDescription(e.target.value);
   const updatePrice = (e) => setPrice(e.target.value);
+  const updatePreviewImage = (e) => setPreviewImage(e.target.value);
+  const updateImages = (e) => setImages(e.target.value);
 
   const [errors, setErrors] = useState({});
 
@@ -108,27 +112,27 @@ const EditSpotForm = ({isLoaded}) => {
       delete newErrors.country
   }
 
-    if(!lat){
-      newErrors.lat = 'Latitude is required'
+  //   if(!lat){
+  //     newErrors.lat = 'Latitude is required'
 
-    } else if ((parseFloat(lat) < -90) || (parseFloat(lat) > 90)){
-      newErrors.lat = 'Latitude is not valid'
+  //   } else if ((parseFloat(lat) < -90) || (parseFloat(lat) > 90)){
+  //     newErrors.lat = 'Latitude is not valid'
 
-    } else {
-      newErrors.lat = null
-      delete newErrors.lat
-  }
+  //   } else {
+  //     newErrors.lat = null
+  //     delete newErrors.lat
+  // }
 
-    if(!lng){
-      newErrors.lng = 'Longitude is required'
+  //   if(!lng){
+  //     newErrors.lng = 'Longitude is required'
 
-    } else if ((parseFloat(lng) < -180) || (parseFloat(lng) > 180)) {
-        newErrors.lng = 'Longitude is not valid'
+  //   } else if ((parseFloat(lng) < -180) || (parseFloat(lng) > 180)) {
+  //       newErrors.lng = 'Longitude is not valid'
 
-    } else {
-      newErrors.lng = null
-      delete newErrors.lng
-  }
+  //   } else {
+  //     newErrors.lng = null
+  //     delete newErrors.lng
+  // }
 
     if(!description){
       newErrors.description = 'Description is required'
@@ -196,23 +200,28 @@ const EditSpotForm = ({isLoaded}) => {
           city,
           state,
           country,
-          lat,
-          lng,
+          lat: `${lat}`,
+          lng: `${lng}`,
           description,
           price
         };
 
-        console.log(payload)
+        console.log({payload})
 
         let editedSpot = await dispatch(editSpot(payload))
 
-        console.log('edited spot ----', {editedSpot})
+        // console.log('edited spot ----', {editedSpot})
 
         if (editedSpot) {
-          console.log('new redirect param',editedSpot.id)
+          // console.log('new redirect param',editedSpot.id)
           history.push(`/spots/${editedSpot.id}`);
         }
     }
+  };
+
+  const isValidURL = (string) => {
+    const res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    return (res !== null)
   };
 
   const confirmDelete = async () => {
@@ -315,7 +324,7 @@ const EditSpotForm = ({isLoaded}) => {
               />
               {errors.country && <p>{errors.country}</p>}
 
-              <label className="lat">Latitude:</label>
+              {/* <label className="lat">Latitude:</label>
               <input
                 type="number"
                 id="lat"
@@ -325,9 +334,9 @@ const EditSpotForm = ({isLoaded}) => {
                 value={lat}
                 onChange={updateLat}
               />
-              {errors.lat && <p>{errors.lat}</p>}
+              {errors.lat && <p>{errors.lat}</p>} */}
 
-              <label className="lng">Longitude:</label>
+              {/* <label className="lng">Longitude:</label>
               <input
                 type="number"
                 id="lng"
@@ -337,7 +346,7 @@ const EditSpotForm = ({isLoaded}) => {
                 value={lng}
                 onChange={updateLng}
               />
-              {errors.lng && <p>{errors.lng}</p>}
+              {errors.lng && <p>{errors.lng}</p>} */}
 
               <label className="description">Description:</label>
               <input
@@ -358,6 +367,20 @@ const EditSpotForm = ({isLoaded}) => {
                 onChange={updatePrice}
               />
               {errors.price && <p>{errors.price}</p>}
+
+              {/* <label className="preview-image">Preview Image:</label>
+              <input
+                type="url"
+                id="previewI-iage"
+                name="preview-image"
+                value={previewImage}
+                onChange={updatePreviewImage}
+              />
+              <div className='preview-image-preview-img'>
+                { (previewImage !== '') && ( isValidURL(previewImage) ) && (
+                  <img src={previewImage}></img>
+                ) }
+              </div> */}
 
               <input type="submit" value="Submit"></input>
 
