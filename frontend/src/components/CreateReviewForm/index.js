@@ -99,7 +99,8 @@ const CreateReviewForm = () => {
         let createdReview = await dispatch(createReview(payload))
 
         if (createdReview) {
-          history.push(`/reviews/${createdReview.id}`);
+          // history.push(`/reviews/${createdReview.id}`);
+          history.push(`/user/current`);
         }
     }
   };
@@ -107,9 +108,10 @@ const CreateReviewForm = () => {
   let isLoggedIn
 
   if(!user){
+    isLoggedIn = false
     return (
       <div className='login-message'>
-        <p>Please login or signup to list your home</p>
+        <p>Please login or signup to continue</p>
       </div>
     )
   } else {
@@ -122,7 +124,7 @@ const CreateReviewForm = () => {
 
     <div className='create-spot-page-component'>
 
-      {true && (
+      {isLoggedIn && (
 
         <div className='form-component'>
 
