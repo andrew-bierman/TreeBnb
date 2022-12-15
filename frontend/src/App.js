@@ -12,6 +12,8 @@ import EditSpotForm from "./components/EditSpotForm";
 import CreateReviewForm from "./components/CreateReviewForm";
 import CurrentUserReviews from "./components/CurrentUserReviews";
 import CurrentUserReviewsComponent from "./components/CurrentUserReviews";
+import EditReviewForm from "./components/EditReviewForm";
+import Profile from "./components/Profile";
 
 function App() {
   const dispatch = useDispatch();
@@ -46,12 +48,22 @@ function App() {
           <CreateReviewForm />
         </Route>
 
+        <Route path="/reviews/:reviewId/edit">
+          <EditReviewForm />
+        </Route>
+
         <Route path="/spots/:spotId">
           <SpotDetailsComponent/>
         </Route>
 
+        <Route path="/user/current">
+          <Profile/>
+          {/* <SpotDetailsComponent/> */}
+        </Route>
+
         <Route path="/reviews/current">
-          <CurrentUserReviewsComponent/>
+          <CurrentUserReviews/>
+          {/* <SpotDetailsComponent/> */}
         </Route>
 
 
