@@ -28,7 +28,8 @@ const CurrentUserReviewsComponent = () => {
     }, [dispatch]);
 
 
-    let reviewsValues
+    let reviewsValues;
+
     if(reviews){
         reviewsValues = Object.keys(reviews).map(e => reviews[e])
     }
@@ -73,10 +74,17 @@ const CurrentUserReviewsComponent = () => {
     const confirmDelete = async (reviewId) => {
         if (window.confirm("Please confirm you would like to delete a review, this action cannot be undone.") == true) {
           let deleteReviewResponse = await dispatch(deleteReview(reviewId))
-          // console.log(deleteSpotResponse)
-          history.push('/reviews/current')
+          console.log(deleteReviewResponse)
+          history.push('/user/current')
         }
       }
+
+
+    // let reviewId
+    const handleEditReviewRoute = (reviewId) =>{
+        // console.log('clicked')
+        history.push(`/reviews/${reviewId}/edit`);
+    }
 
 
 
@@ -119,6 +127,8 @@ const CurrentUserReviewsComponent = () => {
                                     {/* { review.User.id && (
                                         review.User.id
                                     ) } */}
+
+                                    <button onClick={() => handleEditReviewRoute(review.id)}>Edit Review</button>
 
                                     <button onClick={() => confirmDelete(review.id)}>Delete Review</button>
 
