@@ -123,7 +123,7 @@ const Profile = () => {
                         <h3>{user.email}</h3>
                     </div>
 
-                    {reviewsValues && (
+                    {reviewsValues && (reviewsValues.length > 0) && (
                         <CurrentUserReviewsComponent/>
                     )}
 
