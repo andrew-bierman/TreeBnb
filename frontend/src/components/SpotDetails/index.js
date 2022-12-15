@@ -172,8 +172,18 @@ const SpotDetailsComponent = () => {
 
                         <div className='host-details'>
                             {spot.Owner.firstName && (
-                                <p>{`Hosted by ${spot.Owner.firstName}`}</p>
+                                <h3>{`Hosted by ${spot.Owner.firstName}`}</h3>
                             )}
+                            <hr></hr>
+                        </div>
+
+                        <div className='spot-details-description-container'>
+                            { spot.description && (
+                                <p>{ spot.description }</p>
+                            ) }
+
+                            <hr></hr>
+
                         </div>
 
                         <div className='edit-spot-button-container'>
@@ -194,15 +204,24 @@ const SpotDetailsComponent = () => {
                                 <div className='review-container'>
                                     <div className='review-stars'>
                                         <i className="fas fa-solid fa-star"></i>
-                                        <p>
-                                            {
-                                                review.stars
-                                            }
-                                        </p>
+                                        { review.stars && (
+                                            <p>
+                                                {
+                                                    review.stars
+                                                }
+                                            </p>
+                                        ) }
                                     </div>
 
-                                    <p>{ review.User.firstName }</p>
-                                    <p>{ review.review }</p>
+                                    { review.User.firstName && (
+                                        <p>{ review.User.firstName }</p>
+                                    )}
+
+                                    { review.review && (
+                                        <p>{ review.review }</p>
+
+                                    )}
+
 
                                     { ( review.User.id === user.id ) && (
                                         <button onClick={() => handleEditReviewRoute(review.id)}>Edit this review</button>
