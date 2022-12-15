@@ -1,224 +1,230 @@
 .spot-details {
-    /* Set the size of the container */
-    width: 80%;
-    /* max-width: 1200px; */
+  /* Set the size of the container */
+  width: 80%;
+  /* max-width: 1200px; */
 
-    /* Center the container on the page */
-    margin: 0 auto;
+  /* Center the container on the page */
+  margin: 0 auto;
 
-    /* Add some space around the container */
-    padding: 20px;
+  /* Add some space around the container */
+  padding: 20px;
 
-    /* Center the contents of the container */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+  /* Center the contents of the container */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .secondary-details {
-    width: 100%
-  }
-
-
-  .review-and-location {
-    /* Make the container a flex container */
-    display: flex;
-    width: 100%;
-
-    /* Align the items on the same line */
-    align-items: center;
-
-    /* Set the direction of the items to be on the same line */
-    flex-direction: row;
-
-  }
+.secondary-details {
+  width: 100%
+}
 
 
-  .images {
+.review-and-location {
+  /* Make the container a flex container */
+  display: flex;
+  width: 100%;
 
-    display: flex;
-    width: 100%;
-    height: 30%;
-    max-height: 600px;
+  /* Align the items on the same line */
+  align-items: center;
 
-    /* border-radius: 25px; */
+  /* Set the direction of the items to be on the same line */
+  flex-direction: row;
 
-    overflow: hidden;
-
-    flex-direction: row;
-
-    justify-content: space-between;
-    align-items: center;
-
-    box-sizing: border-box;
-
-  }
+}
 
 
-  .preview-image-container {
+.images {
 
-    /* max-height: 600px; */
+  display: flex;
+  width: 100%;
+  height: 30%;
+  max-height: 600px;
 
-    height: 100%;
+  /* border-radius: 25px; */
 
-    box-sizing: border-box;
+  overflow: hidden;
 
-    overflow: auto;
+  flex-direction: row;
 
+  justify-content: space-between;
+  align-items: center;
 
+  box-sizing: border-box;
 
-  }
-
-  .preview-image img {
-
-    object-fit: cover !important;
-    object-position: center;
-
-    padding: 10px !important;
-
-    box-sizing: border-box;
+}
 
 
-    /* width: 100%;
+.preview-image-container {
+
+  max-height: 600px;
+
+  height: 100%;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+
+}
+
+.preview-image img {
+
+  object-fit: cover !important;
+  object-position: center;
+
+  padding: 10px !important;
+
+  box-sizing: border-box;
+
+
+  /* width: 100%;
     height: 100%; */
 
-    max-height: 100%;
-    /* max-width: 100%; */
+  max-height: 100%;
+  /* max-width: 100%; */
 
-    object-fit: contain !important;
-    object-position: center;
+  object-fit: contain !important;
+  object-position: center;
 
-  }
+}
 
-  .secondary-images-container {
+.secondary-images-container {
 
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-left: 5px;
+  overflow-x: scroll;
+  overflow: hidden;
 
-    overflow-x:scroll;
-    overflow: hidden;
-
-    justify-content: space-around;
-
-
-    max-width: 50%;
-  }
-
-  .secondary-image-container {
-
-    height: 300px;
-    width: 50%;
-
-    object-fit: cover;
-    object-position: center;
+  justify-content: space-around;
 
 
-    box-sizing: border-box;
+  max-width: 50%;
+}
 
-    max-width: 100%;
+.secondary-image-container {
 
-  }
+  height: 300px;
+  width: 49%;
 
-  .secondary-image {
-    width: 100%;
-    height: 100%;
-
-    max-height: 100%;
-    max-width: 100%;
-
-    object-fit: cover !important;
-    object-position: center ;
-
-    padding: 10px !important;
-
-    box-sizing: border-box;
-    display: block;
-
-  }
-
-  .secondary-image img {
-    width: 100%;
-    height: 100%;
-
-    max-height: 100%;
-    max-width: 100%;
-
-    object-fit: cover !important;
-    /* object-position: center; */
-
-    padding: 5px !important;
-
-    box-sizing: border-box;
-    display: block;
+  object-fit: cover;
+  object-position: center;
 
 
-  }
+  box-sizing: border-box;
+
+  max-width: 100%;
+
+}
+
+.secondary-image {
+  width: 100%;
+  height: 100%;
+
+  max-height: 100%;
+  max-width: 100%;
+
+  object-fit: cover !important;
+  object-position: center;
+  box-sizing: border-box;
+  display: block;
+
+}
+
+.secondary-image img {
+  width: 100%;
+  height: 100%;
+
+  max-height: 100%;
+  max-width: 100%;
+
+  object-fit: cover !important;
+  /* object-position: center; */
+
+  padding: 5px !important;
+
+  box-sizing: border-box;
+  display: block;
 
 
-  .review-stats {
-
-    margin-right: 20px;
-
-    display: flex;
-
-    flex-direction: row;
-
-    align-items: center ;
-
-    /* justify-content: space-between; */
-
-  }
-
-  .review-stats i {
-    /* Set the size and color of the star icon */
-    font-size: 24px;
-    color: #ffc107;
-
-    margin-right: 10px;
-  }
-
-  .review-stats p {
-    /* Set the font size and weight of the rating */
-    font-size: 18px;
-    font-weight: bold;
-  }
-
-  .location-details p {
-    /* Set the font size and weight of the location details */
-    font-size: 16px;
-    font-weight: bold;
-
-    /* Add some space between the location details */
-    margin: 0 5px;
-  }
+}
 
 
-  .reviews-container {
-    display: flex;
-    flex-direction: column;
+.review-stats {
 
-    width: 100%;
-  }
+  margin-right: 20px;
 
-  .review-container {
-    border: 1px solid #222222;
-    border-radius: 25px;
-    padding: 10px;
-  }
+  display: flex;
 
-  .reviews-container .review-stars {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  flex-direction: row;
 
-    width: 100%;
-  }
+  align-items: center;
 
-  .reviews-container .review-stars i {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  /* justify-content: space-between; */
 
-    margin-right: 10px;
-  }
+}
+
+.review-stats i {
+  /* Set the size and color of the star icon */
+  font-size: 24px;
+  color: #ffc107;
+
+  margin-right: 10px;
+}
+
+.review-stats p {
+  /* Set the font size and weight of the rating */
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.location-details p {
+  /* Set the font size and weight of the location details */
+  font-size: 16px;
+  font-weight: bold;
+
+  /* Add some space between the location details */
+  margin: 0 5px;
+}
+
+
+.reviews-container {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+}
+
+.review-container {
+  border: 1px solid #222222;
+  border-radius: 25px;
+  padding: 10px;
+}
+
+.reviews-container .review-stars {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  width: 100%;
+}
+
+.reviews-container .review-stars i {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  margin-right: 10px;
+}
+
+.border-bottom-right {
+  border-bottom-right-radius: 25px;
+}
+
+.border-top-right {
+  border-top-right-radius: 25px;
+}

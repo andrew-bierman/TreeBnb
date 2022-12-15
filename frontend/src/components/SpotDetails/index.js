@@ -157,9 +157,9 @@ const SpotDetailsComponent = () => {
 
                             <div className='secondary-images-container'>
                                 {(secondaryImagesValues) && (secondaryImagesValues.length > 0) && (
-                                    secondaryImagesValues.slice(0, 4).map(image => (
+                                    secondaryImagesValues.slice(0, 4).map((image, index )=> (
                                         <div className='secondary-image-container'>
-                                            <img key={image.id} src={image.url} alt='secondary-image' className='secondary-image'></img>
+                                            <img key={image.id} src={image.url} alt='secondary-image' className={`secondary-image ${index === 1 ? 'border-top-right' : index === 3 ? 'border-bottom-right' : ''}`}></img>
 
                                         </div>
                                     ))
