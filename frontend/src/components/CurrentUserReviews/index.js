@@ -94,9 +94,9 @@ const CurrentUserReviewsComponent = () => {
 
             {user && (
                 <div className='reviews-details-comp'>
+                    <h2>Your Reviews</h2>
 
                     <div className='reviews-container'>
-                        <h2>Your Reviews</h2>
 
                         {reviewsValues && (
                             reviewsValues.map(review => (

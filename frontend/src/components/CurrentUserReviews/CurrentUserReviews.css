@@ -1,7 +1,22 @@
-.reviews-details-comp .reviews-container {
+.reviews-details-comp {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 50px;
+}
+
+.reviews-details-comp .reviews-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.reviews-details-comp .reviews-container .review-container {
+
+    min-width: 600px;
+    /* min-height: 500px; */
+    padding: 20px;
+    margin: 20px;
 }
 
 .reviews-details-comp .reviews-container button {
