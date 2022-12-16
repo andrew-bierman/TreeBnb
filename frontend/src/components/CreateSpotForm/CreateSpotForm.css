@@ -14,7 +14,7 @@
   form {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 60%;
   }
 
   /* .name,
@@ -35,11 +35,22 @@
 
   label {
     font-weight: bold;
+
     /* margin-right: 5px; */
   }
 
   input {
     padding: 5px;
+    accent-color: #70C1B3;
+  }
+
+  input[type="submit"] {
+    background-color: #70C1B3;
+    border-radius: 10px;
+    outline: #70C1B3;
+
+    min-height: 50px;
+    border-color: #70C1B3;
   }
 
   p.error {

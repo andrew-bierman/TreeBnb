@@ -20,6 +20,12 @@
 }
 
 .reviews-details-comp .reviews-container button {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: 10px 10px 10px 0px;
+
+    background-color: #70C1B3;
+    border-radius: 10px;
+    outline: #70C1B3;
+
+    min-height: 50px;
+    border-color: #70C1B3;
 }

@@ -66,7 +66,7 @@ function ProfileButton({ user }) {
               <button onClick={directToProfile}>Profile</button>
             </li>
             <li>
-              <button onClick={logout}>Log Out</button>
+              <button className='logout-button' onClick={logout}>Log Out</button>
             </li>
           </>
         ) : (

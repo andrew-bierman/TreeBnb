@@ -15,6 +15,17 @@
   align-items: center;
 }
 
+.spot-details button {
+  background-color: #70C1B3;
+  border-radius: 10px;
+  outline: #70C1B3;
+
+  min-height: 50px;
+  border-color: #70C1B3;
+
+  /* width: 100% */
+}
+
 .secondary-details {
   width: 100%
 }
@@ -69,6 +80,9 @@
   overflow: hidden;
   border-top-left-radius: 25px;
   border-bottom-left-radius: 25px;
+
+  object-fit: cover !important;
+  object-position: center;
 
 }
 
