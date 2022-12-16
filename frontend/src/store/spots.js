@@ -6,6 +6,8 @@ const GET_USER_SPOTS = 'spots/currentUser'
 const CREATE_SPOT = 'spots/createSpot'
 const EDIT_SPOT = 'spots/editSpot'
 const DELETE_SPOT = 'spots/deleteSpot'
+const RESET_SINGLE_SPOT = 'spots/resetSingleSpot'
+const RESET_ALL_SPOTS = 'spots/resetAllSpots'
 
 const actionCreatorAllSpots = (spots) => {
   return {
@@ -46,6 +48,21 @@ const actionCreatorDeleteSpot = (spot) => {
     return {
       type: DELETE_SPOT,
       payload: spot,
+    };
+  };
+
+
+export const actionCreatorResetSingleSpot = () => {
+    return {
+      type: RESET_SINGLE_SPOT,
+      payload: {},
+    };
+  };
+
+export const actionCreatorResetAllSpots = () => {
+    return {
+      type: RESET_ALL_SPOTS,
+      payload: {},
     };
   };
 
@@ -251,6 +268,16 @@ const spotsReducer = (state = initialState, action) => {
         newState = { ...state }
 
         return { ...newState }
+
+    case RESET_SINGLE_SPOT:
+        newState = { ...state }
+
+        return { ...newState, allSpots: null, singleSpot: null }
+
+    case RESET_ALL_SPOTS:
+        newState = { ...state }
+
+        return { ...newState, allSpots: null, singleSpot: null }
 
     default:
       return state;

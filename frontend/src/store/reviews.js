@@ -65,8 +65,8 @@ export const getCurrentUserReviews = () => async (dispatch) => {
       const reviewsObj = await response.json();
       // console.log('reviews.Reviews', reviewsObj.Reviews, Array.isArray(reviewsObj.Reviews));
       // const reviewsArr = Object.values(reviews)
-      console.log('--------')
-      console.log({reviewsObj})
+      // console.log('--------')
+      // console.log({reviewsObj})
       dispatch(actionCreatorGetCurrentUserReviews(reviewsObj));
       return reviewsObj
   }
@@ -130,7 +130,7 @@ export const updateReview = (reviewData) => async (dispatch) => {
   });
 
 
-  console.log(response);
+  // console.log(response);
 
   if(response.ok){
       const review = await response.json();
@@ -194,7 +194,7 @@ const reviewsReducer = (state = initialState, action) => {
             // console.log('reviews index 0', reviews[0])
 
             if(reviews && Array.isArray(reviews)){
-              console.log('reviews', reviews)
+              // console.log('reviews', reviews)
 
               // const { Spot, ReviewImages } = reviews
 
@@ -217,7 +217,7 @@ const reviewsReducer = (state = initialState, action) => {
 
                     user[id].ReviewImages = ReviewImages
 
-                    console.log({user})
+                    // console.log({user})
 
                   }
 
@@ -232,6 +232,9 @@ const reviewsReducer = (state = initialState, action) => {
               newState = { ...state }
 
               let user = {}
+
+              /*
+
 
               let review = action.payload
 
@@ -252,6 +255,8 @@ const reviewsReducer = (state = initialState, action) => {
                 return {...newState, user}
 
               }
+
+              */
 
               return {...newState, user};
 
