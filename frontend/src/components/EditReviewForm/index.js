@@ -94,8 +94,11 @@ const EditReviewForm = () => {
         const payload = {
           reviewId,
           review,
-          stars
+          stars,
+          User: user
         };
+
+        console.log({payload})
 
         let updatedReview = await dispatch(updateReview(payload))
 
