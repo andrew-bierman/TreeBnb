@@ -26,7 +26,7 @@ module.exports = {
         onUpdate: 'CASCADE'
       },
       address: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       city: {

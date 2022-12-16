@@ -42,7 +42,7 @@ const EditSpotForm = ({isLoaded}) => {
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
   const [description, setDescription] = useState('');
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState('');
   const [previewImage, setPreviewImage] = useState('');
   const [images, setImages] = useState('');
 
@@ -250,79 +250,90 @@ const EditSpotForm = ({isLoaded}) => {
 
   return (
 
-    <div className='create-spot-page-component'>
+    <div className='edit-spot-page-component'>
       {/* <div>
         {!isLoaded && (
           <p>Please login or signup to list your home</p>
         )}
       </div> */}
 
-      {isLoggedIn && (
+        {isLoggedIn && (
 
         <div className='form-component'>
 
-          <h2>Edit Spot</h2>
+          <h2>Edit a Spot</h2>
 
           {/* Display error messages for all fields */}
           {Object.keys(errors).map(fieldName => {
             const errorMessage = errors[fieldName];
             if (shouldShowErrors && errorMessage) {
-              return <p key={errorMessage} className="error">{errorMessage}</p>;
+              return (
+                  <p key={errorMessage} className="error">
+                    <i className="fas fa-solid fa-exclamation-circle"></i>
+                    &nbsp;&nbsp;
+                    {errorMessage}
+                  </p>
+                )
             }
           })}
 
           <div className='form-container'>
 
             <form onSubmit={handleSubmit}>
-              <label className="name">Name:</label>
+              {/* <label className="name">Name:</label> */}
               <input
                 type="text"
                 id="name"
                 name="name"
+                placeholder="Name"
                 value={name}
                 onChange={updateName}
               />
-              {errors.name && <p>{errors.name}</p>}
+              {/* {errors.name && <p>{errors.name}</p>} */}
 
-              <label className="address">Address:</label>
+              {/* <label className="address">Address:</label> */}
               <input
                 type="text"
                 id="address"
                 name="address"
+                placeholder="Address"
                 value={address}
                 onChange={updateAddress}
               />
-              {errors.address && <p>{errors.address}</p>}
+              {/* {errors.address && <p>{errors.address}</p>} */}
 
-              <label className="city">City:</label>
+              {/* <label className="city">City:</label> */}
               <input
                 type="text"
                 id="city"
                 name="city"
+                placeholder="City"
                 value={city}
                 onChange={updateCity}
               />
-              {errors.city && <p>{errors.city}</p>}
+              {/* {errors.city && <p>{errors.city}</p>} */}
 
-              <label className="state">State:</label>
+              {/* <label className="state">State:</label> */}
               <input
                 type="text"
                 id="state"
                 name="state"
+                placeholder="State"
                 value={state}
                 onChange={updateState}
               />
-              {errors.state && <p>{errors.state}</p>}
+              {/* {errors.state && <p>{errors.state}</p>} */}
 
-              <label className="country">Country:</label>
+              {/* <label className="country">Country:</label> */}
               <input
                 type="text"
                 id="country"
                 name="country"
+                placeholder="Country"
                 value={country}
                 onChange={updateCountry}
               />
-              {errors.country && <p>{errors.country}</p>}
+              {/* {errors.country && <p>{errors.country}</p>} */}
 
               {/* <label className="lat">Latitude:</label>
               <input
@@ -348,31 +359,50 @@ const EditSpotForm = ({isLoaded}) => {
               />
               {errors.lng && <p>{errors.lng}</p>} */}
 
-              <label className="description">Description:</label>
+              {/* <label className="description">Description:</label> */}
               <input
                 type="text"
                 id="description"
                 name="description"
+                placeholder="Description"
                 value={description}
                 onChange={updateDescription}
               />
-              {errors.description && <p>{errors.description}</p>}
+              {/* {errors.description && <p>{errors.description}</p>} */}
 
-              <label className="price">Price:</label>
+              {/* <label className="price">Price:</label> */}
               <input
                 type="number"
                 id="price"
                 name="price"
+                placeholder="Price"
+                min='1'
                 value={price}
                 onChange={updatePrice}
               />
-              {errors.price && <p>{errors.price}</p>}
+              {/* {errors.price && <p>{errors.price}</p>} */}
 
-              {/* <label className="preview-image">Preview Image:</label>
+              {/* <label className="preview-image">Preview Image:</label> */}
+              {/* <input
+                type="url"
+                id="previewImage"
+                name="preview-image"
+                placeholder="Preview Image"
+                value={previewImage}
+                onChange={updatePreviewImage}
+              /> */}
+              {/* {errors.previewImage && <p>{errors.previewImage}</p>} */}
+              {/* <div className='preview-image-preview-img'>
+                { (previewImage !== '') && ( isValidURL(previewImage) ) && (
+                  <img src={previewImage}></img>
+                ) }
+              </div> */}
+
+              {/* <label className="additional-images">Additional Images:</label>
               <input
                 type="url"
-                id="previewI-iage"
-                name="preview-image"
+                id="additional-images"
+                name="additional-images"
                 value={previewImage}
                 onChange={updatePreviewImage}
               />
@@ -382,6 +412,8 @@ const EditSpotForm = ({isLoaded}) => {
                 ) }
               </div> */}
 
+              <br></br>
+
               <input type="submit" value="Submit"></input>
 
             </form>
@@ -390,11 +422,7 @@ const EditSpotForm = ({isLoaded}) => {
 
           <br></br>
 
-          <div className='delete-spot-button'>
-            <button onClick={confirmDelete}>
-                Delete Spot
-            </button>
-          </div>
+
 
         </div>
       )}

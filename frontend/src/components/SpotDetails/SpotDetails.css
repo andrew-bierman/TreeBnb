@@ -30,6 +30,21 @@
   width: 100%
 }
 
+.review-and-location-and-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.edit-spot-delete-spot-buttons-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.edit-spot-delete-spot-buttons-container button {
+  margin: 10px;
+  background: transparent;
+  /* outline: 0; */
+}
 
 .review-and-location {
   /* Make the container a flex container */

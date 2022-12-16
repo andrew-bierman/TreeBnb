@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react'
 import { NavLink, Route, useParams, useHistory } from 'react-router-dom';
 
-import { getOneSpot, actionCreatorResetSingleSpot } from '../../store/spots';
+import { getOneSpot, actionCreatorResetSingleSpot, deleteSpot } from '../../store/spots';
 import { getOneSpotReviews, getCurrentUserReviews } from '../../store/reviews';
 import './SpotDetails.css'
 
@@ -84,6 +84,14 @@ const SpotDetailsComponent = () => {
         history.push(`/reviews/${reviewId}/edit`);
     }
 
+    const confirmDelete = async () => {
+        if (window.confirm("Please confirm you would like to delete a spot, this action cannot be undone.") == true) {
+          let deleteSpotResponse = await dispatch(deleteSpot(spotId))
+          // console.log(deleteSpotResponse)
+          history.push('/')
+        }
+      }
+
     // console.log('spot details ----', {spot})
     // console.log('secondary images ----', secondaryImages, typeof secondaryImages)
 
@@ -140,18 +148,41 @@ const SpotDetailsComponent = () => {
                 <div className='spot-details-comp'>
                     <h2>{spot.name}</h2>
                     <div className='secondary-details'>
-                        <div className='review-and-location'>
-                            <div className='review-stats'>
-                                <i className="fas fa-solid fa-star"></i>
-                                { spot.avgRating && (
-                                    <p>{(spot.avgRating).toFixed(2)}</p>
-                                ) }
+
+                        <div className='review-and-location-and-buttons'>
+                            <div className='review-and-location'>
+                                <div className='review-stats'>
+                                    <i className="fas fa-solid fa-star"></i>
+                                    { spot.avgRating && (
+                                        <p>{(spot.avgRating).toFixed(2)}</p>
+                                    ) }
+                                </div>
+
+                                <div className='location-details'>
+                                    <p>{spot.city}, {spot.state}</p>
+                                </div>
                             </div>
 
-                            <div className='location-details'>
-                                <p>{spot.city}, {spot.state}</p>
-                            </div>
+                            { isSpotOwner && (
+                                <div className='edit-spot-delete-spot-buttons-container'>
+                                    <div className='edit-spot-button-container'>
+                                        {isSpotOwner && (
+                                            <button onClick={handleEditSpotRoute}>Edit this spot</button>
+                                            )}
+                                    </div>
+
+                                    <div className='delete-spot-button'>
+                                        <button onClick={confirmDelete}>
+                                            Delete Spot
+                                        </button>
+                                    </div>
+
+                                </div>
+                            ) }
+
                         </div>
+
+
 
                         <div className='images'>
                             <div className='preview-image-container'>
@@ -196,12 +227,6 @@ const SpotDetailsComponent = () => {
 
                             <hr></hr>
 
-                        </div>
-
-                        <div className='edit-spot-button-container'>
-                            {isSpotOwner && (
-                                <button onClick={handleEditSpotRoute}>Edit this spot</button>
-                                )}
                         </div>
 
                     </div>

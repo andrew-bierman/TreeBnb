@@ -52,14 +52,14 @@ const AllSpotsComponent = () => {
                                 { spot.avgRating && (
                                     <div className='spot-details-avg-rating'>
                                         <i className="fas fa-solid fa-star"></i>
-                                        <h5>{(spot.avgRating).toFixed(2)}</h5>
+                                        <h5>{Number(spot.avgRating).toFixed(2)}</h5>
                                     </div>
                                 ) }
                             </div>
                             <div className='spot-details-price'>
                                 { spot.price && (
                                     <div className='spot-details-price'>
-                                        <p className='price-number'>{`$${(spot.price).toFixed(2)}`}</p>
+                                        <p className='price-number'>{`$${Number(spot.price).toFixed(2)}`}</p>
                                         <p>night</p>
                                     </div>
                                 ) }
