@@ -4,7 +4,7 @@
     flex-wrap: wrap;
     align-items: center;
     /* justify-content: center; */
-    justify-content: space-between;
+    justify-content: space-around;
     width: 95%;
 
     margin-left: auto;
@@ -18,7 +18,11 @@
     align-items: flex-start;
     justify-content: space-around;
 
-    margin: 10px;
+    margin: 12px;
+    display: block;
+
+    box-sizing: border-box;
+
     display: block;
 
   }
@@ -27,23 +31,15 @@
     text-decoration: none;
   }
 
-  .spots-list div {
-    width: auto;
-    height: auto;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    /* border: 1px solid #ccc; */
-    border-radius: 25px;
-  }
 
   .spot-container .spot-details-container{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
+
+    box-sizing: border-box;
 
     display: block;
 
@@ -55,6 +51,10 @@
     /* height: 100%; */
     object-fit: cover;
     border-radius: 25px;
+
+    box-sizing: border-box;
+
+    display: block;
   }
 
   .spots-list img {
@@ -65,20 +65,63 @@
   }
 
 
-  .spots-list h4 {
-    margin: 0;
-    padding: 8px 16px;
-    background: #fff;
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
+  .spot-details-review-price-location {
+    display: flex;
+    flex-direction: column;
+
+    box-sizing: border-box;
+
   }
 
-  .spots-list p {
+  .spot-details-review-price-location .review-location {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-top: 5px; */
+    padding: 0;
+
+    box-sizing: border-box;
+
+  }
+
+  .spot-details-review-price-location .spot-details-avg-rating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: 2px;
+
+    box-sizing: border-box;
+    margin: 0px;
+
+  }
+
+  .spot-details-review-price-location .spot-details-avg-rating i {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 7px;
+    margin-top: 0px;
+  }
+
+  .spot-details-review-price-location .spot-details-price {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+  }
+
+  .spot-details-review-price-location .spot-details-price p {
     margin: 0;
-    padding: 8px 16px;
-    background: #fff;
-    text-align: center;
-    font-size: 14px;
+    padding: 0;
+
+  }
+
+  .spot-details-review-price-location .spot-details-price .price-number {
     font-weight: 600;
+    margin-right: 7px;
   }

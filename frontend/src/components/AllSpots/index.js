@@ -2,15 +2,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react'
 import { NavLink, Route, useParams } from 'react-router-dom';
 
-import { getAllSpots, getOneSpot } from '../../store/spots';
+import { getAllSpots, getOneSpot, actionCreatorResetAllSpots } from '../../store/spots';
 import './Spots.css'
 
 const AllSpotsComponent = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // console.log("dispatching getAllShots()")
+
         dispatch(getAllSpots());
+
+        return ( () => dispatch(actionCreatorResetAllSpots()) )
+
     }, [dispatch]);
 
     let allSpots = useSelector(state => {
@@ -43,8 +46,26 @@ const AllSpotsComponent = () => {
                         <div className='spot-image-container'>
                             <img src={spot.previewImage} alt='Preview Image'></img>
                         </div>
-                        <h4>{spot.city}, {spot.state}</h4>
-                        <p>{`$${spot.price} night`}</p>
+                        <div className='spot-details-review-price-location'>
+                            <div className='review-location'>
+                                <h4>{spot.city}, {spot.state}</h4>
+                                { spot.avgRating && (
+                                    <div className='spot-details-avg-rating'>
+                                        <i className="fas fa-solid fa-star"></i>
+                                        <h5>{(spot.avgRating).toFixed(2)}</h5>
+                                    </div>
+                                ) }
+                            </div>
+                            <div className='spot-details-price'>
+                                { spot.price && (
+                                    <div className='spot-details-price'>
+                                        <p className='price-number'>{`$${(spot.price).toFixed(2)}`}</p>
+                                        <p>night</p>
+                                    </div>
+                                ) }
+                            </div>
+
+                        </div>
                     </div>
                 </NavLink>
             ))}
