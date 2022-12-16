@@ -49,6 +49,12 @@ const CreateSpotForm = () => {
 
   const [shouldShowErrors, setShouldShowErrors] = useState(false);
 
+  const isValidURL = (string) => {
+    const res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    return (res !== null)
+  };
+
+
 
   const validateForm = () => {
 
@@ -140,6 +146,15 @@ const CreateSpotForm = () => {
       delete newErrors.price
   }
 
+  if(!previewImage){
+    newErrors.previewImage = 'Preview Image is required'
+  } else if ((previewImage === '' || previewImage === {})) {
+    newErrors.previewImage = 'Preview Image is not valid'
+  } else {
+    newErrors.previewImage = null
+    delete newErrors.previewImage
+}
+
     setErrors({
       // ...errors,
       ...newErrors
@@ -161,13 +176,10 @@ const CreateSpotForm = () => {
       lat,
       lng,
       description,
-      price
+      price,
+      previewImage
   ])
 
-  const isValidURL = (string) => {
-    const res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
-    return (res !== null)
-  };
 
 
   const handleSubmit = async (event) => {
@@ -191,7 +203,7 @@ const CreateSpotForm = () => {
           lng: `${lng}`,
           description,
           price,
-          ...((previewImage !== '') && isValidURL(previewImage) && {previewImage})
+          ...((previewImage !== '') && {previewImage})
         };
 
         console.log({payload})
@@ -340,11 +352,12 @@ const CreateSpotForm = () => {
               <label className="preview-image">Preview Image:</label>
               <input
                 type="url"
-                id="previewI-iage"
+                id="previewImage"
                 name="preview-image"
                 value={previewImage}
                 onChange={updatePreviewImage}
               />
+              {errors.previewImage && <p>{errors.previewImage}</p>}
               <div className='preview-image-preview-img'>
                 { (previewImage !== '') && ( isValidURL(previewImage) ) && (
                   <img src={previewImage}></img>
