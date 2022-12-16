@@ -143,7 +143,9 @@ const SpotDetailsComponent = () => {
                         <div className='review-and-location'>
                             <div className='review-stats'>
                                 <i className="fas fa-solid fa-star"></i>
-                                <p>{(spot.avgRating).toFixed(2)}</p>
+                                { spot.avgRating && (
+                                    <p>{(spot.avgRating).toFixed(2)}</p>
+                                ) }
                             </div>
 
                             <div className='location-details'>
@@ -176,7 +178,13 @@ const SpotDetailsComponent = () => {
 
                         <div className='host-details'>
                             {spot.Owner.firstName && (
-                                <h3>{`Hosted by ${spot.Owner.firstName}`}</h3>
+                                <div className='host-details-'>
+                                    <h2>
+                                        {`Hosted by ${spot.Owner.firstName}`}
+                                        &emsp;
+                                        <i className="fas fa-user-circle"></i>
+                                    </h2>
+                                </div>
                             )}
                             <hr></hr>
                         </div>
