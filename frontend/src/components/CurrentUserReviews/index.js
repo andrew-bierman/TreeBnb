@@ -119,7 +119,7 @@ const CurrentUserReviewsComponent = () => {
 
                                     { (review.ReviewImages !== []) && (review.ReviewImages.map(image => (
                                         <div>
-                                            <img alt='review-image' src={image.url}></img>
+                                            {/* <img alt='review-image' src={image.url}></img> */}
                                         </div>
                                         ))
                                     )}
