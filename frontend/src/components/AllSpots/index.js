@@ -59,7 +59,7 @@ const AllSpotsComponent = () => {
                             <div className='spot-details-price'>
                                 { spot.price && (
                                     <div className='spot-details-price'>
-                                        <p className='price-number'>{`$${Number(spot.price).toFixed(2)}`}</p>
+                                        <p className='price-number'>{`$${Number(spot.price).toFixed(0)}`}</p>
                                         <p>night</p>
                                     </div>
                                 ) }

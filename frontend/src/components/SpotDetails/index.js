@@ -154,7 +154,7 @@ const SpotDetailsComponent = () => {
                                 <div className='review-stats'>
                                     <i className="fas fa-solid fa-star"></i>
                                     { spot.avgRating && (
-                                        <p>{(spot.avgRating).toFixed(2)}</p>
+                                        <p>{Number(spot.avgRating).toFixed(2)}</p>
                                     ) }
                                 </div>
 
@@ -167,12 +167,16 @@ const SpotDetailsComponent = () => {
                                 <div className='edit-spot-delete-spot-buttons-container'>
                                     <div className='edit-spot-button-container'>
                                         {isSpotOwner && (
-                                            <button onClick={handleEditSpotRoute}>Edit this spot</button>
+                                            <button onClick={handleEditSpotRoute}>
+                                                <i className="fas fa-edit">&nbsp;</i>
+                                                Edit this spot
+                                            </button>
                                             )}
                                     </div>
 
                                     <div className='delete-spot-button'>
                                         <button onClick={confirmDelete}>
+                                            <i className="fas fa-trash-alt">&nbsp;</i>
                                             Delete Spot
                                         </button>
                                     </div>
@@ -244,7 +248,7 @@ const SpotDetailsComponent = () => {
                                         { review.stars && (
                                             <p>
                                                 {
-                                                    (review.stars).toFixed(2)
+                                                    Number(review.stars).toFixed(2)
                                                 }
                                             </p>
                                         ) }
