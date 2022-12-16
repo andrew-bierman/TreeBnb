@@ -151,12 +151,15 @@ const SpotDetailsComponent = () => {
 
                         <div className='review-and-location-and-buttons'>
                             <div className='review-and-location'>
-                                <div className='review-stats'>
-                                    <i className="fas fa-solid fa-star"></i>
-                                    { spot.avgRating && (
-                                        <p>{Number(spot.avgRating).toFixed(2)}</p>
-                                    ) }
-                                </div>
+
+                                { spot.avgRating && (
+                                    <div className='review-stats'>
+                                        <i className="fas fa-solid fa-star"></i>
+                                        { spot.avgRating && (
+                                            <p>{Number(spot.avgRating).toFixed(2)}</p>
+                                        ) }
+                                    </div>
+                                ) }
 
                                 <div className='location-details'>
                                     <p>{spot.city}, {spot.state}</p>
@@ -209,36 +212,80 @@ const SpotDetailsComponent = () => {
 
                         </div>
 
-
-
-                        <div className='host-details'>
-                            {spot.Owner.firstName && (
-                                <div className='host-details-'>
-                                    <h2>
-                                        {`Hosted by ${spot.Owner.firstName}`}
-                                        &emsp;
-                                        <i className="fas fa-user-circle"></i>
-                                    </h2>
+                        <div className='host-details-and-description-and-pricing-container'>
+                            <div className='host-details-and-description-container'>
+                                <div className='host-details-container'>
+                                    {spot.Owner.firstName && (
+                                        <div className='host-details'>
+                                            <h2>
+                                                {`Hosted by ${spot.Owner.firstName}`}
+                                                &emsp;
+                                            </h2>
+                                            <h1>
+                                                <i className="fas fa-user-circle"></i>
+                                            </h1>
+                                        </div>
+                                    )}
+                                    <hr></hr>
                                 </div>
-                            )}
-                            <hr></hr>
+
+
+                                <div className='spot-details-description-container'>
+                                    { spot.description && (
+                                        <p>{ spot.description }</p>
+                                    ) }
+
+                                    <hr></hr>
+
+                                </div>
+
+                            </div>
+
+
+                            <div className='pricing-details-container'>
+                                { spot.price && (
+                                    <div className='pricing-and-reviews-container'>
+                                        <div className='pricing-number'>
+                                            <h2>${spot.price}&nbsp;</h2>
+
+                                            <h4>night</h4>
+                                        </div>
+
+                                        { spot.avgRating && (
+                                            <div className='review-stats'>
+                                                <i className="fas fa-solid fa-star"></i>
+                                                { spot.avgRating && (
+                                                        <p>{Number(spot.avgRating).toFixed(2)}</p>
+                                                    ) }
+                                            </div>
+                                        ) }
+
+                                    </div>
+
+                                ) }
+
+                            </div>
+
+
                         </div>
 
-                        <div className='spot-details-description-container'>
-                            { spot.description && (
-                                <p>{ spot.description }</p>
-                            ) }
-
-                            <hr></hr>
-
-                        </div>
 
                     </div>
 
                     <br></br>
 
                     <div className='reviews-container'>
-                        <h3>Reviews</h3>
+                        <h2>Reviews</h2>
+
+                        { spot.avgRating && (
+                            <div className='review-stats'>
+                                <i className="fas fa-solid fa-star"></i>
+                                { spot.avgRating && (
+                                        <p>{Number(spot.avgRating).toFixed(2)}</p>
+                                    ) }
+                            </div>
+                        ) }
+
 
                         {reviewsValues && (reviewsValues.length > 0) && (
                             reviewsValues.map(review => (
@@ -255,7 +302,13 @@ const SpotDetailsComponent = () => {
                                     </div>
 
                                     { review.User.firstName && (
-                                        <p>{ review.User.firstName }</p>
+                                        <div className='review-user-name-and-avatar'>
+                                            <h2>
+                                                <i className="fas fa-user-circle"></i>
+                                                &nbsp;
+                                            </h2>
+                                            <p>{ review.User.firstName }</p>
+                                        </div>
                                     )}
 
                                     { review.review && (
