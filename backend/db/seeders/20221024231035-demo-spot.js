@@ -75,7 +75,92 @@ module.exports = {
         price: 175.00,
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        ownerId: 3,
+        address: '8523 Lees Ridge Road',
+        city: 'Aptos',
+        state: 'CA',
+        country: 'United States',
+        lat: 19.41,
+        lng: -155.28,
+        name: 'Peaceful Treehouse with Ocean View',
+        description: "Inside, mid-century furniture and architectural details are made of natural materials like wood and stone setting a calming, sanctuary tone throughout. Curl up with a good read by the light streaming through floor to ceiling windows and under soaring wooden beams or tuck in for the evening by closing the sliding doors inspired by Japanese screens.",
+        price: 393.00,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        ownerId: 3,
+        address: '8523 Lees Ridge Road',
+        city: 'Atlanta',
+        state: 'GA',
+        country: 'United States',
+        lat: 19.41,
+        lng: -155.28,
+        name: 'Alpaca Treehouse in the Bamboo Forest',
+        description: "The treehouse is built with all reclaimed architectural antiques, so staying here is like living a jewel box, an art project. Roosters crow nearby because you are on a working farm, in City of Atlanta. You are 15 feet above the forest floor, tucked into the middle of a 80- year old bamboo forest. And there are beautiful Bolivian suri alpacas (like a small llamas with dreadlocks) roaming: Paloma Piper, Caitlin Tastee, Elfie Fay Von Picklesprite, and Sunny Shevoun. We also have five gentle, calm llamas named Dali Llama and Llama Mia Figaro (Figgy), Campari (camel colored), Sophie (bay brown), and baby llama Llyra wandering about grazing.",
+        price: 404.00,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        ownerId: 3,
+        address: '8523 Lees Ridge Road',
+        city: 'Sanford',
+        state: 'ME',
+        country: 'United States',
+        lat: 19.41,
+        lng: -155.28,
+        name: 'The Canopy Treehouse, a Luxury Carbon Free Retreat',
+        description: "Waking up in your treehouse, the first thing you feel is peace. No traffic, no sirens, no planes flying overhead. Only birdsong—the cry of a loon, the piping of a chickadee. Through the windows, you see only leaves, like green glass, filtering the early morning light. Below you, on the ground, a doe and her fawn pick their way down to the pond. They do not hurry, for there is nothing here to frighten them.",
+        price: 449.00,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        ownerId: 3,
+        address: '8523 Lees Ridge Road',
+        city: 'Remsen',
+        state: 'NY',
+        country: 'United States',
+        lat: 19.41,
+        lng: -155.28,
+        name: 'Ultra-Luxury Treehouse ~ Cable Bridge & Waterfall',
+        description: "Spoil yourself by visiting this ultra-luxurious treehouse in the Adirondack Mountains. The elevated design, unique suspension bridge, and a plethora of high-end decor and details will leave you speechless. Step onto the covered porch to enjoy stunning forest views, sit by the fire pit, and gaze at the pond while roasting marshmallows.",
+        price: 495.00,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        ownerId: 3,
+        address: '8523 Lees Ridge Road',
+        city: 'Asheville',
+        state: 'NC',
+        country: 'United States',
+        lat: 19.41,
+        lng: -155.28,
+        name: 'Sanctuary, Treehouses of Serenity',
+        description: "Take in the rustic, fairy tale vibe of this custom-made treehouse in the midst of towering white oaks. Recline in a rocking chair and watch the sunset over the mountains, or try your hand at some stargazing from the comfort of the deluxe double bed.",
+        price: 393.00,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        ownerId: 3,
+        address: '8523 Lees Ridge Road',
+        city: 'Bellingham',
+        state: 'WA',
+        country: 'United States',
+        lat: 19.41,
+        lng: -155.28,
+        name: 'Pleasant Bay Lookout (epic sea view + hot tub)',
+        description: "The Pleasant Bay Lookout is a small private room with a spectacular view. We love welcoming guests to this tucked-away oasis of peace and beauty. Guests access our family's home for bathroom and hot tub.",
+        price: 145.00,
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
+
 
     ]);
 
