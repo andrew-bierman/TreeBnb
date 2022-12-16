@@ -12,7 +12,7 @@
   #modal-content h1 {
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 0px;
+    margin-bottom: 20px;
     text-align: center;
   }
 
@@ -21,9 +21,11 @@
   }
 
   form > * {
-    padding: 10px;
-    margin: 20px;
-    padding-bottom: 10px
+    /* align-items: flex-start; */
+    /* padding: 10px; */
+    margin: 25px 0px;
+    padding-bottom: 10px;
+    box-sizing: border-box;
   }
 
   form br {
@@ -34,24 +36,33 @@
   }
 
   form label {
-    padding: 10px;
+    margin-top: 10px;
+    /* padding: 10px; */
   }
 
   form input {
-    margin-left: 20px;
-    margin-top: 20px
+    /* margin-left: 20px; */
+    margin-top: 20px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
+  .demo-button,
   form button {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
     display: block;
-  }
 
-  button {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    display: block;
+    margin: 20px 0px;
+
+    background-color: #70C1B3;
+    border-radius: 10px;
+    outline: #70C1B3;
+
+    min-height: 50px;
+    border-color: #70C1B3;
+
+    width: 100%
+
   }
