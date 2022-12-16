@@ -205,7 +205,9 @@
 .review-container {
   border: 1px solid #222222;
   border-radius: 25px;
-  padding: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .reviews-container .review-stars {

@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react'
 import { NavLink, Route, useParams, useHistory } from 'react-router-dom';
 
-import { getOneSpot } from '../../store/spots';
+import { getOneSpot, actionCreatorResetSingleSpot } from '../../store/spots';
 import { getOneSpotReviews, getCurrentUserReviews } from '../../store/reviews';
 import './SpotDetails.css'
 
@@ -17,7 +17,9 @@ const SpotDetailsComponent = () => {
         // console.log("dispatching getAllShots()")
         dispatch(getOneSpot(spotId));
         dispatch(getOneSpotReviews(spotId))
-        dispatch(getCurrentUserReviews())
+
+        return ( () => dispatch(actionCreatorResetSingleSpot()) )
+
     }, [dispatch]);
 
     let spot = useSelector(state => {
@@ -99,6 +101,8 @@ const SpotDetailsComponent = () => {
 
     } else {
 
+        dispatch(getCurrentUserReviews())
+
         isLoggedIn = true
 
         if(user.id === spot.ownerId){
@@ -139,7 +143,7 @@ const SpotDetailsComponent = () => {
                         <div className='review-and-location'>
                             <div className='review-stats'>
                                 <i className="fas fa-solid fa-star"></i>
-                                <p>{spot.avgRating}</p>
+                                <p>{(spot.avgRating).toFixed(2)}</p>
                             </div>
 
                             <div className='location-details'>
@@ -199,7 +203,7 @@ const SpotDetailsComponent = () => {
                     <div className='reviews-container'>
                         <h3>Reviews</h3>
 
-                        {reviewsValues && (
+                        {reviewsValues && (reviewsValues.length > 0) && (
                             reviewsValues.map(review => (
                                 <div className='review-container'>
                                     <div className='review-stars'>
@@ -207,7 +211,7 @@ const SpotDetailsComponent = () => {
                                         { review.stars && (
                                             <p>
                                                 {
-                                                    review.stars
+                                                    (review.stars).toFixed(2)
                                                 }
                                             </p>
                                         ) }
@@ -223,7 +227,7 @@ const SpotDetailsComponent = () => {
                                     )}
 
 
-                                    { ( review.User.id === user.id ) && (
+                                    { (user) && ( review.User.id === user.id ) && (
                                         <button onClick={() => handleEditReviewRoute(review.id)}>Edit this review</button>
                                     )}
                                 </div>
@@ -232,7 +236,7 @@ const SpotDetailsComponent = () => {
                     </div>
 
                     <div className='add-review-button-container'>
-                            {(!isSpotOwner) && (!hasAlreadyReviewed) && (
+                            { (user) && (!isSpotOwner) && (!hasAlreadyReviewed) && (
                                 // <NavLink to={`/spots/${spotId}/reviews/create`}>
                                     <button onClick={handleCreateReviewRoute}>Review this spot</button>
                                 // </NavLink>
