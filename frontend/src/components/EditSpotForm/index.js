@@ -112,6 +112,11 @@ const EditSpotForm = () => {
   }, [singleSpot]);
 
 
+  // if(singleSpot.userId !== user.id){
+  //   history.push('/user/current')
+  // }
+
+
 
   const validateForm = () => {
 
@@ -266,7 +271,7 @@ const EditSpotForm = () => {
           // price
         };
 
-        console.log({payload})
+        // console.log({payload})
 
         let editedSpot = await dispatch(editSpot(payload))
 
@@ -306,7 +311,7 @@ const EditSpotForm = () => {
       isLoggedIn = true
   }
 
-  if(!singleSpot) return <p>test</p>
+  // if(!singleSpot) return <p>test</p>
 
   return (
 
