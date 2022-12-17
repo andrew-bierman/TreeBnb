@@ -10,6 +10,16 @@ function Navigation({ isLoaded }){
 
   const logoIcon = true
 
+  let isLoggedIn
+
+  if(!sessionUser){
+    isLoggedIn = false
+
+  } else {
+      isLoggedIn = true
+  }
+  
+
   return (
     <ul>
       <li>
@@ -28,9 +38,11 @@ function Navigation({ isLoaded }){
 
       <div className='right-side'>
         <p className='list-your-home-p' id='list-your-home'>
-          <NavLink className='list-your-home' exact to="/spots/create">
-            List your home
-          </NavLink>
+          { isLoggedIn && (
+            <NavLink className='list-your-home' exact to="/spots/create">
+              List your home
+            </NavLink>
+          ) }
         </p>
 
         {isLoaded && (

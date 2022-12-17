@@ -41,6 +41,10 @@ ul {
     color: #70C1B3;
   }
 
+  .list-your-home {
+    margin-right: 10px;
+  }
+
   a {
     text-decoration: none;
     color: #222222;
