@@ -1,5 +1,3 @@
-**
-
 # TreeBnb
 
 TreeBnb is a fictional treehouse rental platform inspired by Airbnb. It is built using JavaScript, Node.js, Express, React, and Redux and features a fully functional Express API and React front end.
