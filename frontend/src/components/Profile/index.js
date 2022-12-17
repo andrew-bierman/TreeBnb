@@ -5,7 +5,7 @@ import { NavLink, Route, useParams, useHistory } from 'react-router-dom';
 import CurrentUserReviewsComponent from "../CurrentUserReviews";
 
 import * as sessionActions from "../../store/session";
-import { getUserSpots, getAllSpots } from '../../store/spots';
+import { getUserSpots, getAllSpots, deleteSpot, actionCreatorResetSingleSpot } from '../../store/spots';
 import { getCurrentUserReviews, deleteReview } from '../../store/reviews';
 import './Profile.css'
 
@@ -25,6 +25,9 @@ const Profile = () => {
         dispatch(getAllSpots());
         dispatch(getCurrentUserReviews());
         dispatch(getUserSpots())
+
+
+        return ( () => dispatch(actionCreatorResetSingleSpot()) )
 
     }, [dispatch]);
 
@@ -67,11 +70,24 @@ const Profile = () => {
 
     if (allSpots && allSpots.length > 0){
 
+        console.log({allSpots})
+
         userSpots = Object.values(allSpots).filter(spot => spot.ownerId === user.id)
 
     }
 
+    const handleEditSpotRoute = (spotId) =>{
+        // console.log('clicked')
+        history.push(`/spots/${spotId}/edit`);
+    }
 
+    const confirmSpotDelete = async (spotId) => {
+        if (window.confirm("Please confirm you would like to delete a spot, this action cannot be undone.") == true) {
+          let deleteSpotResponse = await dispatch(deleteSpot(spotId))
+          // console.log(deleteSpotResponse)
+          history.push('/')
+        }
+      }
 
 
     let isLoggedIn
@@ -105,6 +121,7 @@ const Profile = () => {
         reviewsValues = Object.keys(reviews).map(e => reviews[e])
     };
 
+    console.log({userSpots})
 
     // if(!reviews) {
     //     return null
@@ -132,14 +149,25 @@ const Profile = () => {
                             <h2>Your spots</h2>
                             <div className='spots-list'>
                                 {userSpots.map(spot => (
-                                    <NavLink key={spot.id} to={`/spots/${spot.id}`} className='spot-container'>
-                                        <div key={spot.id}>
-                                            <img src={spot.previewImage} alt='Preview Image'></img>
-                                            <h4>{spot.name}</h4>
-                                            <p>{spot.city}, {spot.state}</p>
-                                            <p>{`$${spot.price} night`}</p>
+                                    <div className='spot-container'>
+                                        <div className='spot-container-link'>
+                                            <NavLink key={spot.id} to={`/spots/${spot.id}`} className='spot-container'>
+                                                <div key={spot.id}>
+                                                    <img src={spot.previewImage} alt='Preview Image'></img>
+                                                    <h4>{spot.name}</h4>
+                                                    <p>{spot.city}, {spot.state}</p>
+                                                    <p>{`$${spot.price} night`}</p>
+                                                </div>
+                                            </NavLink>
                                         </div>
-                                    </NavLink>
+
+                                        <div className='spot-buttons'>
+                                            <button onClick={() => handleEditSpotRoute(spot.id)}>Edit Spot</button>
+
+                                            <button onClick={() => confirmSpotDelete(spot.id)}>Delete Spot</button>
+                                        </div>
+
+                                    </div>
                                 ))}
 
                             </div>

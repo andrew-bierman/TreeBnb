@@ -1,15 +1,21 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react'
-import { NavLink, Route, useParams, useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useParams, useHistory } from 'react-router-dom';
 
-import { editSpot, deleteSpot } from '../../store/spots';
+import { editSpot, deleteSpot, actionCreatorResetSingleSpot } from '../../store/spots';
+import { getUserSpots, getOneSpot } from '../../store/spots';
+
 import './EditSpotForm.css'
 
-import React, { useState } from 'react';
 
-const EditSpotForm = ({isLoaded}) => {
+const EditSpotForm = () => {
 
   const dispatch = useDispatch();
+
+  const { spotId } = useParams()
+
+
+
 
   let user = useSelector(state => {
     // console.log(state)
@@ -17,50 +23,94 @@ const EditSpotForm = ({isLoaded}) => {
     return state.session.user
   })
 
-  let singleSpot = useSelector(state => {
+  const singleSpot = useSelector(state => {
     // console.log(state)
 
     return state.spots.singleSpot
 
   })
 
-  // const { name as initialName, } = singleSpot
+  const allSpots = useSelector(state => {
+    // console.log(state)
+
+    return state.spots.allSpots
+
+  })
+
+  useEffect(() => {
+
+    dispatch(getOneSpot(spotId))
+    // dispatch(getU)
+
+    // let { name, address, city, state, country, lat, lng, description, price } = singleSpot
+
+    return ( () => dispatch(actionCreatorResetSingleSpot()) )
+
+  }, [dispatch, spotId])
 
 
 
-  const { spotId } = useParams()
-  // console.log(spotId)
+
+
+  // const userSpots = useSelector((state) => Object.values(state.allSpots));
+  // console.log
+  // if(!singleSpot) return
+
+
+  // console.log('-------')
+
+  // console.log({name})
 
 
   const history = useHistory();
 
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [country, setCountry] = useState('');
-  const [lat, setLat] = useState(0);
-  const [lng, setLng] = useState(0);
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [previewImage, setPreviewImage] = useState('');
-  const [images, setImages] = useState('');
+  const [newName, setNewName] = useState(singleSpot?.name || '');
+  const [newAddress, setNewAddress] = useState(singleSpot?.address || '');
+  const [newCity, setNewCity] = useState(singleSpot?.city || '');
+  const [newState, setNewState] = useState(singleSpot?.state || '');
+  const [newCountry, setNewCountry] = useState(singleSpot?.country || '');
+  const [newLat, setNewLat] = useState(singleSpot?.lat || '');
+  const [newLng, setNewLng] = useState(singleSpot?.lng || '');
+  const [newDescription, setNewDescription] = useState(singleSpot?.description || '');
+  const [newPrice, setNewPrice] = useState(singleSpot?.price || '');
+  const [newPreviewImage, setNewPreviewImage] = useState(singleSpot?.name || '');
+  const [newImages, setNewImages] = useState(singleSpot?.name || '');
 
-  const updateName = (e) => setName(e.target.value);
-  const updateAddress = (e) => setAddress(e.target.value);
-  const updateCity = (e) => setCity(e.target.value);
-  const updateState = (e) => setState(e.target.value);
-  const updateCountry = (e) => setCountry(e.target.value);
-  const updateLat = (e) => setLat(e.target.value);
-  const updateLng = (e) => setLng(e.target.value);
-  const updateDescription = (e) => setDescription(e.target.value);
-  const updatePrice = (e) => setPrice(e.target.value);
-  const updatePreviewImage = (e) => setPreviewImage(e.target.value);
-  const updateImages = (e) => setImages(e.target.value);
+  const updateName = (e) => setNewName(e.target.value);
+  const updateAddress = (e) => setNewAddress(e.target.value);
+  const updateCity = (e) => setNewCity(e.target.value);
+  const updateState = (e) => setNewState(e.target.value);
+  const updateCountry = (e) => setNewCountry(e.target.value);
+  const updateLat = (e) => setNewLat(e.target.value);
+  const updateLng = (e) => setNewLng(e.target.value);
+  const updateDescription = (e) => setNewDescription(e.target.value);
+  const updatePrice = (e) => setNewPrice(e.target.value);
+  const updatePreviewImage = (e) => setNewPreviewImage(e.target.value);
+  const updateImages = (e) => setNewImages(e.target.value);
 
   const [errors, setErrors] = useState({});
 
   const [shouldShowErrors, setShouldShowErrors] = useState(false);
+
+  // console.log(singleSpot?.name)
+  // console.log({newName})
+
+
+  useEffect(() => {
+    if (singleSpot) {
+      setNewName(singleSpot.name);
+      setNewAddress(singleSpot.address);
+      setNewCity(singleSpot.city);
+      setNewState(singleSpot.state);
+      setNewCountry(singleSpot.country);
+      setNewLat(singleSpot.lat);
+      setNewLng(singleSpot.lng);
+      setNewDescription(singleSpot.description);
+      setNewPrice(singleSpot.price);
+
+    }
+  }, [singleSpot]);
+
 
 
   const validateForm = () => {
@@ -69,47 +119,47 @@ const EditSpotForm = ({isLoaded}) => {
 
     const newErrors = {}
 
-    if (!name) {
+    if (!newName) {
       newErrors.name = 'Name is required'
 
-    } else if ( name.length < 1 || name.length > 50){
-        newErrors.name = 'Name must be less than 50 characters'
+    } else if ( newName.length < 1 || newName.length > 50){
+        newErrors.newName = 'Name must be less than 50 characters'
 
     } else {
-      newErrors.name = null
-      delete newErrors.name
+      newErrors.newName = null
+      delete newErrors.newName
     }
 
-    if(!address){
-      newErrors.address = 'Street address is required'
+    if(!newAddress){
+      newErrors.newAddress = 'Street address is required'
 
     } else {
-        newErrors.address = null
-        delete newErrors.address
+        newErrors.newAddress = null
+        delete newErrors.newAddress
     }
 
-    if(!city){
-      newErrors.city = 'City is required'
+    if(!newCity){
+      newErrors.newCity = 'City is required'
 
     } else {
-      newErrors.city = null
-      delete newErrors.city
+      newErrors.newCity = null
+      delete newErrors.newCity
   }
 
-    if(!state){
-      newErrors.state = 'State is required'
+    if(!newState){
+      newErrors.newState = 'State is required'
 
     } else {
-      newErrors.state = null
-      delete newErrors.state
+      newErrors.newState = null
+      delete newErrors.newState
   }
 
-    if(!country){
-      newErrors.country = 'Country is required'
+    if(!newCountry){
+      newErrors.newCountry = 'Country is required'
 
     } else {
-      newErrors.country = null
-      delete newErrors.country
+      newErrors.newCountry = null
+      delete newErrors.newCountry
   }
 
   //   if(!lat){
@@ -134,23 +184,23 @@ const EditSpotForm = ({isLoaded}) => {
   //     delete newErrors.lng
   // }
 
-    if(!description){
-      newErrors.description = 'Description is required'
+    if(!newDescription){
+      newErrors.newDescription = 'Description is required'
 
     } else {
-      newErrors.description = null
-      delete newErrors.description
+      newErrors.newDescription = null
+      delete newErrors.newDescription
   }
 
-    if(!price){
-      newErrors.price = 'Price is required'
+    if(!newPrice){
+      newErrors.newPrice = 'Price is required'
 
-    } else if (parseFloat(price) < 1){
-      newErrors.price = 'Price must be greater than $1'
+    } else if (parseFloat(newPrice) < 1){
+      newErrors.newPrice = 'Price must be greater than $1'
 
     } else {
-      newErrors.price = null
-      delete newErrors.price
+      newErrors.newPrice = null
+      delete newErrors.newPrice
   }
 
     setErrors({
@@ -166,15 +216,15 @@ const EditSpotForm = ({isLoaded}) => {
   useEffect(() => {
     validateForm()
   }, [
-      name,
-      address,
-      city,
-      state,
-      country,
-      lat,
-      lng,
-      description,
-      price
+      newName,
+      newAddress,
+      newCity,
+      newState,
+      newCountry,
+      newLat,
+      newLng,
+      newDescription,
+      newPrice
   ])
 
 
@@ -195,15 +245,25 @@ const EditSpotForm = ({isLoaded}) => {
       // Submit the form to your API
         const payload = {
           spotId,
-          name,
-          address,
-          city,
-          state,
-          country,
-          lat: `${lat}`,
-          lng: `${lng}`,
-          description,
-          price
+          name: newName,
+          address: newAddress,
+          city: newCity,
+          state: newState,
+          country: newCountry,
+          lat: `${newLat}`,
+          lng: `${newLng}`,
+          description: newDescription,
+          price: newPrice
+
+          // name,
+          // address,
+          // city,
+          // state,
+          // country,
+          // lat: `${lat}`,
+          // lng: `${lng}`,
+          // description,
+          // price
         };
 
         console.log({payload})
@@ -246,7 +306,7 @@ const EditSpotForm = ({isLoaded}) => {
       isLoggedIn = true
   }
 
-
+  if(!singleSpot) return <p>test</p>
 
   return (
 
@@ -286,7 +346,7 @@ const EditSpotForm = ({isLoaded}) => {
                 id="name"
                 name="name"
                 placeholder="Name"
-                value={name}
+                value={newName}
                 onChange={updateName}
               />
               {/* {errors.name && <p>{errors.name}</p>} */}
@@ -297,7 +357,7 @@ const EditSpotForm = ({isLoaded}) => {
                 id="address"
                 name="address"
                 placeholder="Address"
-                value={address}
+                value={newAddress}
                 onChange={updateAddress}
               />
               {/* {errors.address && <p>{errors.address}</p>} */}
@@ -308,7 +368,7 @@ const EditSpotForm = ({isLoaded}) => {
                 id="city"
                 name="city"
                 placeholder="City"
-                value={city}
+                value={newCity}
                 onChange={updateCity}
               />
               {/* {errors.city && <p>{errors.city}</p>} */}
@@ -319,7 +379,7 @@ const EditSpotForm = ({isLoaded}) => {
                 id="state"
                 name="state"
                 placeholder="State"
-                value={state}
+                value={newState}
                 onChange={updateState}
               />
               {/* {errors.state && <p>{errors.state}</p>} */}
@@ -330,7 +390,7 @@ const EditSpotForm = ({isLoaded}) => {
                 id="country"
                 name="country"
                 placeholder="Country"
-                value={country}
+                value={newCountry}
                 onChange={updateCountry}
               />
               {/* {errors.country && <p>{errors.country}</p>} */}
@@ -365,7 +425,7 @@ const EditSpotForm = ({isLoaded}) => {
                 id="description"
                 name="description"
                 placeholder="Description"
-                value={description}
+                value={newDescription}
                 onChange={updateDescription}
               />
               {/* {errors.description && <p>{errors.description}</p>} */}
@@ -377,7 +437,7 @@ const EditSpotForm = ({isLoaded}) => {
                 name="price"
                 placeholder="Price"
                 min='1'
-                value={price}
+                value={newPrice}
                 onChange={updatePrice}
               />
               {/* {errors.price && <p>{errors.price}</p>} */}

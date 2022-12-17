@@ -1,76 +1,57 @@
+**
 
-# Create React App Template
+# TreeBnb
 
-A no-frills template from which to create React + Redux applications with
-[Create React App](https://github.com/facebook/create-react-app).
+TreeBnb is a fictional treehouse rental platform inspired by Airbnb. It is built using JavaScript, Node.js, Express, React, and Redux and features a fully functional Express API and React front end.
 
-```sh
-npx create-react-app my-app --template @appacademy/react-redux-v17 --use-npm
-```
+## **Local Installation**
 
-## Available Scripts
+To install and run the TreeBnb app locally, follow these steps:
 
-In the project directory, you can run:
+Clone the repository: git clone https://github.com/andrew-bierman/Airbnb-Clone-Deployment
 
-### `npm start`
+Navigate to the project directory: cd treebnb
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**Install dependencies:** npm install in both backend and frontend folders
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+**Run the app:**
 
-### `npm test`
+ - Backend folder:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+     npx dotenv sequelize-cli db:migrate
+     npx dotenv sequelize-cli db:seed:all
+     npm start
 
-### `npm run build`
+ - Frontend folder:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    npm start
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The app will be available at http://localhost:3000/.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Usage
 
-### `npm run eject`
+To use the TreeBnb app, simply visit the URL listed above in your web browser. From there, you can browse the available treehouses and make reservations. Additionally you can visit the public deployment [here].(https://bierman-bnb.onrender.com/)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## API Reference
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The TreeBnb API is built using Express and has numerous endpoints relating to Users, Spots, Reviews, Images, and Bookings.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+See the full API documentation and Database Schema in the [Wiki](https://github.com/andrew-bierman/AirBnb-Clone-Deployment/wiki/Database-Schema-Design) section of this repo.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Contribution Guidelines
 
-## Learn More
+We welcome contributions to the TreeBnb project! If you have an idea for a new feature or spot a bug that needs fixing, please follow these steps to submit a pull request:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+ 1. Fork the repository.
+ 2. Create a new branch for your changes.
+ 3. Make your changes and commit them to your branch.
+ 4. Push your branch to your fork on GitHub.
+ 5. Submit a pull request to the main repository.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Please note that all contributions must adhere to the project's code of conduct.
 
-### Analyzing the Bundle Size
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+TreeBnb is licensed under the MIT License. This means that you are free to use, modify, and distribute the code as you see fit, as long as you include the original copyright and license notice.

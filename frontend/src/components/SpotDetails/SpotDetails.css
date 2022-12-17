@@ -43,7 +43,7 @@
 }
 
 .edit-spot-delete-spot-buttons-container button {
-  margin-left: 10px;
+  margin-left: 40px;
   box-sizing: border-box;
   background: transparent;
   /* outline: 0; */
@@ -53,6 +53,8 @@
   height: 100%;
   text-decoration: underline;
   font-weight: 500;
+
+  padding: 0px;
 }
 
 .review-and-location {
@@ -353,7 +355,7 @@
 .reviews-container .review-user-name-and-avatar p {
 
   font: bold;
-  
+
 }
 
 
