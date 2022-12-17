@@ -39,6 +39,10 @@ function App() {
         <Route path="/spots/create">
           <CreateSpotForm />
         </Route>
+        <Route path="/user/current">
+          <Profile/>
+          {/* <SpotDetailsComponent/> */}
+        </Route>
 
         <Route path="/spots/:spotId/edit">
           <EditSpotForm/>
@@ -56,10 +60,6 @@ function App() {
           <SpotDetailsComponent/>
         </Route>
 
-        <Route path="/user/current">
-          <Profile/>
-          {/* <SpotDetailsComponent/> */}
-        </Route>
 
         <Route path="/reviews/current">
           <CurrentUserReviews/>

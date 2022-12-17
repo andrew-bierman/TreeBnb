@@ -14,7 +14,6 @@ const SpotDetailsComponent = () => {
     const { spotId } = useParams()
 
     useEffect(() => {
-        // console.log("dispatching getAllShots()")
         dispatch(getOneSpot(spotId));
         dispatch(getOneSpotReviews(spotId))
 

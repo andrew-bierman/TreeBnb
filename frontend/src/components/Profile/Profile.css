@@ -18,4 +18,80 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+
+    margin-bottom: 100px;
+
+    width: 100%;
+}
+
+.your-spots-section .spots-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    align-items: flex-start;
+}
+
+.your-spots-section .spots-list img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 25px;
+  }
+
+
+.your-spots-section .spot-container {
+    display: flex;
+    width: 280px;
+    height: 370px;
+    align-items: flex-start;
+    justify-content: space-around;
+
+    /* margin: 12px; */
+    display: block;
+
+    box-sizing: border-box;
+
+    display: block;
+
+    padding: 0;
+
+  }
+
+  .your-spots-section div {
+
+    padding: 0;
+
+    margin: 0;
+
+  }
+
+  .your-spots-section .spot-container-link {
+    display: flex;
+    width: 280px;
+    height: 370px;
+    align-items: flex-start;
+    justify-content: space-around;
+
+    /* margin: 12px; */
+    display: block;
+
+    box-sizing: border-box;
+
+    display: block;
+
+    padding: 0;
+    margin: 0;
+
+  }
+
+  .your-spots-section .spot-container .spot-buttons button {
+    width: 100%;
+    margin: 10px 10px 10px 0px;
+
+    background-color: #70C1B3;
+    border-radius: 10px;
+    outline: #70C1B3;
+
+    min-height: 50px;
+    border-color: #70C1B3;
 }
