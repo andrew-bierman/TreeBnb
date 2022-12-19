@@ -1,8 +1,6 @@
-**
-
 # TreeBnb
 
-TreeBnb is a fictional treehouse rental platform inspired by Airbnb. It is built using JavaScript, Node.js, Express, React, and Redux and features a fully functional Express API and React front end.
+TreeBnb is a fictional treehouse rental platform inspired by Airbnb. It is built using JavaScript, Node.js, Express, React/Redux, and vanilla CSS and features a fully functional Express REST API and React front end.
 
 ## **Local Installation**
 
@@ -10,21 +8,25 @@ To install and run the TreeBnb app locally, follow these steps:
 
 Clone the repository: git clone https://github.com/andrew-bierman/Airbnb-Clone-Deployment
 
-Navigate to the project directory: cd treebnb
+Navigate to the project directory in the terminal
 
-**Install dependencies:** npm install in both backend and frontend folders
+**Install dependencies:** `npm install` in both backend and frontend folders
 
 **Run the app:**
 
  - Backend folder:
+ 
+```bash
+npx dotenv sequelize-cli db:migrate
+npx dotenv sequelize-cli db:seed:all
+npm start
+```
 
-     npx dotenv sequelize-cli db:migrate
-     npx dotenv sequelize-cli db:seed:all
-     npm start
 
  - Frontend folder:
-
-    npm start
+```bash
+npm start
+```
 
 The app will be available at http://localhost:3000/.
 
