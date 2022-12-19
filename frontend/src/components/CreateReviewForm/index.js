@@ -148,6 +148,7 @@ const CreateReviewForm = () => {
                 name="review"
                 value={review}
                 onChange={updateReview}
+                required
               />
               {errors.review && <p>{errors.review}</p>}
 
@@ -162,6 +163,7 @@ const CreateReviewForm = () => {
                 name="stars"
                 value={stars}
                 onChange={updateStars}
+                required
               />
               {errors.stars && <p>{errors.stars}</p>}
 

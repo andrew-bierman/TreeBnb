@@ -268,6 +268,7 @@ const CreateSpotForm = () => {
                 placeholder="Name"
                 value={name}
                 onChange={updateName}
+                required
               />
               {/* {errors.name && <p>{errors.name}</p>} */}
 
@@ -279,6 +280,7 @@ const CreateSpotForm = () => {
                 placeholder="Address"
                 value={address}
                 onChange={updateAddress}
+                required
               />
               {/* {errors.address && <p>{errors.address}</p>} */}
 
@@ -290,6 +292,7 @@ const CreateSpotForm = () => {
                 placeholder="City"
                 value={city}
                 onChange={updateCity}
+                required
               />
               {/* {errors.city && <p>{errors.city}</p>} */}
 
@@ -301,6 +304,7 @@ const CreateSpotForm = () => {
                 placeholder="State"
                 value={state}
                 onChange={updateState}
+                required
               />
               {/* {errors.state && <p>{errors.state}</p>} */}
 
@@ -312,6 +316,7 @@ const CreateSpotForm = () => {
                 placeholder="Country"
                 value={country}
                 onChange={updateCountry}
+                required
               />
               {/* {errors.country && <p>{errors.country}</p>} */}
 
@@ -347,6 +352,7 @@ const CreateSpotForm = () => {
                 placeholder="Description"
                 value={description}
                 onChange={updateDescription}
+                required
               />
               {/* {errors.description && <p>{errors.description}</p>} */}
 
@@ -359,6 +365,7 @@ const CreateSpotForm = () => {
                 min='1'
                 value={price}
                 onChange={updatePrice}
+                required
               />
               {/* {errors.price && <p>{errors.price}</p>} */}
 
@@ -370,6 +377,7 @@ const CreateSpotForm = () => {
                 placeholder="Preview Image"
                 value={previewImage}
                 onChange={updatePreviewImage}
+                required
               />
               {/* {errors.previewImage && <p>{errors.previewImage}</p>} */}
               <div className='preview-image-preview-img'>
