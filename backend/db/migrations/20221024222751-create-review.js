@@ -36,7 +36,7 @@ module.exports = {
         onUpdate: 'CASCADE'
       },
       review: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       stars: {
