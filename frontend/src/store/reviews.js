@@ -5,6 +5,7 @@ const GET_CURRENT_USER_REVIEWS = 'reviews/getCurrentUserReviews'
 const CREATE_REVIEW = 'reviews/createReview';
 const UPDATE_REVIEW = 'reviews/updateReview';
 const DELETE_REVIEW = 'reviews/deleteReview'
+const RESET_USER_REVIEWS = 'reviews/resetUserReviews'
 
 const actionCreatorGetOneReview = (reviews) => {
   return {
@@ -38,6 +39,13 @@ const actionCreatorDeleteReview = (reviewId) => {
   return {
     type: DELETE_REVIEW,
     payload: reviewId,
+  };
+};
+
+export const actionCreatorResetUserReviews = () => {
+  return {
+    type: RESET_USER_REVIEWS,
+    payload: {},
   };
 };
 
@@ -307,6 +315,10 @@ const reviewsReducer = (state = initialState, action) => {
               return {...state, user};
 
               }
+      case RESET_USER_REVIEWS:
+        newState = { ...state }
+
+        return { ...newState, spot: {}, user: {} }
 
       default:
         return state;

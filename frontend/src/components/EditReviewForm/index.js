@@ -2,11 +2,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react'
 import { NavLink, Route, useParams, useHistory } from 'react-router-dom';
 
-import { updateReview } from '../../store/reviews';
+import { updateReview, getCurrentUserReviews, actionCreatorUpdateReview, actionCreatorResetUserReviews } from '../../store/reviews';
 import './EditReviewForm.css'
 
 import React, { useState } from 'react';
-import { validate } from 'uuid';
 
 const EditReviewForm = () => {
 
@@ -18,12 +17,31 @@ const EditReviewForm = () => {
     // console.log(state)
 
     return state.session.user
-})
+  })
+
+  let userReviews = useSelector(state => {
+    // console.log(state)
+
+    return state.reviews.user
+
+  })
+
+  useEffect(() => {
+
+    dispatch(getCurrentUserReviews())
+
+    return ( () => dispatch(actionCreatorResetUserReviews()))
+
+  }, [dispatch, reviewId])
+
+  // let findReview = Object.values(userReviews).find(review => review.id !== reviewId)
+  let findReview = userReviews[reviewId]
+
 
   const history = useHistory();
 
-  const [review, setReview] = useState('');
-  const [stars, setStars] = useState(5);
+  const [review, setReview] = useState(findReview?.review || '');
+  const [stars, setStars] = useState(findReview?.stars || 5);
 
   const updateReviewText = (e) => setReview(e.target.value);
   const updateStars = (e) => setStars(e.target.value);
@@ -31,6 +49,21 @@ const EditReviewForm = () => {
   const [errors, setErrors] = useState({});
 
   const [shouldShowErrors, setShouldShowErrors] = useState(false);
+
+  if(!findReview || findReview.userId !== user.id){
+    history.push('/user/current')
+  }
+
+
+  useEffect(() => {
+
+    if(userReviews && findReview){
+      console.log('hello', findReview)
+      setReview(findReview.review)
+      setStars(findReview.stars)
+    }
+
+  }, [userReviews])
 
 
   const validateForm = () => {
