@@ -47,7 +47,11 @@ function LoginFormModal() {
         { (errors.length > 0) && (
           <ul className='errors'>
             {errors.map((error, idx) => (
-              <li key={idx} className='error'>{error}</li>
+              <li key={idx} className='error'>
+                <i className="fas fa-solid fa-exclamation-circle"></i>
+                    &nbsp;&nbsp;
+                    {error}
+              </li>
             ))}
           </ul>
         ) }
