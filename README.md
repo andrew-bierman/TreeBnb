@@ -1,8 +1,6 @@
-# AirBnB Clone
+# TreeBnb
 
-## Database Schema Design
-
-<img width="100%" alt="airbnb_dbdiagram" src="https://user-images.githubusercontent.com/94939237/197589392-b645926e-0aca-4ee5-b780-5f9e4ace7759.png">
+TreeBnb is a fictional treehouse rental platform inspired by Airbnb. It is built using JavaScript, Node.js, Express, React/Redux, and vanilla CSS and features a fully functional Express REST API and React front end.
 
 ## API Documentation
 
@@ -10,14 +8,9 @@
 
 ### All endpoints that require authentication
 
-All endpoints that require a current user to be logged in.
+Navigate to the project directory in the terminal
 
-* Request: endpoints that require authentication
-* Error Response: Require authentication
-  * Status Code: 401
-  * Headers:
-    * Content-Type: application/json
-  * Body:
+**Install dependencies:** `npm install` in both backend and frontend folders
 
     ```json
     {
@@ -26,24 +19,19 @@ All endpoints that require a current user to be logged in.
     }
     ```
 
-### All endpoints that require proper authorization
+ - Backend folder:
 
-All endpoints that require authentication and the current user does not have the
-correct role(s) or permission(s).
+```bash
+npx dotenv sequelize-cli db:migrate
+npx dotenv sequelize-cli db:seed:all
+npm start
+```
 
-* Request: endpoints that require proper authorization
-* Error Response: Require proper authorization
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
 
-    ```json
-    {
-      "message": "Forbidden",
-      "statusCode": 403
-    }
-    ```
+ - Frontend folder:
+```bash
+npm start
+```
 
 ### Get the Current User
 

@@ -17,7 +17,7 @@ const SpotDetailsComponent = () => {
         dispatch(getOneSpot(spotId));
         dispatch(getOneSpotReviews(spotId))
 
-        return ( () => dispatch(actionCreatorResetSingleSpot()) )
+        return (() => dispatch(actionCreatorResetSingleSpot()))
 
     }, [dispatch]);
 
@@ -40,24 +40,24 @@ const SpotDetailsComponent = () => {
     })
 
     let reviewsValues
-    if(reviews){
+    if (reviews) {
         reviewsValues = Object.keys(reviews).map(e => reviews[e])
     }
 
-    if(!spot) {
+    if (!spot) {
         return null
     }
 
-    const previewImage = spot.SpotImages.find( ({ preview }) => preview === true );
+    const previewImage = spot?.SpotImages?.find(({ preview }) => preview === true);
 
     let secondaryImages;
     // let secondaryImagesKeys;
     let secondaryImagesValues
 
-    if(previewImage){
-        secondaryImages = spot.SpotImages.filter( ({ id }) => id !== previewImage.id );
+    if (previewImage) {
+        secondaryImages = spot?.SpotImages?.filter(({ id }) => id !== previewImage.id);
 
-        if(Object.keys(secondaryImages).length > 1){
+        if (Object.keys(secondaryImages).length > 1) {
             // secondaryImages = Object.values(secondaryImages)
             // console.log('values ---', Object.values(secondaryImages))
             // console.log('keys ---', Object.keys(secondaryImages))
@@ -69,27 +69,27 @@ const SpotDetailsComponent = () => {
     }
 
 
-    const handleEditSpotRoute = () =>{
+    const handleEditSpotRoute = () => {
         // console.log('clicked')
         history.push(`/spots/${spotId}/edit`);
     }
 
-    const handleCreateReviewRoute = () =>{
+    const handleCreateReviewRoute = () => {
         history.push(`/spots/${spotId}/reviews/create`);
     }
 
-    const handleEditReviewRoute = (reviewId) =>{
+    const handleEditReviewRoute = (reviewId) => {
         // console.log('clicked')
         history.push(`/reviews/${reviewId}/edit`);
     }
 
     const confirmDelete = async () => {
         if (window.confirm("Please confirm you would like to delete a spot, this action cannot be undone.") == true) {
-          let deleteSpotResponse = await dispatch(deleteSpot(spotId))
-          // console.log(deleteSpotResponse)
-          history.push('/')
+            let deleteSpotResponse = await dispatch(deleteSpot(spotId))
+            // console.log(deleteSpotResponse)
+            history.push('/')
         }
-      }
+    }
 
     // console.log('spot details ----', {spot})
     // console.log('secondary images ----', secondaryImages, typeof secondaryImages)
@@ -102,7 +102,7 @@ const SpotDetailsComponent = () => {
     let hasAlreadyReviewed
     let isReviewOwner
 
-    if(!user){
+    if (!user) {
 
         isLoggedIn = false
 
@@ -112,20 +112,20 @@ const SpotDetailsComponent = () => {
 
         isLoggedIn = true
 
-        if(user.id === spot.ownerId){
+        if (user.id === spot.ownerId) {
             isSpotOwner = true
         } else {
             isSpotOwner = false
         }
 
-        const findUserReviews = reviewsValues.find(({User}) => User.id === user.id)
+        const findUserReviews = reviewsValues.find(({ User }) => User.id === user.id)
         // const findUserReviewsForCurrentSpot = reviewsValues.find(({User}) => (
         //     // User.id === user.id && spotId ===
 
         //     ))
 
-        if(findUserReviews){
-            console.log({reviewsValues}, {findUserReviews})
+        if (findUserReviews) {
+            console.log({ reviewsValues }, { findUserReviews })
             hasAlreadyReviewed = true
 
         } else {
@@ -145,27 +145,27 @@ const SpotDetailsComponent = () => {
         <div className='spot-details'>
             {spot && (
                 <div className='spot-details-comp'>
-                    <h2>{spot.name}</h2>
+                    <h2>{spot?.name}</h2>
                     <div className='secondary-details'>
 
                         <div className='review-and-location-and-buttons'>
                             <div className='review-and-location'>
 
-                                { spot.avgRating && (
+                                {spot?.avgRating && (
                                     <div className='review-stats'>
                                         <i className="fas fa-solid fa-star"></i>
-                                        { spot.avgRating && (
-                                            <p>{Number(spot.avgRating).toFixed(2)}</p>
-                                        ) }
+                                        {spot?.avgRating && (
+                                            <p>{Number(spot?.avgRating).toFixed(2)}</p>
+                                        )}
                                     </div>
-                                ) }
+                                )}
 
                                 <div className='location-details'>
-                                    <p>{spot.city}, {spot.state}</p>
+                                    <p>{spot?.city}, {spot?.state}</p>
                                 </div>
                             </div>
 
-                            { isSpotOwner && (
+                            {isSpotOwner && (
                                 <div className='edit-spot-delete-spot-buttons-container'>
                                     <div className='edit-spot-button-container'>
                                         {isSpotOwner && (
@@ -173,7 +173,7 @@ const SpotDetailsComponent = () => {
                                                 <i className="fas fa-edit">&nbsp;</i>
                                                 Edit this spot
                                             </button>
-                                            )}
+                                        )}
                                     </div>
 
                                     <div className='delete-spot-button'>
@@ -184,7 +184,7 @@ const SpotDetailsComponent = () => {
                                     </div>
 
                                 </div>
-                            ) }
+                            )}
 
                         </div>
 
@@ -193,14 +193,14 @@ const SpotDetailsComponent = () => {
                         <div className='images'>
                             <div className='preview-image-container'>
                                 {previewImage && (
-                                    <img src={previewImage.url} alt='preview-image' className='preview-image'></img>
+                                    <img src={previewImage?.url} alt='preview-image' className='preview-image'></img>
 
                                 )}
                             </div>
 
                             <div className='secondary-images-container'>
                                 {(secondaryImagesValues) && (secondaryImagesValues.length > 0) && (
-                                    secondaryImagesValues.slice(0, 4).map((image, index )=> (
+                                    secondaryImagesValues.slice(0, 4).map((image, index) => (
                                         <div className='secondary-image-container'>
                                             <img key={image.id} src={image.url} alt='secondary-image' className={`secondary-image ${index === 1 ? 'border-top-right' : index === 3 ? 'border-bottom-right' : ''}`}></img>
 
@@ -214,7 +214,7 @@ const SpotDetailsComponent = () => {
                         <div className='host-details-and-description-and-pricing-container'>
                             <div className='host-details-and-description-container'>
                                 <div className='host-details-container'>
-                                    {spot.Owner.firstName && (
+                                    {spot?.Owner?.firstName && (
                                         <div className='host-details'>
                                             <h2>
                                                 {`Hosted by ${spot.Owner.firstName}`}
@@ -230,9 +230,9 @@ const SpotDetailsComponent = () => {
 
 
                                 <div className='spot-details-description-container'>
-                                    { spot.description && (
-                                        <p>{ spot.description }</p>
-                                    ) }
+                                    {spot?.description && (
+                                        <p>{spot?.description}</p>
+                                    )}
 
                                     <hr></hr>
 
@@ -242,26 +242,26 @@ const SpotDetailsComponent = () => {
 
 
                             <div className='pricing-details-container'>
-                                { spot.price && (
+                                {spot?.price && (
                                     <div className='pricing-and-reviews-container'>
                                         <div className='pricing-number'>
-                                            <h2>${spot.price}&nbsp;</h2>
+                                            <h2>${spot?.price}&nbsp;</h2>
 
                                             <h4>night</h4>
                                         </div>
 
-                                        { spot.avgRating && (
+                                        {spot?.avgRating && (
                                             <div className='review-stats'>
                                                 <i className="fas fa-solid fa-star"></i>
-                                                { spot.avgRating && (
-                                                        <p>{Number(spot.avgRating).toFixed(2)}</p>
-                                                    ) }
+                                                {spot?.avgRating && (
+                                                    <p>{Number(spot?.avgRating).toFixed(2)}</p>
+                                                )}
                                             </div>
-                                        ) }
+                                        )}
 
                                     </div>
 
-                                ) }
+                                )}
 
                             </div>
 
@@ -276,48 +276,48 @@ const SpotDetailsComponent = () => {
                     <div className='reviews-container'>
                         <h2>Reviews</h2>
 
-                        { spot.avgRating && (
+                        {spot?.avgRating && (
                             <div className='review-stats'>
                                 <i className="fas fa-solid fa-star"></i>
-                                { spot.avgRating && (
-                                        <p>{Number(spot.avgRating).toFixed(2)}</p>
-                                    ) }
+                                {spot?.avgRating && (
+                                    <p>{Number(spot?.avgRating).toFixed(2)}</p>
+                                )}
                             </div>
-                        ) }
+                        )}
 
 
-                        {reviewsValues && (reviewsValues.length > 0) && (
-                            reviewsValues.map(review => (
+                        {reviewsValues && (reviewsValues?.length > 0) && (
+                            reviewsValues?.map(review => (
                                 <div className='review-container'>
                                     <div className='review-stars'>
                                         <i className="fas fa-solid fa-star"></i>
-                                        { review.stars && (
+                                        {review?.stars && (
                                             <p>
                                                 {
                                                     Number(review.stars).toFixed(2)
                                                 }
                                             </p>
-                                        ) }
+                                        )}
                                     </div>
 
-                                    { review.User.firstName && (
+                                    {review?.User?.firstName && (
                                         <div className='review-user-name-and-avatar'>
                                             <h2>
                                                 <i className="fas fa-user-circle"></i>
                                                 &nbsp;
                                             </h2>
-                                            <p>{ review.User.firstName }</p>
+                                            <p>{review?.User?.firstName}</p>
                                         </div>
                                     )}
 
-                                    { review.review && (
-                                        <p>{ review.review }</p>
+                                    {review.review && (
+                                        <p>{review.review}</p>
 
                                     )}
 
 
-                                    { (user) && ( review.User.id === user.id ) && (
-                                        <button onClick={() => handleEditReviewRoute(review.id)}>Edit this review</button>
+                                    {(user) && (review?.User?.id === user.id) && (
+                                        <button onClick={() => handleEditReviewRoute(review?.id)}>Edit this review</button>
                                     )}
                                 </div>
                             ))
@@ -325,12 +325,12 @@ const SpotDetailsComponent = () => {
                     </div>
 
                     <div className='add-review-button-container'>
-                            { (user) && (!isSpotOwner) && (!hasAlreadyReviewed) && (
-                                // <NavLink to={`/spots/${spotId}/reviews/create`}>
-                                    <button onClick={handleCreateReviewRoute}>Review this spot</button>
-                                // </NavLink>
-                                )}
-                        </div>
+                        {(user) && (!isSpotOwner) && (!hasAlreadyReviewed) && (
+                            // <NavLink to={`/spots/${spotId}/reviews/create`}>
+                            <button onClick={handleCreateReviewRoute}>Review this spot</button>
+                            // </NavLink>
+                        )}
+                    </div>
 
                 </div>
 

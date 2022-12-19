@@ -200,8 +200,8 @@ export const deleteSpot = (spotId) => async (dispatch) => {
 };
 
 const initialState = {
-    allSpots: null,
-    singleSpot: null
+    allSpots: {},
+    singleSpot: {}
  };
 
 const spotsReducer = (state = initialState, action) => {
@@ -251,7 +251,7 @@ const spotsReducer = (state = initialState, action) => {
 
         // newState.spots.allSpots = allSpots;
 
-        return {...state, newSpot};
+        return {...newState, newSpot};
 
     case EDIT_SPOT: {
         newState = { ...state }
@@ -261,7 +261,7 @@ const spotsReducer = (state = initialState, action) => {
 
         // newState.spots.allSpots = allSpots;
 
-        return {...state, singleSpot};
+        return {...newState, singleSpot};
     }
 
     case DELETE_SPOT:
@@ -272,12 +272,12 @@ const spotsReducer = (state = initialState, action) => {
     case RESET_SINGLE_SPOT:
         newState = { ...state }
 
-        return { ...newState, allSpots: null, singleSpot: null }
+        return { ...newState, allSpots: {}, singleSpot: {} }
 
     case RESET_ALL_SPOTS:
         newState = { ...state }
 
-        return { ...newState, allSpots: null, singleSpot: null }
+        return { ...newState, allSpots: {}, singleSpot: {} }
 
     default:
       return state;

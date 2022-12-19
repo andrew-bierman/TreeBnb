@@ -160,7 +160,7 @@ const CreateSpotForm = () => {
       ...newErrors
     })
 
-    if(errors.length > 0) console.log(errors)
+    // if(errors.length > 0) console.log(errors)
 
 
   };
