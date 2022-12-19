@@ -56,6 +56,8 @@ function LoginFormModal() {
           <input
             type="text"
             placeholder="Username or Email"
+            minLength='3'
+            maxLength='256'
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
             required

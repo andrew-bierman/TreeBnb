@@ -38,14 +38,20 @@ function SignupFormModal() {
 
     if(!username){
       newErrors.push('Username is required')
+    } else if ( isEmail(username) ) {
+      newErrors.push('Username cannot be an email address')
     }
 
     if(!firstName){
       newErrors.push('First name is required')
+    } else if ( isEmail(firstName) ) {
+      newErrors.push('First name cannot be an email address')
     }
 
     if(!lastName){
       newErrors.push('Last name is required')
+    } else if ( isEmail(lastName) ) {
+      newErrors.push('Last name cannot be an email address')
     }
 
     if(!password){
@@ -77,7 +83,7 @@ function SignupFormModal() {
     setShouldShowErrors(true);
     validateForm();
 
-    if (password === confirmPassword) {
+    if (password === confirmPassword && errors.length === 0) {
       setErrors([]);
       return dispatch(sessionActions.signup({ email, username, firstName, lastName, password }))
         .then(closeModal)
@@ -103,8 +109,10 @@ function SignupFormModal() {
         {/* <label>
           Email */}
         <input
-          type="text"
+          type="email"
           placeholder="Email"
+          minLength='3'
+          maxLength='256'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -116,6 +124,8 @@ function SignupFormModal() {
         <input
           type="text"
           placeholder="Username"
+          minLength='4'
+          maxLength='30'
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
@@ -127,6 +137,8 @@ function SignupFormModal() {
         <input
           type="text"
           placeholder="First Name"
+          minLength='2'
+          maxLength='30'
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
           required
@@ -138,6 +150,8 @@ function SignupFormModal() {
         <input
           type="text"
           placeholder="Last Name"
+          minLength='2'
+          maxLength='30'
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
           required
