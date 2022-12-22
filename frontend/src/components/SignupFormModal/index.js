@@ -115,7 +115,7 @@ function SignupFormModal() {
       <form onSubmit={handleSubmit}>
         {/* Email */}
         <div className="field mb-5">
-          <div className="control">
+          <div className="control has-icons-left has-icons-right has-icons-left has-icons-right">
             <input
               required
               className={`input ${errors.email && touched.email ? 'is-danger' : ''}`}
@@ -128,12 +128,22 @@ function SignupFormModal() {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {errors.email && touched.email && <h6 className="subtitle is-6 mt-1 error">{errors.email}</h6>}
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+            {errors.email && touched.email && 
+              <>
+                <span class="icon is-small is-right">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+                <h6 className="help is-danger">{errors.email}</h6>
+              </>
+            }
           </div>
         </div>
         {/* Username */}
         <div className="field mb-5">
-          <div className="control">
+          <div className="control has-icons-left has-icons-right">
             <input
               className={`input ${errors.username && touched.username ? 'is-danger' : ''}`}
               type="text"
@@ -146,12 +156,22 @@ function SignupFormModal() {
               onBlur={handleBlur}
               required
             />
-            {errors.username && touched.username && <h6 className="subtitle is-6 mt-1 error">{errors.username}</h6>}
+            <span class="icon is-small is-left">
+              <i class="fas fa-user"></i>
+            </span>
+            {errors.username && touched.username && 
+              <>
+                <span class="icon is-small is-right">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+                <h6 className="help is-danger">{errors.username}</h6>
+              </>
+            }
           </div>
         </div>
         {/* First Name */}
         <div className="field mb-5">
-          <div className="control">
+          <div className="control has-icons-left has-icons-right">
           <input
             className={`input ${errors.firstName && touched.firstName ? 'is-danger' : ''}`}
             type="text"
@@ -164,12 +184,22 @@ function SignupFormModal() {
             onBlur={handleBlur}
             required
           />
-          {errors.firstName && touched.firstName && <h6 className="subtitle is-6 mt-1 error">{errors.firstName}</h6>}
+          <span class="icon is-small is-left">
+              <i class="fas fa-user"></i>
+            </span>
+            {errors.firstName && touched.firstName && 
+              <>
+                <span class="icon is-small is-right">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+                <h6 className="help is-danger">{errors.firstName}</h6>
+              </>
+            }
           </div>
         </div>
         {/* Last Name */}
         <div className="field mb-5">
-          <div className="control">
+          <div className="control has-icons-left has-icons-right">
             <input
               className={`input ${errors.lastName && touched.lastName ? 'is-danger' : ''}`}
               type="text"
@@ -182,12 +212,22 @@ function SignupFormModal() {
               onBlur={handleBlur}
               required
             />
-            {errors.lastName && touched.lastName && <h6 className="subtitle is-6 mt-1 error">{errors.lastName}</h6>}
+            <span class="icon is-small is-left">
+              <i class="fas fa-user"></i>
+            </span>
+            {errors.lastName && touched.lastName && 
+              <>
+                <span class="icon is-small is-right">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+                <h6 className="help is-danger">{errors.lastName}</h6>
+              </>
+            }
           </div>
         </div>
         {/* Password */}
         <div className="field mb-5">
-          <div className="control">
+          <div className="control has-icons-left has-icons-right">
             <input
               className={`input ${errors.password && touched.password ? 'is-danger' : ''}`}
               type="password"
@@ -198,12 +238,22 @@ function SignupFormModal() {
               onBlur={handleBlur}
               required
             />
-            {errors.password && touched.password && <h6 className="subtitle is-6 mt-1 error">{errors.password}</h6>}
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+            {errors.password && touched.password && 
+              <>
+                <span class="icon is-small is-right">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+                <h6 className="help is-danger">{errors.password}</h6>
+              </>
+            }
           </div>
         </div>
         {/* Confirm Password */}
         <div className="field mb-5">
-          <div className="control">
+          <div className="control has-icons-left has-icons-right">
             <input
               className={`input ${errors.confirmPassword && touched.confirmPassword ? 'is-danger' : ''}`}
               type="password"
@@ -214,7 +264,17 @@ function SignupFormModal() {
               onBlur={handleBlur}
               required
             />
-            {errors.confirmPassword && touched.confirmPassword && <h6 className="subtitle is-6 mt-1 error">{errors.confirmPassword}</h6>}
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+            {errors.confirmPassword && touched.confirmPassword && 
+              <>
+                <span class="icon is-small is-right">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+                <h6 className="help is-danger">{errors.confirmPassword}</h6>
+              </>
+            }
           </div>
         </div>
         <div className="buttons is-justify-content-flex-end mt-5">

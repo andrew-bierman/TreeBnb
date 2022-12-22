@@ -15,7 +15,6 @@ button {
     width: 100%;
 }
 
-.error {
-    color: #f14668;
-    font-size: 1rem;
+.weight-600 {
+    font-weight: 600 !important;
 }

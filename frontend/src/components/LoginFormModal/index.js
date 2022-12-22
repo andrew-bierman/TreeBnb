@@ -94,7 +94,7 @@ function LoginFormModal() {
       <form onSubmit={handleSubmit}>
         <div className="field mb-5">
           {/* Username or Email */}
-          <div className="control">
+          <div className="control has-icons-left has-icons-right">
             <input
               type="text"
               name="credential"
@@ -107,12 +107,22 @@ function LoginFormModal() {
               onBlur={handleBlur}
               required
             />
-            {errors.credential && touched.credential && <h6 className="subtitle is-6 mt-1 error">{errors.credential}</h6>}
+            <span class="icon is-small is-left">
+              <i class="fas fa-user"></i>
+            </span>
+            {errors.credential && touched.credential && 
+              <>
+                <span class="icon is-small is-right">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+                <h6 className="help is-danger">{errors.credential}</h6>
+              </>
+            }
           </div>
         </div>
         <div className="field mb-5">
           {/* Password */}
-          <div className="control">
+          <div className="control has-icons-left has-icons-right">
             <input
               type="password"
               placeholder="Password"
@@ -123,7 +133,17 @@ function LoginFormModal() {
               onBlur={handleBlur}
               required
             />
-            {errors.password && touched.password && <h6 className="subtitle is-6 mt-1 error">{errors.password}</h6>}
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+            {errors.password && touched.password &&
+              <>
+                <span class="icon is-small is-right">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+                <h6 className="help is-danger">{errors.password}</h6>
+              </>
+            }
           </div>
         </div>
         <div className="buttons is-justify-content-flex-end mt-5">

@@ -57,6 +57,7 @@
   display: block;
 }
 
-a.navbar-item:hover {
+a.navbar-item:hover,
+a.navbar-item:focus {
   color: #70C1B3;
 }
