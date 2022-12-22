@@ -128,13 +128,13 @@ function SignupFormModal() {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            <span class="icon is-small is-left">
-              <i class="fas fa-envelope"></i>
+            <span className="icon is-small is-left">
+              <i className="fas fa-envelope"></i>
             </span>
             {errors.email && touched.email && 
               <>
-                <span class="icon is-small is-right">
-                  <i class="fas fa-exclamation-triangle"></i>
+                <span className="icon is-small is-right">
+                  <i className="fas fa-exclamation-triangle"></i>
                 </span>
                 <h6 className="help is-danger">{errors.email}</h6>
               </>
@@ -156,13 +156,13 @@ function SignupFormModal() {
               onBlur={handleBlur}
               required
             />
-            <span class="icon is-small is-left">
-              <i class="fas fa-user"></i>
+            <span className="icon is-small is-left">
+              <i className="fas fa-user"></i>
             </span>
             {errors.username && touched.username && 
               <>
-                <span class="icon is-small is-right">
-                  <i class="fas fa-exclamation-triangle"></i>
+                <span className="icon is-small is-right">
+                  <i className="fas fa-exclamation-triangle"></i>
                 </span>
                 <h6 className="help is-danger">{errors.username}</h6>
               </>
@@ -184,13 +184,13 @@ function SignupFormModal() {
             onBlur={handleBlur}
             required
           />
-          <span class="icon is-small is-left">
-              <i class="fas fa-user"></i>
+          <span className="icon is-small is-left">
+              <i className="fas fa-user"></i>
             </span>
             {errors.firstName && touched.firstName && 
               <>
-                <span class="icon is-small is-right">
-                  <i class="fas fa-exclamation-triangle"></i>
+                <span className="icon is-small is-right">
+                  <i className="fas fa-exclamation-triangle"></i>
                 </span>
                 <h6 className="help is-danger">{errors.firstName}</h6>
               </>
@@ -212,13 +212,13 @@ function SignupFormModal() {
               onBlur={handleBlur}
               required
             />
-            <span class="icon is-small is-left">
-              <i class="fas fa-user"></i>
+            <span className="icon is-small is-left">
+              <i className="fas fa-user"></i>
             </span>
             {errors.lastName && touched.lastName && 
               <>
-                <span class="icon is-small is-right">
-                  <i class="fas fa-exclamation-triangle"></i>
+                <span className="icon is-small is-right">
+                  <i className="fas fa-exclamation-triangle"></i>
                 </span>
                 <h6 className="help is-danger">{errors.lastName}</h6>
               </>
@@ -238,13 +238,13 @@ function SignupFormModal() {
               onBlur={handleBlur}
               required
             />
-            <span class="icon is-small is-left">
-              <i class="fas fa-lock"></i>
+            <span className="icon is-small is-left">
+              <i className="fas fa-lock"></i>
             </span>
             {errors.password && touched.password && 
               <>
-                <span class="icon is-small is-right">
-                  <i class="fas fa-exclamation-triangle"></i>
+                <span className="icon is-small is-right">
+                  <i className="fas fa-exclamation-triangle"></i>
                 </span>
                 <h6 className="help is-danger">{errors.password}</h6>
               </>
@@ -264,13 +264,13 @@ function SignupFormModal() {
               onBlur={handleBlur}
               required
             />
-            <span class="icon is-small is-left">
-              <i class="fas fa-lock"></i>
+            <span className="icon is-small is-left">
+              <i className="fas fa-lock"></i>
             </span>
             {errors.confirmPassword && touched.confirmPassword && 
               <>
-                <span class="icon is-small is-right">
-                  <i class="fas fa-exclamation-triangle"></i>
+                <span className="icon is-small is-right">
+                  <i className="fas fa-exclamation-triangle"></i>
                 </span>
                 <h6 className="help is-danger">{errors.confirmPassword}</h6>
               </>

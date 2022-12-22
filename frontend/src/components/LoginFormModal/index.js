@@ -34,6 +34,7 @@ function LoginFormModal() {
 
     if (Object.values(errors).some(err => err)) return;
 
+    console.log({ credential: formValues.credential, password: formValues.password })
     return dispatch(sessionActions.login({ credential: formValues.credential, password: formValues.password }))
       .then(closeModal)
       .catch(
@@ -107,13 +108,13 @@ function LoginFormModal() {
               onBlur={handleBlur}
               required
             />
-            <span class="icon is-small is-left">
-              <i class="fas fa-user"></i>
+            <span className="icon is-small is-left">
+              <i className="fas fa-user"></i>
             </span>
             {errors.credential && touched.credential && 
               <>
-                <span class="icon is-small is-right">
-                  <i class="fas fa-exclamation-triangle"></i>
+                <span className="icon is-small is-right">
+                  <i className="fas fa-exclamation-triangle"></i>
                 </span>
                 <h6 className="help is-danger">{errors.credential}</h6>
               </>
@@ -133,13 +134,13 @@ function LoginFormModal() {
               onBlur={handleBlur}
               required
             />
-            <span class="icon is-small is-left">
-              <i class="fas fa-lock"></i>
+            <span className="icon is-small is-left">
+              <i className="fas fa-lock"></i>
             </span>
             {errors.password && touched.password &&
               <>
-                <span class="icon is-small is-right">
-                  <i class="fas fa-exclamation-triangle"></i>
+                <span className="icon is-small is-right">
+                  <i className="fas fa-exclamation-triangle"></i>
                 </span>
                 <h6 className="help is-danger">{errors.password}</h6>
               </>

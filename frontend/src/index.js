@@ -4,7 +4,7 @@ import React from 'react';
 import './index.css';
 import './style/global-style/style.css'
 import './style/font-awesome-4.7.0/css/font-awesome.css'
-import './style/global-style/bulma/css/bulma.css'
+import './style/global-style/bulma/mybulma/css/mystyles.css'
 
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
