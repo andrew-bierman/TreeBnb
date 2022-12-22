@@ -1,33 +1,52 @@
 // frontend/src/components/LoginFormModal/index.js
-import React, { useReducer, useState } from "react";
-import * as sessionActions from "../../store/session";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+
+import * as sessionActions from "../../store/session";
 import { useModal } from "../../context/Modal";
-import "./LoginForm.css";
+
+const initialValues = {
+  credential: "",
+  password: ""
+};
+
+const initialTouchedValues = {
+  credential: false,
+  password: false
+};
 
 function LoginFormModal() {
   const dispatch = useDispatch();
-  const [credential, setCredential] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [formValues, setFormValues] = useState(initialValues);
+  const [touched, setTouched] = useState(initialTouchedValues);
+  const [errors, setErrors] = useState(initialValues);
   const { closeModal } = useModal();
+
+  const validateForm = () => {
+    setErrors({
+      credential: !formValues.credential ? 'Username or Email is required' : '',
+      password: !formValues.password ? 'Password is required' : ''
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors([]);
-    return dispatch(sessionActions.login({ credential, password }))
+
+    if (Object.values(errors).some(err => err)) return;
+
+    return dispatch(sessionActions.login({ credential: formValues.credential, password: formValues.password }))
       .then(closeModal)
       .catch(
         async (res) => {
           const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
+          // TODO: fix
+          // if (data && data.errors) setErrors(Object.values(data.errors));
         }
       );
   };
 
   const handleDemo = (e) => {
     e.preventDefault();
-    setErrors([]);
     // setCredential('demo@user.io')
     // setPassword('password')
     return dispatch(sessionActions.login({ credential: 'demo@user.io', password: 'password' }))
@@ -35,48 +54,83 @@ function LoginFormModal() {
       .catch(
         async (res) => {
           const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
+           // TODO: fix
+          // if (data && data.errors) setErrors(data.errors);
         }
       );
+  };
+
+  const handleChange = async (event) => {
+    const { name, value } = event.target;
+    await setFormValues((prevState) => {
+      return {
+        ...prevState,
+        [name]: value,
+      };
+    });
+  };
+
+  const handleBlur = (event) => {
+    const { name } = event.target;
+    setTouched((prevState) => {
+      return {
+        ...prevState,
+        [name]: true,
+      };
+    });
   }
+
+  // reset all errors to inital in the first render
+  useEffect(() => {
+    setErrors(initialValues);
+    setTouched(initialTouchedValues);
+  }, []);
+
+  useEffect(() => validateForm(), [formValues]);
 
   return (
     <>
-      <h1>Log In</h1>
+      <h3 className="title is-3">Log In</h3>
       <form onSubmit={handleSubmit}>
-        { (errors.length > 0) && (
-          <ul className='errors'>
-            {errors.map((error, idx) => (
-              <li key={idx} className='error'>{error}</li>
-            ))}
-          </ul>
-        ) }
-        {/* <label>
-          Username or Email */}
-          <input
-            type="text"
-            placeholder="Username or Email"
-            value={credential}
-            onChange={(e) => setCredential(e.target.value)}
-            required
-          />
-        {/* </label> */}
-        <br></br>
-        {/* <label>
-          Password */}
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        {/* </label> */}
-        <br></br>
-        <button type="submit">Log In</button>
-        <button className='demo-button' type='demo' onClick={handleDemo}>Demo User</button>
+        <div className="field mb-5">
+          {/* Username or Email */}
+          <div className="control">
+            <input
+              type="text"
+              name="credential"
+              placeholder="Username or Email"
+              className={`input ${errors.credential && touched.credential ? 'is-danger' : ''}`}
+              minLength='3'
+              maxLength='256'
+              value={formValues.credential}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              required
+            />
+            {errors.credential && touched.credential && <h6 className="subtitle is-6 mt-1 error">{errors.credential}</h6>}
+          </div>
+        </div>
+        <div className="field mb-5">
+          {/* Password */}
+          <div className="control">
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              className={`input ${errors.password && touched.password ? 'is-danger' : ''}`}
+              value={formValues.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              required
+            />
+            {errors.password && touched.password && <h6 className="subtitle is-6 mt-1 error">{errors.password}</h6>}
+          </div>
+        </div>
+        <div className="buttons is-justify-content-flex-end mt-5">
+          <button type="submit" className="button is-primary">Log In</button>
+          <button className="button is-light" type='demo' onClick={handleDemo}>Demo User</button>
+        </div>
       </form>
-
     </>
   );
 }

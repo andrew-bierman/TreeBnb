@@ -6,6 +6,8 @@ import { getOneSpot, actionCreatorResetSingleSpot, deleteSpot } from '../../stor
 import { getOneSpotReviews, getCurrentUserReviews } from '../../store/reviews';
 import './SpotDetails.css'
 
+import CreateBookingForm from "../CreateBookingForm";
+
 const SpotDetailsComponent = () => {
     const dispatch = useDispatch();
 
@@ -142,7 +144,7 @@ const SpotDetailsComponent = () => {
 
     return (
 
-        <div className='spot-details'>
+        <div className='spot-details content'>
             {spot && (
                 <div className='spot-details-comp'>
                     <h2>{spot?.name}</h2>
@@ -258,10 +260,12 @@ const SpotDetailsComponent = () => {
                                                 )}
                                             </div>
                                         )}
-
                                     </div>
 
                                 )}
+                                <div className='booking-container'>
+                                    <CreateBookingForm/>
+                                </div>
 
                             </div>
 

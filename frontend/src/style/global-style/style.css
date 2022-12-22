@@ -1,8 +1,21 @@
 
 a {
-    cursor: pointer
+    cursor: pointer;
 }
 
 button {
-    cursor: pointer
+    cursor: pointer;
+}
+
+.button.is-primary {
+    background-color: #70C1B3;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.error {
+    color: #f14668;
+    font-size: 1rem;
 }

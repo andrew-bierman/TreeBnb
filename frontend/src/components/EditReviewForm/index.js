@@ -184,6 +184,7 @@ const EditReviewForm = () => {
                 name="review"
                 value={review}
                 onChange={updateReviewText}
+                required
               />
               {errors.review && <p>{errors.review}</p>}
 
@@ -198,6 +199,7 @@ const EditReviewForm = () => {
                 name="stars"
                 value={stars}
                 onChange={updateStars}
+                required
               />
               {errors.stars && <p>{errors.stars}</p>}
 

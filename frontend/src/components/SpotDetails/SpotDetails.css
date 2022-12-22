@@ -15,7 +15,7 @@
   align-items: center;
 }
 
-.spot-details button {
+.spot-details .reviews-container button {
   background-color: #70C1B3;
   border-radius: 10px;
   outline: #70C1B3;
@@ -312,6 +312,13 @@
 .pricing-details-container .review-stats i {
   color: #70C1B3;
 }
+
+.booking-container {
+  display: flex;
+
+  max-width: 100%;
+}
+
 
 .reviews-container {
   display: flex;

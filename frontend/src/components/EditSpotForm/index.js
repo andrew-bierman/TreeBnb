@@ -353,6 +353,7 @@ const EditSpotForm = () => {
                 placeholder="Name"
                 value={newName}
                 onChange={updateName}
+                required
               />
               {/* {errors.name && <p>{errors.name}</p>} */}
 
@@ -364,6 +365,7 @@ const EditSpotForm = () => {
                 placeholder="Address"
                 value={newAddress}
                 onChange={updateAddress}
+                required
               />
               {/* {errors.address && <p>{errors.address}</p>} */}
 
@@ -375,6 +377,7 @@ const EditSpotForm = () => {
                 placeholder="City"
                 value={newCity}
                 onChange={updateCity}
+                required
               />
               {/* {errors.city && <p>{errors.city}</p>} */}
 
@@ -386,6 +389,7 @@ const EditSpotForm = () => {
                 placeholder="State"
                 value={newState}
                 onChange={updateState}
+                required
               />
               {/* {errors.state && <p>{errors.state}</p>} */}
 
@@ -397,6 +401,7 @@ const EditSpotForm = () => {
                 placeholder="Country"
                 value={newCountry}
                 onChange={updateCountry}
+                required
               />
               {/* {errors.country && <p>{errors.country}</p>} */}
 
@@ -432,6 +437,7 @@ const EditSpotForm = () => {
                 placeholder="Description"
                 value={newDescription}
                 onChange={updateDescription}
+                required
               />
               {/* {errors.description && <p>{errors.description}</p>} */}
 
@@ -444,6 +450,7 @@ const EditSpotForm = () => {
                 min='1'
                 value={newPrice}
                 onChange={updatePrice}
+                required
               />
               {/* {errors.price && <p>{errors.price}</p>} */}
 

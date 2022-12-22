@@ -1,4 +1,4 @@
-.form-component {
+/* .form-component {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,13 +9,13 @@
     flex-direction: column;
     align-items: center;
     width: 80%;
-  }
+  } */
 
-  form {
+  /* form {
     display: flex;
     flex-direction: column;
     width: 60%;
-  }
+  } */
 
   /* .name,
   .address,
@@ -32,11 +32,11 @@
     flex-direction: row;
     margin: 5px 0;
   } */
-
+/* 
   label {
     font-weight: bold;
 
-    /* margin-right: 5px; */
+
   }
 
   input {
@@ -66,4 +66,4 @@
   .preview-image-preview-img img {
     max-width: 300px;
     max-height: 300px;
-  }
+  } */
