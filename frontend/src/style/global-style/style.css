@@ -8,7 +8,7 @@ button {
 }
 
 .button.is-primary {
-    background-color: #70C1B3;
+    background-color: #70C1B3 !important;
 }
 
 .w-100 {
