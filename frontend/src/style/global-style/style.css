@@ -1,4 +1,3 @@
-
 a {
     cursor: pointer;
 }
@@ -17,4 +16,20 @@ button {
 
 .weight-600 {
     font-weight: 600 !important;
+}
+
+.star-container {
+    font-size: 24px;
+}
+
+.fa-star.checked {
+    color: #70C1B3;
+}
+
+.cursor {
+    cursor: pointer;
+}
+
+.centered { 
+    text-align: center;
 }
