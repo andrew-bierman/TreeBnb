@@ -114,8 +114,8 @@ const CreateSpotForm = () => {
 
   if (!user) {
     return (
-      <div className='login-message'>
-        <p>Please login or signup to list your home</p>
+      <div className="is-flex is-justify-content-center w-100 mt-5">
+        <h5 className="title is-5">Please login or signup to list your home</h5>
       </div>
     )
   }
