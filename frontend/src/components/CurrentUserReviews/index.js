@@ -68,8 +68,8 @@ const CurrentUserReviewsComponent = ({ reviews }) => {
                 <Slider {...sliderSettings} className='column is-three-fifths-desktop is-offset-one-fifth-desktop is-half-tablet is-offset-3-tablet'>
                     {reviews && (
                         reviews.map(review => (
-                            <div className='p-2 pb-4'>
-                                <div key={review.id} className='review-box box is-flex is-flex-direction-column is-justify-content-space-between w-100'>
+                            <div className='p-2 pb-4' key={review.id}>
+                                <div className='review-box box is-flex is-flex-direction-column is-justify-content-space-between w-100'>
                                     <div>
                                         <h5 className="subtitle is-5 mb-2">{review.Spot.name}</h5>
                                         <div className='is-flex is-justify-content-space-between is-align-items-center mb-3'>

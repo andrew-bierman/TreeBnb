@@ -73,7 +73,7 @@ const CreateBookingForm = () => {
       />
 
       <div className='create-booking-reserve-button'>
-        <button onClick={e => handleSubmit()}>Reserve</button>
+        <button className="button is-light" onClick={e => handleSubmit()}>Reserve</button>
       </div>
 
     </div>

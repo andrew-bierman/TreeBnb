@@ -102,23 +102,6 @@ const Profile = () => {
                     </div>
                 )}
             </div>
-
-                {/* <div className='user-details column is-centered is-two-fifths-tablet'>
-                    <div 
-                        className='cursor is-flex is-justify-content-space-between'
-                        onClick={() => setIsProfileVisible(prev => !prev)}
-                    >
-                        Profile Information
-                        <i className={`fas fa-solid ${isProfileVisible ? 'fa-arrow-up' : 'fa-arrow-down'}`} />
-                    </div>
-                    {isProfileVisible && (
-                    <div>
-                        <h5 className="subtitle is-5 m-0 mr-2">{user.username}</h5>
-                        <h5 className="subtitle is-5 m-0 mr-2">{user.firstName} {user.lastName}</h5>
-                        <h5 className="subtitle is-5 m-0">{user.email}</h5>
-                    </div>
-                    )}
-                </div> */}
             </div>
             <div className='mt-3'>
                 {reviews && (reviews.length > 0) && (
@@ -155,27 +138,6 @@ const Profile = () => {
                                 </NavLink>
                             ))}
                         </div>
-                        {/* <div className='columns is-flex-wrap-wrap is-align-items-stretch w-100 m-0'>
-                            {userSpots.map(spot => (
-                                <div className='column is-flex-direction-column is-flex is-justify-content-center is-full-mobile is-half-tablet'>
-                                    <div className='spot-container-link'>
-                                        <NavLink key={spot.id} to={`/spots/${spot.id}`} className='spot-container'>
-                                            <div key={spot.id}>
-                                                <img src={spot.previewImage} alt='Preview Image'></img>
-                                                <h5 className="subtitle is-5 mb-2 is-spaced">{spot.name}</h5>
-                                                <h6 className="title is-6 mb-2 is-spaced">{spot.city}, {spot.state}</h6>
-                                                <h6 className="subtitle is-6 m-0 is-spaced">{`$${spot.price} night`}</h6>
-                                            </div>
-                                        </NavLink>
-                                    </div>
-
-                                    <div className="buttons is-justify-content-flex-end mt-5">
-                                        <button className="button is-light" onClick={() => handleEditSpotRoute(spot.id)}>Edit Spot</button>
-                                        <button className="button is-danger" onClick={() => confirmSpotDelete(spot.id)}>Delete Spot</button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div> */}
                     </div>
                 )}
             </div>

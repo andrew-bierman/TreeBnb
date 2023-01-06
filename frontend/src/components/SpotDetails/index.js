@@ -135,216 +135,125 @@ const SpotDetailsComponent = () => {
         }
     }
 
-    // if(Array.isArray(secondaryImagesValues)){
-    //     return (
-
-    //     )
-    // }
+    if (!spot) return null;
 
 
     return (
+        <div className='spot-details p-5'>
+            <h5 className="title is-5 mb-2">{spot.name}</h5>
+            <div className="is-flex is-align-items-center">
+            {spot.avgRating && (
+                <div className='is-flex is-align-items-center mr-4'>
+                    <i className="fas fa-star mr-2 checked"></i>
+                    <h5 className='weight-600'>{Number(spot.avgRating).toFixed(2)}</h5>
+                </div>
+            )}
+            <h6 className="subtitle is-6">{spot.city}, {spot.state}</h6>
+            </div>
+            {isSpotOwner && (
+                <div className="buttons mt-5">
+                    <button className="button is-light" onClick={handleEditSpotRoute}>Edit Spot</button>
+                    <button className="button is-danger" onClick={confirmDelete}>Delete Spot</button>
+                </div>
+            )}
+            <div className='images mt-3 mb-3'>
+                {previewImage && !secondaryImagesValues ? (
+                    <img src={previewImage?.url} alt='preview-image' className='image is-5by4 p-0' />
+                ) : (
+                    <>
+                    <div className='preview-image-container'>
+                        {previewImage && (
+                            <img src={previewImage?.url} alt='preview-image' className='preview-image'></img>
 
-        <div className='spot-details content'>
-            {spot && (
-                <div className='spot-details-comp'>
-                    <h2>{spot?.name}</h2>
-                    <div className='secondary-details'>
-
-                        <div className='review-and-location-and-buttons'>
-                            <div className='review-and-location'>
-
-                                {spot?.avgRating && (
-                                    <div className='review-stats'>
-                                        <i className="fas fa-solid fa-star"></i>
-                                        {spot?.avgRating && (
-                                            <p>{Number(spot?.avgRating).toFixed(2)}</p>
-                                        )}
-                                    </div>
-                                )}
-
-                                <div className='location-details'>
-                                    <p>{spot?.city}, {spot?.state}</p>
-                                </div>
-                            </div>
-
-                            {isSpotOwner && (
-                                <div className='edit-spot-delete-spot-buttons-container'>
-                                    <div className='edit-spot-button-container'>
-                                        {isSpotOwner && (
-                                            <button onClick={handleEditSpotRoute}>
-                                                <i className="fas fa-edit">&nbsp;</i>
-                                                Edit this spot
-                                            </button>
-                                        )}
-                                    </div>
-
-                                    <div className='delete-spot-button'>
-                                        <button onClick={confirmDelete}>
-                                            <i className="fas fa-trash-alt">&nbsp;</i>
-                                            Delete Spot
-                                        </button>
-                                    </div>
-
-                                </div>
-                            )}
-
-                        </div>
-
-
-
-                        <div className='images'>
-                            <div className='preview-image-container'>
-                                {previewImage && (
-                                    <img src={previewImage?.url} alt='preview-image' className='preview-image'></img>
-
-                                )}
-                            </div>
-
-                            <div className='secondary-images-container'>
-                                {(secondaryImagesValues) && (secondaryImagesValues.length > 0) && (
-                                    secondaryImagesValues.slice(0, 4).map((image, index) => (
-                                        <div className='secondary-image-container'>
-                                            <img key={image.id} src={image.url} alt='secondary-image' className={`secondary-image ${index === 1 ? 'border-top-right' : index === 3 ? 'border-bottom-right' : ''}`}></img>
-
-                                        </div>
-                                    ))
-                                )}
-                            </div>
-
-                        </div>
-
-                        <div className='host-details-and-description-and-pricing-container'>
-                            <div className='host-details-and-description-container'>
-                                <div className='host-details-container'>
-                                    {spot?.Owner?.firstName && (
-                                        <div className='host-details'>
-                                            <h2>
-                                                {`Hosted by ${spot.Owner.firstName}`}
-                                                &emsp;
-                                            </h2>
-                                            <h1>
-                                                <i className="fas fa-user-circle"></i>
-                                            </h1>
-                                        </div>
-                                    )}
-                                    <hr></hr>
-                                </div>
-
-
-                                <div className='spot-details-description-container'>
-                                    {spot?.description && (
-                                        <p>{spot?.description}</p>
-                                    )}
-
-                                    <hr></hr>
-
-                                </div>
-
-                            </div>
-
-
-                            <div className='pricing-details-container'>
-                                {spot?.price && (
-                                    <div className='pricing-and-reviews-container'>
-                                        <div className='pricing-number'>
-                                            <h2>${spot?.price}&nbsp;</h2>
-
-                                            <h4>night</h4>
-                                        </div>
-
-                                        {spot?.avgRating && (
-                                            <div className='review-stats'>
-                                                <i className="fas fa-solid fa-star"></i>
-                                                {spot?.avgRating && (
-                                                    <p>{Number(spot?.avgRating).toFixed(2)}</p>
-                                                )}
-                                            </div>
-                                        )}
-                                    </div>
-
-                                )}
-                                <div className='booking-container'>
-                                    <CreateBookingForm/>
-                                </div>
-
-                            </div>
-
-
-                        </div>
-
-
+                        )}
                     </div>
 
-                    <br></br>
-
-                    <div className='reviews-container'>
-                        <h2>Reviews</h2>
-
-                        {spot?.avgRating && (
-                            <div className='review-stats'>
-                                <i className="fas fa-solid fa-star"></i>
-                                {spot?.avgRating && (
-                                    <p>{Number(spot?.avgRating).toFixed(2)}</p>
-                                )}
-                            </div>
-                        )}
-
-
-                        {reviewsValues && (reviewsValues?.length > 0) && (
-                            reviewsValues?.map(review => (
-                                <div className='review-container'>
-                                    <div className='review-stars'>
-                                        <i className="fas fa-solid fa-star"></i>
-                                        {review?.stars && (
-                                            <p>
-                                                {
-                                                    Number(review.stars).toFixed(2)
-                                                }
-                                            </p>
-                                        )}
-                                    </div>
-
-                                    {review?.User?.firstName && (
-                                        <div className='review-user-name-and-avatar'>
-                                            <h2>
-                                                <i className="fas fa-user-circle"></i>
-                                                &nbsp;
-                                            </h2>
-                                            <p>{review?.User?.firstName}</p>
-                                        </div>
-                                    )}
-
-                                    {review.review && (
-                                        <p>{review.review}</p>
-
-                                    )}
-
-
-                                    {(user) && (review?.User?.id === user.id) && (
-                                        <button onClick={() => handleEditReviewRoute(review?.id)}>Edit this review</button>
-                                    )}
+                    <div className='secondary-images-container'>
+                        {(secondaryImagesValues) && (secondaryImagesValues.length > 0) && (
+                            secondaryImagesValues.slice(0, 4).map((image, index) => (
+                                <div className='secondary-image-container' key={index}>
+                                    <img key={image.id} src={image.url} alt='secondary-image' className={`secondary-image ${index === 1 ? 'border-top-right' : index === 3 ? 'border-bottom-right' : ''}`}></img>
                                 </div>
                             ))
                         )}
                     </div>
+                    </>
+                )}
+            </div>
+            <div className='columns'>
+                <div className='column is-full-mobile is-half-tablet is-three-fifths-desktop'>
+                    {spot.Owner?.firstName && (
+                        <div className='is-flex mt-4'>
+                            <h5 className="subtitle is-5 m-0 weight-600">
+                                {`Hosted by ${spot.Owner?.firstName}`}
+                                <i className="fas fa-user-circle ml-3" />
+                            </h5>
+                        </div>
+                    )}
+                    <hr />
+                    {spot.description && <p className="subtitle is-6 mt-3">{spot.description}</p>}
+                </div>
+                <div className='column calendar-container is-full-mobile is-flex is-justify-content-flex-end'>
+                    <div className='box calendar-box'>
+                        {spot.price && <h6 className="subtitle is-6 m-0 mb-2"><span className='weight-600'>${Number(spot.price).toFixed(0)}</span> night</h6>}
+                        <div className='is-flex is-align-items-center mb-2'>
+                            <i className="fas fa-star mr-2 checked"></i>
+                            <h5 className='weight-600'>{Number(spot.avgRating).toFixed(2)}</h5>
+                        </div>
+                        <div className='booking-container'>
+                            <CreateBookingForm/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {reviewsValues && (reviewsValues?.length > 0) && (
+                <div>
+                <h4 className="title is-4 mb-2">Reviews</h4>
+                <div className="is-flex is-align-items-center mb-4">
+                    {spot.avgRating && (
+                        <div className='is-flex is-align-items-center'>
+                            <i className="fas fa-star mr-2 checked"></i>
+                            <h5 className='weight-600'>{Number(spot.avgRating).toFixed(2)}</h5>
+                        </div>
+                    )}
+                    <h6 className='subtitle is-6 m-0 mr-2 ml-2'>|</h6>
+                    <h6 className='subtitle is-6 m-0'>{`${reviewsValues.length} review${reviewsValues.length === 1 ? '' : 's'}`}</h6>
+                </div>
+                {reviewsValues.map((review, ind) => (
+                    <div key={ind} className='box'>
+                        <div className="is-flex is-align-items-center mb-3">
+                            {review.User?.firstName && (
+                                <h5 className="subtitle is-5 m-0">
+                                    <i className="fas fa-user-circle mr-2" />
+                                    {review.User?.firstName}
+                                </h5>
+                            )}
+                            <h5 className="subtitle is-5 m-0 ml-2 mr-2">·</h5>
+                            {spot.avgRating && (
+                                <div className='is-flex is-align-items-center mr-4'>
+                                    <i className="fas fa-star mr-2 checked"></i>
+                                    <h5 className='weight-600'>{Number(spot.avgRating).toFixed(2)}</h5>
+                                </div>
+                            )}
+                        </div>
+                        {review.review && <p>{review.review}</p>}
 
-                    <div className='add-review-button-container'>
-                        {(user) && (!isSpotOwner) && (!hasAlreadyReviewed) && (
-                            // <NavLink to={`/spots/${spotId}/reviews/create`}>
-                            <button onClick={handleCreateReviewRoute}>Review this spot</button>
-                            // </NavLink>
+                        {review?.User?.id === user?.id && (
+                            <div className="buttons is-justify-content-flex-end mt-3">
+                                <button className="button is-primary" onClick={() => handleEditReviewRoute(review?.id)}>Edit this review</button>
+                            </div>
                         )}
                     </div>
-
-                </div>
-
+                ))}
+                <div className='buttons mt-2'>
+                    {(user) && (!isSpotOwner) && (!hasAlreadyReviewed) && (
+                        <button className="button is-primary"  onClick={handleCreateReviewRoute}>Review this spot</button>
+                    )}
+                </div> 
+            </div>    
             )}
-
-
-
         </div>
-
     );
 }
 
-export default SpotDetailsComponent
+export default SpotDetailsComponent;

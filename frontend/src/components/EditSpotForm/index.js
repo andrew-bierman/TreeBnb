@@ -135,17 +135,17 @@ const EditSpotForm = () => {
 
   useEffect(() => {
     setFormValues({
-      name: singleSpot.name || "",
-      address: singleSpot.address || "",
-      city: singleSpot.city || "",
-      state: singleSpot.state || "",
-      country: singleSpot.country || "",
-      lat: singleSpot.lat || 0,
-      lng: singleSpot.lng || 0,
-      description: singleSpot.description || "",
-      price: singleSpot.price || "",
-      previewImage: singleSpot.previewImage || "",
-      images: singleSpot.images || "",
+      name: singleSpot?.name || "",
+      address: singleSpot?.address || "",
+      city: singleSpot?.city || "",
+      state: singleSpot?.state || "",
+      country: singleSpot?.country || "",
+      lat: singleSpot?.lat || 0,
+      lng: singleSpot?.lng || 0,
+      description: singleSpot?.description || "",
+      price: singleSpot?.price || "",
+      previewImage: singleSpot?.previewImage || "",
+      images: singleSpot?.images || "",
     })
   }, [singleSpot]);
 
