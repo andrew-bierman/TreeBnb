@@ -1,97 +1,105 @@
 import { csrfFetch } from './csrf';
 
-const GET_ALL_BOOKINGS = 'bookings/getAll';
+const GET_ALL_SPOT_BOOKINGS = 'bookings/getAllSpotBookings';
+const GET_ALL_USER_BOOKINGS = 'bookings/getAllUserBookings';
 const GET_ONE_BOOKING = 'bookings/getOne'
-const GET_USER_BOOKINGS = 'bookings/currentUser'
 const CREATE_BOOKING = 'bookings/createBooking'
 const EDIT_BOOKING = 'bookings/editBooking'
 const DELETE_BOOKING = 'bookings/deleteBooking'
 const RESET_SINGLE_BOOKING = 'bookings/resetSingleBooking'
 const RESET_ALL_BOOKINGS = 'bookings/resetAllBookings'
 
-const actionCreatorAllBookings = (bookings) => {
+const actionCreatorGetAllSpotBookings = (bookings) => {
   return {
-    type: GET_ALL_BOOKINGS,
+    type: GET_ALL_SPOT_BOOKINGS,
+    payload: bookings,
+  };
+};
+
+const actionCreatorGetAllUserBookings = (bookings) => {
+  return {
+    type: GET_ALL_USER_BOOKINGS,
     payload: bookings,
   };
 };
 
 const actionCreatorOneBooking = (booking) => {
-    return {
-      type: GET_ONE_BOOKING,
-      payload: booking,
-    };
+  return {
+    type: GET_ONE_BOOKING,
+    payload: booking,
   };
-
-  const actionCreatorUserBookings = (booking) => {
-    return {
-      type: GET_USER_BOOKINGS,
-      payload: booking,
-    };
-  };
+};
 
 const actionCreatorCreateBooking = (booking) => {
-    return {
-      type: CREATE_BOOKING,
-      payload: booking,
-    };
+  return {
+    type: CREATE_BOOKING,
+    payload: booking,
   };
+};
 
 const actionCreatorEditBooking = (booking) => {
-    return {
-      type: EDIT_BOOKING,
-      payload: booking,
-    };
+  return {
+    type: EDIT_BOOKING,
+    payload: booking,
   };
+};
 
-const actionCreatorDeleteBooking = (booking) => {
-    return {
-      type: DELETE_BOOKING,
-      payload: booking,
-    };
+const actionCreatorDeleteBooking = (bookingId) => {
+  return {
+    type: DELETE_BOOKING,
+    payload: bookingId,
   };
-
+};
 
 export const actionCreatorResetSingleBooking = () => {
-    return {
-      type: RESET_SINGLE_BOOKING,
-      payload: {},
-    };
+  return {
+    type: RESET_SINGLE_BOOKING,
+    payload: {},
   };
+};
 
 export const actionCreatorResetAllBookings = () => {
-    return {
-      type: RESET_ALL_BOOKINGS,
-      payload: {},
-    };
+  return {
+    type: RESET_ALL_BOOKINGS,
+    payload: {},
   };
+};
+
+export const getSpotBookings = (spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}/bookings`);
+
+  if (response.ok) {
+    const bookings = await response.json();
+    dispatch(actionCreatorGetAllSpotBookings(bookings));
+
+    return bookings
+  }
+};
 
 
-export const getAllBookings = () => async (dispatch) => {
+export const getAllUserBookings = () => async (dispatch) => {
 
-    const response = await csrfFetch("/api/bookings");
-    // console.log(response);
+  const response = await csrfFetch("/api/bookings/current");
+  // console.log(response);
 
-    if(response.ok){
-        const bookings = await response.json();
-        dispatch(actionCreatorAllBookings(bookings));
+  if (response.ok) {
+    const bookings = await response.json();
+    dispatch(actionCreatorGetAllUserBookings(bookings));
 
-        return bookings
-    }
+    return bookings
+  }
 
-  };
-
-// getAllBookings();
+};
 
 export const getOneBooking = (bookingId) => async (dispatch) => {
 
-    const response = await csrfFetch(`/api/bookings/${bookingId}`);
-    console.log(response);
+  const response = await csrfFetch(`/api/bookings/${bookingId}`);
+  console.log(response);
 
-    if(response.ok){
-        const booking = await response.json();
-        dispatch(actionCreatorOneBooking(booking));
-    }
+  if (response.ok) {
+    const booking = await response.json();
+    dispatch(actionCreatorOneBooking(booking));
+  }
 
 };
 
@@ -100,18 +108,18 @@ export const getUserBookings = () => async (dispatch) => {
   const response = await csrfFetch("/api/bookings/current");
   // console.log(response);
 
-  if(response.ok){
-      const bookings = await response.json();
-      dispatch(actionCreatorUserBookings(bookings));
+  if (response.ok) {
+    const bookings = await response.json();
+    dispatch(actionCreatorGetAllUserBookings(bookings));
 
-      return bookings
+    return bookings
   }
 
 };
 
-export const createBooking = (bookingData) => async (dispatch) => {
+export const createBooking = (spotId, bookingData) => async (dispatch) => {
 
-  const response = await csrfFetch(`/api/bookings`, {
+  const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -123,36 +131,40 @@ export const createBooking = (bookingData) => async (dispatch) => {
   console.log(response);
 
 
-  if(response.ok){
-      const bookingRes = await response.json();
+  if (response.ok) {
+    const bookingRes = await response.json();
 
-      try {
+    try {
 
-        const { previewImage } = bookingData
+      const { previewImage } = bookingData
 
-        if(previewImage && previewImage !== {} && previewImage !== ''){
-          const { id } = bookingRes
+      if (previewImage && previewImage !== {} && previewImage !== '') {
+        const { id } = bookingRes
 
-          const imageRes = await csrfFetch(`/api/bookings/${id}/images`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              url: previewImage,
-              preview: true
-            })
-          });
+        const imageRes = await csrfFetch(`/api/bookings/${id}/images`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            url: previewImage,
+            preview: true
+          })
+        });
 
-        }
-
-      } catch(e) {
-          console.log({e})
       }
 
+    } catch (e) {
+      console.log({ e })
+    }
 
-      dispatch(actionCreatorCreateBooking(bookingRes));
-      return bookingRes
+
+    dispatch(actionCreatorCreateBooking(bookingRes));
+    return bookingRes
+
+  } else {
+    const error = await response.json();
+    return error
   }
 
 };
@@ -172,10 +184,10 @@ export const editBooking = (bookingData) => async (dispatch) => {
 
   console.log(response);
 
-  if(response.ok){
-      const booking = await response.json();
-      dispatch(actionCreatorEditBooking(booking));
-      return booking
+  if (response.ok) {
+    const booking = await response.json();
+    dispatch(actionCreatorEditBooking(booking));
+    return booking
   }
 
 };
@@ -192,93 +204,101 @@ export const deleteBooking = (bookingId) => async (dispatch) => {
 
   console.log(response);
 
-  if(response.ok){
-      const booking = await response.json();
-      dispatch(actionCreatorDeleteBooking(booking));
+  if (response.ok) {
+    const booking = await response.json();
+    dispatch(actionCreatorDeleteBooking(bookingId));
   }
+
+  return response
 
 };
 
 const initialState = {
-    user: {},
-    booking: {}
- };
+  user: {},
+  booking: {},
+  singleSpotBooking: {},
+};
 
 const bookingsReducer = (state = initialState, action) => {
   let newState;
 
   switch (action.type) {
 
-    case GET_ALL_BOOKINGS:{
-        newState = { ...state }
+    case GET_ALL_SPOT_BOOKINGS: {
+      newState = { ...state }
+      
+      const singleSpotBooking = {};
 
-        const user = {};
-        // console.log(action.payload);
-        action.payload["Bookings"].forEach(booking => {
-            user[booking["id"]] = booking
-        })
-        // newState.bookings.user = user;
+      action.payload["Bookings"].forEach(booking => {
+        singleSpotBooking[booking["spotId"]] = booking
+      })
 
-        return {...state, user};
+      return { ...state, singleSpotBooking };
     }
 
-    case GET_ONE_BOOKING:{
-        newState = { ...state }
-
-        const booking = action.payload["Bookings"];
-        // console.log(action.payload);
-
-        // newState.bookings.user = user;
-
-        return {...state, booking};
-    }
-
-    case GET_USER_BOOKINGS:{
+    case GET_ALL_USER_BOOKINGS: {
       newState = { ...state }
 
-      // const booking = action.payload["Bookings"];
+      const user = {};
+      // console.log(action.payload);
+      action.payload["Bookings"].forEach(booking => {
+        user[booking["id"]] = booking
+      })
+      // newState.bookings.user = user;
+
+      return { ...state, user };
+    }
+
+    case GET_ONE_BOOKING: {
+      newState = { ...state }
+
+      const booking = action.payload["Bookings"];
       // console.log(action.payload);
 
       // newState.bookings.user = user;
 
-      return {...newState};
-  }
+      return { ...state, booking };
+    }
 
     case CREATE_BOOKING:
-        newState = { ...state }
+      newState = { ...state }
 
-        const newBooking = action.payload.Bookings;
-        // console.log(action.payload);
+      const newBooking = action.payload.Bookings;
+      // console.log(action.payload);
 
-        // newState.bookings.user = user;
+      // newState.bookings.user = user;
 
-        return {...newState, newBooking};
+      return { ...newState, newBooking };
 
     case EDIT_BOOKING: {
-        newState = { ...state }
+      newState = { ...state }
 
-        const booking = action.payload.Bookings;
-        // console.log(action.payload);
+      const booking = action.payload.Bookings;
+      // console.log(action.payload);
 
-        // newState.bookings.user = user;
+      // newState.bookings.user = user;
 
-        return {...newState, booking};
+      return { ...newState, booking };
     }
 
     case DELETE_BOOKING:
-        newState = { ...state }
+      newState = { ...state }
 
-        return { ...newState }
+      const { user } = newState;
+
+      delete user[action.payload]
+
+      return { ...newState, user };
 
     case RESET_SINGLE_BOOKING:
-        newState = { ...state }
+      newState = { ...state }
 
-        return { ...newState, user: {}, booking: {} }
+      return { ...newState, user: {}, booking: {} }
 
     case RESET_ALL_BOOKINGS:
-        newState = { ...state }
+      newState = { ...state }
 
-        return { ...newState, user: {}, booking: {} }
+      return { ...newState, user: {}, booking: {} }
 
     default:
       return state;

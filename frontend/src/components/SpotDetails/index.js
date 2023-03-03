@@ -140,15 +140,15 @@ const SpotDetailsComponent = () => {
 
     return (
         <div className='spot-details p-5'>
-            <h5 className="title is-5 mb-2">{spot.name}</h5>
+            <h5 className="title is-3 mb-2">{spot.name}</h5>
             <div className="is-flex is-align-items-center">
-            {spot.avgRating && (
-                <div className='is-flex is-align-items-center mr-4'>
-                    <i className="fas fa-star mr-2 checked"></i>
-                    <h5 className='weight-600'>{Number(spot.avgRating).toFixed(2)}</h5>
-                </div>
-            )}
-            <h6 className="subtitle is-6">{spot.city}, {spot.state}</h6>
+                {spot.avgRating && (
+                    <div className='is-flex is-align-items-center mr-4'>
+                        <i className="fas fa-star mr-2 checked"></i>
+                        <h5 className='weight-600'>{Number(spot.avgRating).toFixed(2)}</h5>
+                    </div>
+                )}
+                <h6 className="subtitle is-6">{spot.city}, {spot.state}</h6>
             </div>
             {isSpotOwner && (
                 <div className="buttons mt-5">
@@ -161,22 +161,22 @@ const SpotDetailsComponent = () => {
                     <img src={previewImage?.url} alt='preview-image' className='image is-5by4 p-0' />
                 ) : (
                     <>
-                    <div className='preview-image-container'>
-                        {previewImage && (
-                            <img src={previewImage?.url} alt='preview-image' className='preview-image'></img>
+                        <div className='preview-image-container'>
+                            {previewImage && (
+                                <img src={previewImage?.url} alt='preview-image' className='preview-image'></img>
 
-                        )}
-                    </div>
+                            )}
+                        </div>
 
-                    <div className='secondary-images-container'>
-                        {(secondaryImagesValues) && (secondaryImagesValues.length > 0) && (
-                            secondaryImagesValues.slice(0, 4).map((image, index) => (
-                                <div className='secondary-image-container' key={index}>
-                                    <img key={image.id} src={image.url} alt='secondary-image' className={`secondary-image ${index === 1 ? 'border-top-right' : index === 3 ? 'border-bottom-right' : ''}`}></img>
-                                </div>
-                            ))
-                        )}
-                    </div>
+                        <div className='secondary-images-container'>
+                            {(secondaryImagesValues) && (secondaryImagesValues.length > 0) && (
+                                secondaryImagesValues.slice(0, 4).map((image, index) => (
+                                    <div className='secondary-image-container' key={index}>
+                                        <img key={image.id} src={image.url} alt='secondary-image' className={`secondary-image ${index === 1 ? 'border-top-right' : index === 3 ? 'border-bottom-right' : ''}`}></img>
+                                    </div>
+                                ))
+                            )}
+                        </div>
                     </>
                 )}
             </div>
@@ -184,14 +184,16 @@ const SpotDetailsComponent = () => {
                 <div className='column is-full-mobile is-half-tablet is-three-fifths-desktop'>
                     {spot.Owner?.firstName && (
                         <div className='is-flex mt-4'>
-                            <h5 className="subtitle is-5 m-0 weight-600">
+                            <h5 className="subtitle is-4 m-0 weight-600">
                                 {`Hosted by ${spot.Owner?.firstName}`}
                                 <i className="fas fa-user-circle ml-3" />
                             </h5>
                         </div>
                     )}
                     <hr />
-                    {spot.description && <p className="subtitle is-6 mt-3">{spot.description}</p>}
+                    <div className='content is-medium'>
+                    {spot.description && <p className="mt-3">{spot.description}</p>}
+                    </div>
                 </div>
                 <div className='column calendar-container is-full-mobile is-flex is-justify-content-flex-end'>
                     <div className='box calendar-box'>
@@ -200,57 +202,65 @@ const SpotDetailsComponent = () => {
                             <i className="fas fa-star mr-2 checked"></i>
                             <h5 className='weight-600'>{Number(spot.avgRating).toFixed(2)}</h5>
                         </div>
-                        <div className='booking-container'>
-                            <CreateBookingForm/>
+                        <div className='booking-container is-inline-block'>
+                            {
+                                isLoggedIn ?
+                                    !isSpotOwner ?
+                                        <CreateBookingForm spotId={spot.id}/>
+                                        :
+                                        <></>
+                                    :
+                                    <></>
+                            }
                         </div>
                     </div>
                 </div>
             </div>
             {reviewsValues && (reviewsValues?.length > 0) && (
                 <div>
-                <h4 className="title is-4 mb-2">Reviews</h4>
-                <div className="is-flex is-align-items-center mb-4">
-                    {spot.avgRating && (
-                        <div className='is-flex is-align-items-center'>
-                            <i className="fas fa-star mr-2 checked"></i>
-                            <h5 className='weight-600'>{Number(spot.avgRating).toFixed(2)}</h5>
-                        </div>
-                    )}
-                    <h6 className='subtitle is-6 m-0 mr-2 ml-2'>|</h6>
-                    <h6 className='subtitle is-6 m-0'>{`${reviewsValues.length} review${reviewsValues.length === 1 ? '' : 's'}`}</h6>
-                </div>
-                {reviewsValues.map((review, ind) => (
-                    <div key={ind} className='box'>
-                        <div className="is-flex is-align-items-center mb-3">
-                            {review.User?.firstName && (
-                                <h5 className="subtitle is-5 m-0">
-                                    <i className="fas fa-user-circle mr-2" />
-                                    {review.User?.firstName}
-                                </h5>
-                            )}
-                            <h5 className="subtitle is-5 m-0 ml-2 mr-2">·</h5>
-                            {spot.avgRating && (
-                                <div className='is-flex is-align-items-center mr-4'>
-                                    <i className="fas fa-star mr-2 checked"></i>
-                                    <h5 className='weight-600'>{Number(spot.avgRating).toFixed(2)}</h5>
+                    <h4 className="title is-4 mb-2">Reviews</h4>
+                    <div className="is-flex is-align-items-center mb-4">
+                        {spot.avgRating && (
+                            <div className='is-flex is-align-items-center'>
+                                <i className="fas fa-star mr-2 checked"></i>
+                                <h5 className='weight-600'>{Number(spot.avgRating).toFixed(2)}</h5>
+                            </div>
+                        )}
+                        <h6 className='subtitle is-6 m-0 mr-2 ml-2'>|</h6>
+                        <h6 className='subtitle is-6 m-0'>{`${reviewsValues.length} review${reviewsValues.length === 1 ? '' : 's'}`}</h6>
+                    </div>
+                    {reviewsValues.map((review, ind) => (
+                        <div key={ind} className='box'>
+                            <div className="is-flex is-align-items-center mb-3">
+                                {review.User?.firstName && (
+                                    <h5 className="subtitle is-5 m-0">
+                                        <i className="fas fa-user-circle mr-2" />
+                                        {review.User?.firstName}
+                                    </h5>
+                                )}
+                                <h5 className="subtitle is-5 m-0 ml-2 mr-2">·</h5>
+                                {spot.avgRating && (
+                                    <div className='is-flex is-align-items-center mr-4'>
+                                        <i className="fas fa-star mr-2 checked"></i>
+                                        <h5 className='weight-600'>{Number(spot.avgRating).toFixed(2)}</h5>
+                                    </div>
+                                )}
+                            </div>
+                            {review.review && <p>{review.review}</p>}
+
+                            {review?.User?.id === user?.id && (
+                                <div className="buttons is-justify-content-flex-end mt-3">
+                                    <button className="button is-primary" onClick={() => handleEditReviewRoute(review?.id)}>Edit this review</button>
                                 </div>
                             )}
                         </div>
-                        {review.review && <p>{review.review}</p>}
-
-                        {review?.User?.id === user?.id && (
-                            <div className="buttons is-justify-content-flex-end mt-3">
-                                <button className="button is-primary" onClick={() => handleEditReviewRoute(review?.id)}>Edit this review</button>
-                            </div>
+                    ))}
+                    <div className='buttons mt-2'>
+                        {(user) && (!isSpotOwner) && (!hasAlreadyReviewed) && (
+                            <button className="button is-primary" onClick={handleCreateReviewRoute}>Review this spot</button>
                         )}
                     </div>
-                ))}
-                <div className='buttons mt-2'>
-                    {(user) && (!isSpotOwner) && (!hasAlreadyReviewed) && (
-                        <button className="button is-primary"  onClick={handleCreateReviewRoute}>Review this spot</button>
-                    )}
-                </div> 
-            </div>    
+                </div>
             )}
         </div>
     );

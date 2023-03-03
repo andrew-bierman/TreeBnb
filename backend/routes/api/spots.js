@@ -52,7 +52,7 @@ const router = express.Router();
 
 // Get all Spots
 router.get('/', validateFilters, async (req, res) => {
-  const { maxLat, minLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+  const { maxLat, minLat, minLng, maxLng, minPrice, maxPrice, q } = req.query;
 
   const where = {};
 
@@ -101,84 +101,98 @@ router.get('/', validateFilters, async (req, res) => {
     pagination.offset = size * (page - 1);
   }
 
-  // const allSpots = await Spot.findAll()
-
-  const allSpots = await Spot.findAll({
-    attributes: [
-      'id',
-      'ownerId',
-      'address',
-      'city',
-      'state',
-      'country',
-      'lat',
-      'lng',
-      'name',
-      'description',
-      'price',
-      [sequelize.fn('avg', sequelize.col('stars')), 'avgRating'],
-      [sequelize.fn('', sequelize.col('url')), 'previewImage'],
-      'createdAt',
-      'updatedAt',
-    ],
-    // sequelize code to include the url of the first image of the spot but only if the preview attribute is true otherwise it will be null
-
-    include: [
-      {
-        model: SpotImage,
-        attributes: [
-          // 'url'
+  let allSpots;
+  if (q) {
+    // If the `q` parameter is present, filter the spots based on the search query
+    allSpots = await Spot.findAll({
+      where: {
+        [Op.or]: [
+          { name: { [Op.like]: `%${q}%` } },
+          { address: { [Op.like]: `%${q}%` } },
+          { city: { [Op.like]: `%${q}%` } },
+          { state: { [Op.like]: `%${q}%` } },
+          { country: { [Op.like]: `%${q}%` } },
+          { description: { [Op.like]: `%${q}%` } },
         ],
-        where: {
-          preview: true,
+        ...where,
+      },
+      attributes: [
+        'id',
+        'ownerId',
+        'address',
+        'city',
+        'state',
+        'country',
+        'lat',
+        'lng',
+        'name',
+        'description',
+        'price',
+        [sequelize.fn('avg', sequelize.col('stars')), 'avgRating'],
+        [sequelize.fn('', sequelize.col('url')), 'previewImage'],
+        'createdAt',
+        'updatedAt',
+      ],
+
+      // sequelize code to include the url of the first image of the spot but only if the preview attribute is true otherwise it will be null
+      include: [
+        {
+          model: SpotImage,
+          attributes: [],
+          where: {
+            preview: true,
+          },
+          required: false,
         },
-        required: false,
-      },
-      {
-        model: Review,
-        attributes: [
-          // 'stars'
-        ],
-      },
-    ],
-
-    // // group: ['Spot.id', ', 'Reviews.spotId', 'SpotImages.id'],
-    group: ['Spot.id', 'SpotImages.url', 'Reviews.spotId'],
-
-    where,
-
-    // where: {
-    //     id: {
-    //         [Op.gte]: 0,
-    //     },
-    //     ...where
-    // }
-
-    ...pagination,
-    // limit: pagination.limit,
-    // offset: pagination.offset,
-    subQuery: false,
-  });
-
-  // */
-  // const reviews = await Review.findAll({
-  //   where: {
-  //     spotId: '1',
-  //   },
-  //   attributes: {
-  //     include: [[sequelize.fn('COUNT', sequelize.col('stars')), 'avgRating']],
-  //     exclude: [
-  //       'id',
-  //       'spotId',
-  //       'userId',
-  //       'review',
-  //       'stars',
-  //       'createdAt',
-  //       'updatedAt',
-  //     ],
-  //   },
-  //   group: ['Review.spotId'],
-  // });
+        {
+          model: Review,
+          attributes: [],
+        },
+      ],
+      group: ['Spot.id', 'SpotImages.url', 'Reviews.spotId'],
+      ...pagination,
+      subQuery: false,
+    });
+  } else {
+    // If the `q` parameter is not present, return all spots without any filters or search query
+    allSpots = await Spot.findAll({
+      where,
+      attributes: [
+        'id',
+        'ownerId',
+        'address',
+        'city',
+        'state',
+        'country',
+        'lat',
+        'lng',
+        'name',
+        'description',
+        'price',
+        [sequelize.fn('avg', sequelize.col('stars')), 'avgRating'],
+        [sequelize.fn('', sequelize.col('url')), 'previewImage'],
+        'createdAt',
+        'updatedAt',
+      ],
+      include: [
+        {
+          model: SpotImage,
+          attributes: [],
+          where: {
+            preview: true,
+          },
+          required: false,
+        },
+        {
+          model: Review,
+          attributes: [],
+        },
+      ],
+      group: ['Spot.id', 'SpotImages.url', 'Reviews.spotId'],
+      ...pagination,
+      subQuery: false,
+    });
+  }
 
   return res.status(200).json({
     Spots: allSpots,
@@ -186,6 +200,7 @@ router.get('/', validateFilters, async (req, res) => {
     size,
   });
 });
+
 
 // Get all Spots owned by the Current User
 router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
@@ -455,7 +470,7 @@ router.put(
 
     let findSpot = await Spot.findByPk(spotId)
 
-    console.log({findSpot})
+    console.log({ findSpot })
 
     if (!findSpot) {
       return next(customErrorFormatter("Spot couldn't be found", 404));
@@ -466,7 +481,7 @@ router.put(
       // })
     }
 
-    if(findSpot.dataValues.ownerId !== user.id){
+    if (findSpot.dataValues.ownerId !== user.id) {
       return next(customErrorFormatter("Forbidden", 403))
     }
 

@@ -11,6 +11,8 @@ import SignupFormModal from '../SignupFormModal';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 
+import SearchBar from '../SearchBar/SearchBar';
+
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
   const { setModalContent } = useModal();
@@ -39,6 +41,9 @@ function Navigation({ isLoaded }){
           {logoIcon && <i className="fas fa-solid fa-tree mr-2"></i>}
           <p>{platformTitle}</p>
         </NavLink>
+        <div className='navbar-item'>
+            <SearchBar />
+            </div>
         {!isLoggedIn ? (
           <a role="button" className="navbar-burger" id="navbarBurger" onClick={handleOpenMobileMenu}>
             <span aria-hidden="true"></span>
@@ -46,14 +51,18 @@ function Navigation({ isLoaded }){
             <span aria-hidden="true"></span>
           </a>
         ) : (
-          <div className="buttons pr-3 is-flex is-align-content-center">
-            <NavLink className='button is-primary' exact to="/spots/create">
-              List your home
-            </NavLink>
-            <button className='button is-rounded' onClick={handleOpenProfileMenu}>
-              <i className="fas fa-solid fa-bars"></i>
-              <i className="fas fa-user-circle ml-3" />
-            </button>
+          <div className="buttons pr-3 is-flex is-align-content-center">            
+            <div className='navbar-end'>
+              <div className="buttons pr-3 is-flex is-align-content-center">
+                <NavLink className='button is-primary is-rounded' exact to="/spots/create">
+                  List your home
+                </NavLink>
+                <button className='button is-rounded' onClick={handleOpenProfileMenu}>
+                  <i className="fas fa-solid fa-bars"></i>
+                  <i className="fas fa-user-circle ml-3" />
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>

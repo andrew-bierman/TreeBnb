@@ -1,0 +1,42 @@
+.search-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+
+
+    /* margin: 2rem 0; */
+
+}
+
+.search-bar form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+.search-bar .input {
+    border-radius: 40px;
+    border-color: #dbdbdb;
+    font-size: 1.25rem;
+    /* height: 3.5rem; */
+}
+
+.search-bar .field {
+    /* margin-bottom: 0.75rem; */
+}
+
+.search-bar .buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar .button {
+    border-radius: 40px;
+    height: 3.5rem;
+    font-size: 1.25rem;
+}

@@ -15,6 +15,9 @@ import CurrentUserReviewsComponent from "./components/CurrentUserReviews";
 import EditReviewForm from "./components/EditReviewForm";
 import Profile from "./components/Profile";
 import CreateBookingForm from "./components/CreateBookingForm";
+import EditBookingForm from "./components/EditBookingForm";
+import EditBookingPage from "./components/EditBookingPage";
+import SearchResultPage from "./components/SearchResultPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,12 +48,21 @@ function App() {
           {/* <SpotDetailsComponent/> */}
         </Route>
 
+        <Route path="/spots/search">
+          <SearchResultPage />
+        </Route>
+
         <Route path="/spots/:spotId/edit">
           <EditSpotForm/>
         </Route>
 
         <Route path="/spots/:spotId/bookings/create">
           <CreateBookingForm />
+        </Route>
+
+        <Route path="/spots/:spotId/bookings/edit/:bookingId">
+        {/* <Route path="/bookings/edit/:bookingId"> */}
+          <EditBookingPage/>
         </Route>
 
         <Route path="/spots/:spotId/reviews/create">

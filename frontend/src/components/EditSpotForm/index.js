@@ -165,6 +165,10 @@ const EditSpotForm = () => {
     )
   }
 
+  if (user.id !== singleSpot?.userId) {
+    history.push(`/spots/${spotId}`)
+  }
+
   return (
     <div className='p-2 pt-5 is-flex is-flex-direction-column is-align-items-center'>
       <h3 className="title is-3">Edit a Spot</h3>
