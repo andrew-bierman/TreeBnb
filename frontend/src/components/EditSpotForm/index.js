@@ -1,15 +1,21 @@
-import { useDispatch, useSelector } from 'react-redux';
-import React, { useEffect, useState } from 'react'
-import { useParams, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
 
-import { editSpot, deleteSpot, actionCreatorResetSingleSpot } from '../../store/spots';
-import { getUserSpots, getOneSpot } from '../../store/spots';
+import {
+  editSpot,
+  deleteSpot,
+  actionCreatorResetSingleSpot,
+} from "../../store/spots";
+import { getUserSpots, getOneSpot } from "../../store/spots";
 
-import './EditSpotForm.css';
+import "./EditSpotForm.css";
 
 const isValidURL = (string) => {
-  const res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
-  return (res !== null)
+  const res = string.match(
+    /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+  );
+  return res !== null;
 };
 
 const initialValues = {
@@ -23,8 +29,8 @@ const initialValues = {
   description: "",
   price: "",
   previewImage: "",
-  images: ""
-}
+  images: "",
+};
 
 const initialTouchedValues = {
   name: false,
@@ -37,17 +43,17 @@ const initialTouchedValues = {
   description: false,
   price: false,
   previewImage: false,
-  images: false
+  images: false,
 };
 
 const EditSpotForm = () => {
   const dispatch = useDispatch();
-  const { spotId } = useParams()
+  const { spotId } = useParams();
   const history = useHistory();
 
-  const user = useSelector(state => state.session.user);
-  const singleSpot = useSelector(state => state.spots.singleSpot);
-  const allSpots = useSelector(state => state.spots.allSpots);
+  const user = useSelector((state) => state.session.user);
+  const singleSpot = useSelector((state) => state.spots.singleSpot);
+  const allSpots = useSelector((state) => state.spots.allSpots);
 
   const [formValues, setFormValues] = useState(initialValues);
   const [touched, setTouched] = useState(initialTouchedValues);
@@ -55,15 +61,23 @@ const EditSpotForm = () => {
 
   const validateForm = () => {
     setErrors({
-      name: !formValues.name ? "Name is required" : (formValues.name.length < 1 || formValues.name.length > 50) ? 'Name must be less than 50 characters' : '',
-      address: !formValues.address ? 'Street address is required' : "",
-      city: !formValues.city ? 'City is required' : "",
-      state: !formValues.state ? 'State is required' : "",
-      country: !formValues.country ? 'Country is required' : "",
+      name: !formValues.name
+        ? "Name is required"
+        : formValues.name.length < 1 || formValues.name.length > 50
+        ? "Name must be less than 50 characters"
+        : "",
+      address: !formValues.address ? "Street address is required" : "",
+      city: !formValues.city ? "City is required" : "",
+      state: !formValues.state ? "State is required" : "",
+      country: !formValues.country ? "Country is required" : "",
       // lat: !formValues.lat ? 'Latitude is required' : (parseFloat(lat) < -90) || (parseFloat(lat) > 90) ? 'Latitude is not valid' : '',
       // lng: !formValues.lng ? 'Longitude is required' : (parseFloat(lng) < -180) || (parseFloat(lng) > 180) ? 'Longitude is not valid' : '',
-      description: !formValues.description ? 'Description is required' : "",
-      price: !formValues.price ? 'Price is required' : (parseFloat(formValues.price) < 1) ? 'Price must be greater than $1' : "",
+      description: !formValues.description ? "Description is required" : "",
+      price: !formValues.price
+        ? "Price is required"
+        : parseFloat(formValues.price) < 1
+        ? "Price must be greater than $1"
+        : "",
       //previewImage: !formValues.previewImage ? 'Preview Image is required' : (formValues.previewImage === '' || formValues.previewImage === {}) ? 'Preview Image is not valid' : "",
       // images: ""
     });
@@ -72,7 +86,7 @@ const EditSpotForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (Object.values(errors).some(err => err)) return;
+    if (Object.values(errors).some((err) => err)) return;
 
     // Submit the form to your API
     const payload = {
@@ -85,12 +99,12 @@ const EditSpotForm = () => {
       lat: `${formValues.lat}`,
       lng: `${formValues.lng}`,
       description: formValues.description,
-      price: formValues.price
+      price: formValues.price,
     };
 
     // console.log({payload})
 
-    let editedSpot = await dispatch(editSpot(payload))
+    let editedSpot = await dispatch(editSpot(payload));
 
     // console.log('edited spot ----', {editedSpot})
 
@@ -101,12 +115,16 @@ const EditSpotForm = () => {
   };
 
   const confirmDelete = async () => {
-    if (window.confirm("Please confirm you would like to delete a spot, this action cannot be undone.") == true) {
-      let deleteSpotResponse = await dispatch(deleteSpot(spotId))
+    if (
+      window.confirm(
+        "Please confirm you would like to delete a spot, this action cannot be undone."
+      ) == true
+    ) {
+      let deleteSpotResponse = await dispatch(deleteSpot(spotId));
       // console.log(deleteSpotResponse)
-      history.push('/')
+      history.push("/");
     }
-  }
+  };
 
   const handleChange = async (event) => {
     const { name, value } = event.target;
@@ -126,7 +144,7 @@ const EditSpotForm = () => {
         [name]: true,
       };
     });
-  }
+  };
 
   useEffect(() => {
     dispatch(getOneSpot(spotId));
@@ -146,7 +164,7 @@ const EditSpotForm = () => {
       price: singleSpot?.price || "",
       previewImage: singleSpot?.previewImage || "",
       images: singleSpot?.images || "",
-    })
+    });
   }, [singleSpot]);
 
   // reset all errors to inital in the first render
@@ -162,18 +180,17 @@ const EditSpotForm = () => {
       <div className="is-flex is-justify-content-center w-100 mt-5">
         <h5 className="title is-5">Please login or signup to list your home</h5>
       </div>
-    )
-  }
-
-  if (user.id !== singleSpot?.userId) {
-    history.push(`/spots/${spotId}`)
+    );
   }
 
   return (
-    <div className='p-2 pt-5 is-flex is-flex-direction-column is-align-items-center'>
+    <div className="p-2 pt-5 is-flex is-flex-direction-column is-align-items-center">
       <h3 className="title is-3">Edit a Spot</h3>
-      <div className='columns is-centered w-100'>
-        <form onSubmit={handleSubmit} className='is-flex is-flex-direction-column is-align-items-center column is-half'>
+      <div className="columns is-centered w-100">
+        <form
+          onSubmit={handleSubmit}
+          className="is-flex is-flex-direction-column is-align-items-center column is-half"
+        >
           {/* Name */}
           <div className="field mb-5 w-100">
             <div className="control has-icons-left has-icons-right">
@@ -182,7 +199,9 @@ const EditSpotForm = () => {
                 id="name"
                 name="name"
                 placeholder="Name"
-                className={`input ${errors.name && touched.name ? 'is-danger' : ''}`}
+                className={`input ${
+                  errors.name && touched.name ? "is-danger" : ""
+                }`}
                 value={formValues.name}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -191,14 +210,14 @@ const EditSpotForm = () => {
               <span className="icon is-small is-left">
                 <i className="fas fa-user"></i>
               </span>
-              {errors.name && touched.name && 
+              {errors.name && touched.name && (
                 <>
                   <span className="icon is-small is-right">
                     <i className="fas fa-exclamation-triangle"></i>
                   </span>
                   <h6 className="help is-danger">{errors.name}</h6>
                 </>
-              }
+              )}
             </div>
           </div>
           {/* Address */}
@@ -209,7 +228,9 @@ const EditSpotForm = () => {
                 id="address"
                 name="address"
                 placeholder="Address"
-                className={`input ${errors.address && touched.address ? 'is-danger' : ''}`}
+                className={`input ${
+                  errors.address && touched.address ? "is-danger" : ""
+                }`}
                 value={formValues.address}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -218,14 +239,14 @@ const EditSpotForm = () => {
               <span className="icon is-small is-left">
                 <i className="fas fa-envelope"></i>
               </span>
-              {errors.address && touched.address && 
+              {errors.address && touched.address && (
                 <>
                   <span className="icon is-small is-right">
                     <i className="fas fa-exclamation-triangle"></i>
                   </span>
                   <h6 className="help is-danger">{errors.address}</h6>
                 </>
-              }
+              )}
             </div>
           </div>
           {/* City */}
@@ -236,7 +257,9 @@ const EditSpotForm = () => {
                 id="city"
                 name="city"
                 placeholder="City"
-                className={`input ${errors.city && touched.city ? 'is-danger' : ''}`}
+                className={`input ${
+                  errors.city && touched.city ? "is-danger" : ""
+                }`}
                 value={formValues.city}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -245,14 +268,14 @@ const EditSpotForm = () => {
               <span className="icon is-small is-left">
                 <i className="fas fa-city"></i>
               </span>
-              {errors.city && touched.city && 
+              {errors.city && touched.city && (
                 <>
                   <span className="icon is-small is-right">
                     <i className="fas fa-exclamation-triangle"></i>
                   </span>
                   <h6 className="help is-danger">{errors.city}</h6>
                 </>
-              }
+              )}
             </div>
           </div>
           {/* State */}
@@ -266,20 +289,22 @@ const EditSpotForm = () => {
                 value={formValues.state}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className={`input ${errors.state && touched.state ? 'is-danger' : ''}`}
+                className={`input ${
+                  errors.state && touched.state ? "is-danger" : ""
+                }`}
                 required
               />
               <span className="icon is-small is-left">
                 <i className="fas fa-envelope"></i>
               </span>
-              {errors.state && touched.state && 
+              {errors.state && touched.state && (
                 <>
                   <span className="icon is-small is-right">
                     <i className="fas fa-exclamation-triangle"></i>
                   </span>
                   <h6 className="help is-danger">{errors.state}</h6>
                 </>
-              }
+              )}
             </div>
           </div>
           {/* Country */}
@@ -290,7 +315,9 @@ const EditSpotForm = () => {
                 id="country"
                 name="country"
                 placeholder="Country"
-                className={`input ${errors.country && touched.country ? 'is-danger' : ''}`}
+                className={`input ${
+                  errors.country && touched.country ? "is-danger" : ""
+                }`}
                 value={formValues.country}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -299,14 +326,14 @@ const EditSpotForm = () => {
               <span className="icon is-small is-left">
                 <i className="fas fa-globe"></i>
               </span>
-              {errors.country && touched.country && 
+              {errors.country && touched.country && (
                 <>
                   <span className="icon is-small is-right">
                     <i className="fas fa-exclamation-triangle"></i>
                   </span>
                   <h6 className="help is-danger">{errors.country}</h6>
                 </>
-              }
+              )}
             </div>
           </div>
           {/* Latitude */}
@@ -374,21 +401,23 @@ const EditSpotForm = () => {
                 name="description"
                 placeholder="Description"
                 value={formValues.description}
-                className={`input ${errors.description && touched.description ? 'is-danger' : ''}`}
+                className={`input ${
+                  errors.description && touched.description ? "is-danger" : ""
+                }`}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
               <span className="icon is-small is-left">
                 <i className="fas fa-comment"></i>
               </span>
-              {errors.description && touched.description && 
+              {errors.description && touched.description && (
                 <>
                   <span className="icon is-small is-right">
                     <i className="fas fa-exclamation-triangle"></i>
                   </span>
                   <h6 className="help is-danger">{errors.description}</h6>
                 </>
-              }
+              )}
             </div>
           </div>
 
@@ -400,9 +429,11 @@ const EditSpotForm = () => {
                 id="price"
                 name="price"
                 placeholder="Price"
-                min='1'
+                min="1"
                 value={formValues.price}
-                className={`input ${errors.price && touched.price ? 'is-danger' : ''}`}
+                className={`input ${
+                  errors.price && touched.price ? "is-danger" : ""
+                }`}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 required
@@ -410,14 +441,14 @@ const EditSpotForm = () => {
               <span className="icon is-small is-left">
                 <i className="fas fa-dollar-sign"></i>
               </span>
-              {errors.price && touched.price && 
+              {errors.price && touched.price && (
                 <>
                   <span className="icon is-small is-right">
                     <i className="fas fa-exclamation-triangle"></i>
                   </span>
                   <h6 className="help is-danger">{errors.price}</h6>
                 </>
-              }
+              )}
             </div>
           </div>
 
@@ -480,11 +511,13 @@ const EditSpotForm = () => {
               <img src={previewImage}></img>
             ) }
           </div> */}
-            <button type="submit" className="button is-primary mt-5 w-100">Submit</button>
+          <button type="submit" className="button is-primary mt-5 w-100">
+            Submit
+          </button>
         </form>
       </div>
     </div>
   );
 };
 
-export default EditSpotForm
+export default EditSpotForm;

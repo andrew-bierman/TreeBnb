@@ -26,13 +26,16 @@ $white: hsl(0, 0%, 100%);
 $black: hsl(0, 0%, 4%);
 
 // Update Bulma's global variables
-$family-sans-serif: "Montserrat", sans-serif;
+$family-sans-serif: "Montserrat",
+sans-serif;
 $grey-dark: $grey-dark;
 $grey-light: $grey-light;
 $primary: $green;
 $link: $blue;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
+
+$footer-padding:3rem 1.5rem 3rem;
 
 // Update some of Bulma's component variables
 // $body-background-color: $white;
@@ -51,11 +54,13 @@ $fullhd-enabled: false;
 // @import "../node_modules/bulma/sass/layout/hero.sass";
 // @import "../node_modules/bulma/sass/layout/section.sass";
 
-@import "../node_modules/bulma/sass/base/_all";
-@import "../node_modules/bulma/sass/utilities/_all";
-@import "../node_modules/bulma/sass/elements/_all";
-@import "../node_modules/bulma/sass/form/_all";
-@import "../node_modules/bulma/sass/components/_all";
-@import "../node_modules/bulma/sass/grid/_all";
-@import "../node_modules/bulma/sass/helpers/_all";
-@import "../node_modules/bulma/sass/layout/_all";
+
+// @import "../../../../../../node_modules/";
+@import "../../../../../../node_modules/bulma/sass/base/_all";
+@import "../../../../../../node_modules/bulma/sass/utilities/_all";
+@import "../../../../../../node_modules/bulma/sass/elements/_all";
+@import "../../../../../../node_modules/bulma/sass/form/_all";
+@import "../../../../../../node_modules/bulma/sass/components/_all";
+@import "../../../../../../node_modules/bulma/sass/grid/_all";
+@import "../../../../../../node_modules/bulma/sass/helpers/_all";
+@import "../../../../../../node_modules/bulma/sass/layout/_all";

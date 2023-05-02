@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Switch, Redirect, Route  } from "react-router-dom";
-
+import { Switch, Redirect, Route } from "react-router-dom";
 
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
@@ -18,6 +17,7 @@ import CreateBookingForm from "./components/CreateBookingForm";
 import EditBookingForm from "./components/EditBookingForm";
 import EditBookingPage from "./components/EditBookingPage";
 import SearchResultPage from "./components/SearchResultPage";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,21 +30,18 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      {isLoaded && (
-        <Switch>
-        </Switch>
-      )}
+      {isLoaded && <Switch></Switch>}
 
       <Switch>
         <Route exact path="/">
-          <AllSpotsComponent/>
+          <AllSpotsComponent />
         </Route>
 
         <Route path="/spots/create">
           <CreateSpotForm />
         </Route>
         <Route path="/user/current">
-          <Profile/>
+          <Profile />
           {/* <SpotDetailsComponent/> */}
         </Route>
 
@@ -53,7 +50,7 @@ function App() {
         </Route>
 
         <Route path="/spots/:spotId/edit">
-          <EditSpotForm/>
+          <EditSpotForm />
         </Route>
 
         <Route path="/spots/:spotId/bookings/create">
@@ -61,8 +58,8 @@ function App() {
         </Route>
 
         <Route path="/spots/:spotId/bookings/edit/:bookingId">
-        {/* <Route path="/bookings/edit/:bookingId"> */}
-          <EditBookingPage/>
+          {/* <Route path="/bookings/edit/:bookingId"> */}
+          <EditBookingPage />
         </Route>
 
         <Route path="/spots/:spotId/reviews/create">
@@ -74,22 +71,19 @@ function App() {
         </Route>
 
         <Route path="/spots/:spotId">
-          <SpotDetailsComponent/>
+          <SpotDetailsComponent />
         </Route>
-
 
         <Route path="/reviews/current">
-          <CurrentUserReviews/>
+          <CurrentUserReviews />
           {/* <SpotDetailsComponent/> */}
         </Route>
-
-
 
         <Route>
           <p>Page Not Found</p>
         </Route>
-
       </Switch>
+      <Footer />
     </>
   );
 }

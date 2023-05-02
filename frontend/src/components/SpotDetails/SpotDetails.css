@@ -1,5 +1,8 @@
 .spot-details .calendar-box {
+  width: -webkit-max-content;
+  width: -moz-max-content;
   width: max-content;
+  min-width: 300px;
 }
 
 .images {
@@ -28,18 +31,24 @@
   border-top-left-radius: 25px;
   border-bottom-left-radius: 25px;
 
+  -o-object-fit: cover !important;
+
   object-fit: cover !important;
+  -o-object-position: center;
   object-position: center;
 }
 
 .preview-image-container img {
   width: 100%;
   min-height: 500px;
+  -o-object-fit: cover !important;
   object-fit: cover !important;
 }
 
 .preview-image img {
+  -o-object-fit: cover !important;
   object-fit: cover !important;
+  -o-object-position: center;
   object-position: center;
 
   padding: 10px !important;
@@ -52,12 +61,13 @@
   max-height: 100%;
   /* max-width: 100%; */
 
+  -o-object-fit: contain !important;
+
   object-fit: contain !important;
   object-position: center;
 }
 
 .secondary-images-container {
-
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -68,25 +78,24 @@
 
   justify-content: space-around;
 
-
   max-width: 50%;
   max-height: 500px;
   min-height: 500px;
 }
 
 .secondary-image-container {
-
   height: 250px;
   width: 49%;
 
-  object-fit: cover;
-  object-position: center;
+  -o-object-fit: cover;
 
+  object-fit: cover;
+  -o-object-position: center;
+  object-position: center;
 
   box-sizing: border-box;
 
   max-width: 100%;
-
 }
 
 .secondary-image {
@@ -96,15 +105,18 @@
   max-height: 100%;
   max-width: 100%;
 
+  -o-object-fit: cover !important;
+
   object-fit: cover !important;
+  -o-object-position: center;
   object-position: center;
   box-sizing: border-box;
   display: block;
-
 }
 
 .secondary-image-container img {
   width: 100%;
+  -o-object-fit: cover !important;
   object-fit: cover !important;
 }
 
@@ -114,6 +126,8 @@
 
   max-height: 100%;
   max-width: 100%;
+
+  -o-object-fit: cover !important;
 
   object-fit: cover !important;
   /* object-position: center; */
@@ -131,15 +145,19 @@
 .border-top-right {
   border-top-right-radius: 25px;
 }
-
+.calendar-container {
+  height: 100%;
+}
 @media screen and (max-width: 768px) {
   .calendar-container.column.is-full-mobile {
-      justify-content: center !important;
+    justify-content: center !important;
   }
 }
 
 @media screen and (max-width: 991px) {
   .images {
+    max-height: -webkit-max-content;
+    max-height: -moz-max-content;
     max-height: max-content;
     flex-direction: column;
     justify-content: space-between;
@@ -148,6 +166,10 @@
     border-radius: 0;
     margin-bottom: 5px;
   }
+  .preview-image-container img {
+    min-height: auto;
+  }
+
   .secondary-images-container {
     max-width: 100%;
     margin: 0;
@@ -165,6 +187,8 @@
 
 @media screen and (max-width: 767px) {
   .secondary-images-container {
+    max-height: -webkit-max-content;
+    max-height: -moz-max-content;
     max-height: max-content;
   }
   .secondary-image-container {
@@ -178,4 +202,3 @@
     min-height: fit-content;
   } */
 }
-
