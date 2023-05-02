@@ -1,0 +1,17 @@
+/* .calendar-container button {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0px;
+} */
+
+.create-booking-reserve-button button {
+    background-color: #70C1B3;
+    border-radius: 10px;
+    outline: #70C1B3;
+
+    min-height: 50px;
+    border-color: #70C1B3;
+
+    width: 100%
+  }

@@ -16,6 +16,24 @@ Navigate to the project directory in the terminal
 
  - Backend folder:
 
+ Create a `.env` file to define environment variables
+
+```env
+PORT=8000
+DB_FILE=db/dev.db
+JWT_SECRET=«generate_strong_secret_here»
+JWT_EXPIRES_IN=604800
+SCHEMA=«custom_schema_name_here»
+```
+
+Run `openssl rand -base64 10` to generate a random JWT secret.
+
+```bash
+openssl rand -base64 10
+```
+
+Run the migrations and seed files to create models and populate demo data into the database. Then `npm start` to run the API. 
+
 ```bash
 npx dotenv sequelize-cli db:migrate
 npx dotenv sequelize-cli db:seed:all

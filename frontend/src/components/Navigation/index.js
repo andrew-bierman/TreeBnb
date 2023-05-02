@@ -1,57 +1,124 @@
 // frontend/src/components/Navigation/index.js
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import ProfileButton from './ProfileButton';
-import './Navigation.css';
+import React, { useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-function Navigation({ isLoaded }){
-  const sessionUser = useSelector(state => state.session.user);
+import { useModal } from "../../context/Modal";
 
-  const logoIcon = true
+import LoginFormModal from "../LoginFormModal";
+import SignupFormModal from "../SignupFormModal";
 
-  let isLoggedIn
+import ProfileButton from "./ProfileButton";
+import "./Navigation.css";
 
-  if(!sessionUser){
-    isLoggedIn = false
+import SearchBar from "../SearchBar/SearchBar";
 
-  } else {
-      isLoggedIn = true
-  }
-  
+function Navigation({ isLoaded }) {
+  const sessionUser = useSelector((state) => state.session.user);
+  const { setModalContent } = useModal();
+  const platformTitle = "treebnb";
+
+  const logoIcon = true;
+  const isLoggedIn = !!sessionUser;
+
+  const handleOpenModal = (modalComponent) => () => {
+    setModalContent(modalComponent);
+  };
+
+  const handleOpenMobileMenu = () => {
+    document.querySelector("#navbarBurger").classList.toggle("is-active");
+    document.querySelector("#navbarBasic").classList.toggle("is-active");
+  };
+
+  const handleOpenProfileMenu = () => {
+    document.querySelector("#navbarProfile").classList.toggle("is-active");
+  };
 
   return (
-    <ul>
-      <li>
-        <NavLink className='logoName' exact to="/">
-          {logoIcon && (
-            <>
-              <i className="fas fa-solid fa-tree"></i>
-              <p>treebnb</p>
-            </>
-          )}
-          {!logoIcon && (
-            <i>treebnb</i>
-          )}
+    <nav
+      className="navbar is-flex-wrap-wrap"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div
+        className={`navbar-brand is-justify-content-space-between w-100 pb-4 pt-4`}
+      >
+        <NavLink className="navbar-item logo" exact to="/">
+          {logoIcon && <i className="fas fa-solid fa-tree mr-2"></i>}
+          <p>{platformTitle}</p>
         </NavLink>
-      </li>
 
-      <div className='right-side'>
-        <p className='list-your-home-p' id='list-your-home'>
-          { isLoggedIn && (
-            <NavLink className='list-your-home' exact to="/spots/create">
-              List your home
-            </NavLink>
-          ) }
-        </p>
+        {/* <div className="navbar-item search-bar-wrap"> */}
+        <SearchBar />
+        {/* </div> */}
+        {!isLoggedIn ? (
+          <>
+            <a
+              role="button"
+              className="navbar-burger"
+              id="navbarBurger"
+              onClick={handleOpenMobileMenu}
+            >
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
 
-        {isLoaded && (
-          <li>
-            <ProfileButton user={sessionUser} />
-          </li>
+            <div id="navbarBasic" className="navbar-menu ">
+              {/* <div id="navbarBasic"> */}
+              <div className="navbar-end">
+                <div className="navbar-item">
+                  <div className="buttons">
+                    <a
+                      className="button is-primary"
+                      onClick={handleOpenModal(<LoginFormModal />)}
+                    >
+                      Log In
+                    </a>
+                    <a
+                      className="button is-light"
+                      onClick={handleOpenModal(<SignupFormModal />)}
+                    >
+                      Sign Up
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="buttons is-flex is-align-content-center mb-0">
+            <div className="navbar-end">
+              <div className="buttons pr-3 is-flex is-align-content-center mb-0">
+                <NavLink
+                  className="button is-primary is-rounded list-btn mb-0"
+                  exact
+                  to="/spots/create"
+                >
+                  List your home
+                </NavLink>
+                <button
+                  className="button is-rounded mb-0"
+                  onClick={handleOpenProfileMenu}
+                >
+                  <i className="fas fa-solid fa-bars"></i>
+                  <i className="fas fa-user-circle ml-3" />
+                </button>
+              </div>
+            </div>
+          </div>
         )}
       </div>
-    </ul>
+
+      {isLoggedIn && (
+        <div
+          id="navbarProfile"
+          className="navbar-profile-menu w-100 pl-3 pb-5 pt-5"
+        >
+          {isLoaded && <ProfileButton user={sessionUser} />}
+        </div>
+      )}
+    </nav>
   );
 }
 

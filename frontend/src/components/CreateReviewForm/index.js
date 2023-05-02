@@ -1,184 +1,193 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react'
-import { NavLink, Route, useParams, useHistory } from 'react-router-dom';
+import { useState, useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, useHistory } from "react-router-dom";
 
-import { createReview } from '../../store/reviews';
-import './CreateReviewForm.css'
+import { createReview } from "../../store/reviews";
 
-import React, { useState } from 'react';
-import { validate } from 'uuid';
+import "./CreateReviewForm.css";
+
+const initialValues = {
+  review: "",
+  stars: 5,
+};
+
+const initialTouchedValues = {
+  review: false,
+  stars: false,
+};
 
 const CreateReviewForm = () => {
-
   const dispatch = useDispatch();
-
-  const { spotId } = useParams()
-
-  let user = useSelector(state => {
-    // console.log(state)
-
-    return state.session.user
-})
-
+  const { spotId } = useParams();
   const history = useHistory();
 
-  const [review, setReview] = useState('');
-  const [stars, setStars] = useState(5);
+  const user = useSelector((state) => state.session.user);
 
-  const updateReview = (e) => setReview(e.target.value);
-  const updateStars = (e) => setStars(e.target.value);
+  const [formValues, setFormValues] = useState(initialValues);
+  const [touched, setTouched] = useState(initialTouchedValues);
+  const [errors, setErrors] = useState(initialValues);
+  console.log(
+    "OUTPUT ~ file: index.js:29 ~ CreateReviewForm ~ errors:",
+    errors
+  );
+  const [hoverRate, setHoverRate] = useState(0);
 
-  const [errors, setErrors] = useState({});
+  const getColor = (index) => {
+    if (hoverRate >= index) return true;
 
-  const [shouldShowErrors, setShouldShowErrors] = useState(false);
+    if (!hoverRate && formValues.stars >= index) return true;
 
-
-  const validateForm = () => {
-
-    // setErrors({})
-
-    const newErrors = {}
-
-    if (!review) {
-      newErrors.review = 'Review is required'
-
-    } else if ( review.length < 5){
-        newErrors.review = 'Review must be more than 5 characters'
-
-    } else {
-      newErrors.review = null
-      delete newErrors.review
-    }
-
-    if(!stars){
-      newErrors.lat = 'Stars input is required'
-
-    } else if ((parseFloat(stars) < 1) || (parseFloat(stars) > 5)){
-      newErrors.stars = 'Stars input is not valid'
-
-    } else {
-      newErrors.stars = null
-      delete newErrors.stars
-  }
-
-    setErrors({
-      // ...errors,
-      ...newErrors
-    })
-
-    if(errors.length > 0) console.log(errors)
-
-
+    return false;
   };
 
-  useEffect(() => {
-    validateForm()
-  }, [
-      review,
-      stars
-  ])
+  const handleRate = (idx) => {
+    setFormValues((prevState) => ({
+      ...prevState,
+      stars: prevState.stars === idx ? 0 : idx,
+    }));
+  };
 
+  const starRating = useMemo(() => {
+    return Array(5)
+      .fill(0)
+      .map((_, i) => i + 1)
+      .map((idx) => (
+        <div
+          className="mr-1 cursor star-container"
+          onClick={() => handleRate(idx)}
+          onMouseEnter={() => setHoverRate(idx)}
+          onMouseLeave={() => setHoverRate(0)}
+        >
+          <span className={`fa fa-star ${getColor(idx) ? "checked" : ""}`} />
+        </div>
+      ));
+  });
+
+  const validateForm = () => {
+    setErrors({
+      review: !formValues.review
+        ? "Review is required"
+        : formValues.review.length < 5
+        ? "Review must be more than 5 characters"
+        : "",
+      stars:
+        parseFloat(formValues.stars) < 1 || parseFloat(formValues.stars) > 5
+          ? "Stars is not valid"
+          : "",
+    });
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (errors) return;
+    // Submit the form to your API
+    const payload = {
+      spotId,
+      review: formValues.review,
+      stars: formValues.stars,
+    };
 
-    // Validate the form
-    setShouldShowErrors(true);
-    validateForm();
+    let createdReview = await dispatch(createReview(payload));
 
-
-    // If there are no errors, submit the form to your API
-    if (Object.keys(errors).length === 0) {
-      // Submit the form to your API
-        const payload = {
-          spotId,
-          review,
-          stars
-        };
-
-        let createdReview = await dispatch(createReview(payload))
-
-        if (createdReview) {
-          // history.push(`/reviews/${createdReview.id}`);
-          history.push(`/user/current`);
-        }
+    if (createdReview) {
+      // history.push(`/reviews/${createdReview.id}`);
+      history.push(`/user/current`);
     }
   };
 
-  let isLoggedIn
+  const handleChange = async (event) => {
+    const { name, value } = event.target;
+    await setFormValues((prevState) => {
+      return {
+        ...prevState,
+        [name]: value,
+      };
+    });
+  };
 
-  if(!user){
-    isLoggedIn = false
+  const handleBlur = (event) => {
+    const { name } = event.target;
+    setTouched((prevState) => {
+      return {
+        ...prevState,
+        [name]: true,
+      };
+    });
+  };
+
+  // reset all errors to inital in the first render
+  useEffect(() => {
+    setErrors(initialValues);
+    setTouched(initialTouchedValues);
+  }, []);
+
+  useEffect(() => validateForm(), [formValues]);
+
+  if (!user) {
     return (
-      <div className='login-message'>
-        <p>Please login or signup to continue</p>
+      <div className="is-flex is-justify-content-center w-100 mt-5">
+        <h5 className="title is-5">Please login or signup to continue</h5>
       </div>
-    )
-  } else {
-      isLoggedIn = true
+    );
   }
 
-
-
   return (
-
-    <div className='create-spot-page-component'>
-
-      {isLoggedIn && (
-
-        <div className='form-component'>
-
-          <h2>Write a Review</h2>
-
-          {/* Display error messages for all fields */}
-          {Object.keys(errors).map(fieldName => {
-            const errorMessage = errors[fieldName];
-            if (shouldShowErrors && errorMessage) {
-              return <p key={errorMessage} className="error">{errorMessage}</p>;
-            }
-          })}
-
-          <div className='form-container'>
-
-            <form onSubmit={handleSubmit}>
-              <label className="name">Review:</label>
-              <input
-                type="textarea"
-                id="review"
-                name="review"
-                value={review}
-                onChange={updateReview}
-                required
-              />
-              {errors.review && <p>{errors.review}</p>}
-
-              <label className="stars">Stars: {stars}</label>
-              <input
-                type="range"
-                min="1"
-                max="5"
-                className="slider"
-
-                id="stars"
-                name="stars"
-                value={stars}
-                onChange={updateStars}
-                required
-              />
-              {errors.stars && <p>{errors.stars}</p>}
-
-              <input type="submit" value="Submit"></input>
-
-            </form>
-
+    <div className="p-2 pt-5 is-flex is-flex-direction-column is-align-items-center">
+      <h3 className="title is-3">Write a Review</h3>
+      <div className="columns is-centered w-100">
+        <form
+          onSubmit={handleSubmit}
+          className="is-flex is-flex-direction-column is-align-items-center column is-half"
+        >
+          <div className="control has-icons-right w-100">
+            <textarea
+              id="review"
+              name="review"
+              value={formValues.review}
+              className={`textarea ${
+                errors.review && touched.review ? "is-danger" : ""
+              }`}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              required
+            />
+            {errors.review && touched.review && (
+              <>
+                <span className="icon is-small is-right">
+                  <i className="fas fa-exclamation-triangle"></i>
+                </span>
+                <h6 className="help is-danger">{errors.review}</h6>
+              </>
+            )}
           </div>
 
-        </div>
-      )}
-
+          <div className="is-flex is-flex-direction-column is-align-items-center mt-4">
+            <div className="is-flex mb-2">{starRating}</div>
+            <h6 className="subtitle is-6">Stars: {formValues.stars}</h6>
+            {errors.stars && <h6 className="help is-danger">{errors.stars}</h6>}
+          </div>
+          <div class="field is-grouped mt-2">
+            <p class="control">
+              <button
+                type="submit"
+                className="button is-primary is-medium w-100"
+              >
+                Submit
+              </button>
+            </p>
+            <p class="control">
+              <button
+                class="button is-medium"
+                onClick={() => history.push(`/`)}
+              >
+                Cancel
+              </button>
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
 
-
-export default CreateReviewForm
+export default CreateReviewForm;

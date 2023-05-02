@@ -1,77 +1,31 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react'
-import { NavLink, Route, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
-import { getAllSpots, getOneSpot, actionCreatorResetAllSpots } from '../../store/spots';
+import { getAllSpots, actionCreatorResetAllSpots } from '../../store/spots';
+
+import SpotCard from '../SpotCard';
+
 import './Spots.css'
 
 const AllSpotsComponent = () => {
     const dispatch = useDispatch();
+    const allSpots = useSelector(state => state.spots.allSpots ? Object.values(state.spots.allSpots) : []);
 
     useEffect(() => {
-
         dispatch(getAllSpots());
-
-        return ( () => dispatch(actionCreatorResetAllSpots()) )
-
+        return () => dispatch(actionCreatorResetAllSpots());
     }, [dispatch]);
 
-    let allSpots = useSelector(state => {
-        // console.log(state)
 
-        // const spots = state.spots.allSpots.forEach(spot => )
-        // const { spotId } =
-
-
-        // return state.spots.allSpots.map(spotId => state.allSpots[spotId]);
-
-        return state.spots.allSpots
-    })
-
-    if(!allSpots) {
-        return null
-    }
-
-    allSpots = Object.values(allSpots)
-
-    console.log('spots ----', {allSpots})
+    if (!allSpots || !allSpots.length) return null;
 
     return (
-
-        <div className='spots-list'>
-
+        <div className='columns is-flex-wrap-wrap is-3 pt-5 pl-3 pr-3'>
             {allSpots && allSpots.map(spot => (
-                <NavLink key={spot.id} to={`/spots/${spot.id}`} className='spot-container'>
-                    <div key={spot.id} className='spot-details-container'>
-                        <div className='spot-image-container'>
-                            <img src={spot.previewImage} alt='Preview Image'></img>
-                        </div>
-                        <div className='spot-details-review-price-location'>
-                            <div className='review-location'>
-                                <h4>{spot.city}, {spot.state}</h4>
-                                { spot.avgRating && (
-                                    <div className='spot-details-avg-rating'>
-                                        <i className="fas fa-solid fa-star"></i>
-                                        <h5>{Number(spot.avgRating).toFixed(2)}</h5>
-                                    </div>
-                                ) }
-                            </div>
-                            <div className='spot-details-price'>
-                                { spot.price && (
-                                    <div className='spot-details-price'>
-                                        <p className='price-number'>{`$${Number(spot.price).toFixed(0)}`}</p>
-                                        <p>night</p>
-                                    </div>
-                                ) }
-                            </div>
-
-                        </div>
-                    </div>
-                </NavLink>
+                <SpotCard key={spot.id} spot={spot} />
             ))}
-
         </div>
-
     );
 }
 

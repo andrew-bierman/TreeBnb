@@ -1,8 +1,35 @@
-
 a {
-    cursor: pointer
+    cursor: pointer;
 }
 
 button {
-    cursor: pointer
+    cursor: pointer;
+}
+
+.button.is-primary {
+    background-color: #70C1B3 !important;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.weight-600 {
+    font-weight: 600 !important;
+}
+
+.star-container {
+    font-size: 24px;
+}
+
+.fa-star.checked {
+    color: #70C1B3;
+}
+
+.cursor {
+    cursor: pointer;
+}
+
+.centered { 
+    text-align: center;
 }

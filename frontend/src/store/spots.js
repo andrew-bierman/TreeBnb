@@ -1,6 +1,7 @@
 import { csrfFetch } from './csrf';
 
 const GET_ALL_SPOTS = 'spots/getAll';
+const GET_ALL_SEARCH_SPOTS = 'spots/getAllSearch';
 const GET_ONE_SPOT = 'spots/getOne'
 const GET_USER_SPOTS = 'spots/currentUser'
 const CREATE_SPOT = 'spots/createSpot'
@@ -12,6 +13,13 @@ const RESET_ALL_SPOTS = 'spots/resetAllSpots'
 const actionCreatorAllSpots = (spots) => {
   return {
     type: GET_ALL_SPOTS,
+    payload: spots,
+  };
+};
+
+const actionCreatorSearchSpots = (spots) => {
+  return {
+    type: GET_ALL_SEARCH_SPOTS,
     payload: spots,
   };
 };
@@ -81,7 +89,35 @@ export const getAllSpots = () => async (dispatch) => {
 
   };
 
-// getAllSpots();
+  export const searchSpots = (searchQuery, minPrice, maxPrice) => async (dispatch) => {
+  
+    const searchParams = new URLSearchParams();
+    if (searchQuery) {
+      searchParams.set('q', searchQuery);
+    }
+    if (minPrice) {
+      searchParams.set('minPrice', minPrice);
+    }
+    if (maxPrice) {
+      searchParams.set('maxPrice', maxPrice);
+    }
+    const searchUrl = `/api/spots?${searchParams.toString()}`;
+  
+    const response = await csrfFetch(searchUrl);
+  
+    if (response.ok) {
+      const spots = await response.json();
+      dispatch(actionCreatorSearchSpots(spots));
+      return spots;
+    }
+    dispatch({
+      type: 'SPOTS_FETCH_ERROR',
+      payload: 'An error occurred while fetching the data.',
+    });
+  };
+  
+  
+  
 
 export const getOneSpot = (spotId) => async (dispatch) => {
 
@@ -201,7 +237,8 @@ export const deleteSpot = (spotId) => async (dispatch) => {
 
 const initialState = {
     allSpots: {},
-    singleSpot: {}
+    singleSpot: {},
+    searchSpots: {},
  };
 
 const spotsReducer = (state = initialState, action) => {
@@ -220,6 +257,17 @@ const spotsReducer = (state = initialState, action) => {
         // newState.spots.allSpots = allSpots;
 
         return {...state, allSpots};
+
+    case GET_ALL_SEARCH_SPOTS:
+        newState = { ...state }
+
+        const searchSpots = {};
+
+        action.payload["Spots"].forEach(spot => {
+            searchSpots[spot["id"]] = spot
+        })
+
+        return {...state, searchSpots};
 
     case GET_ONE_SPOT:{
         newState = { ...state }

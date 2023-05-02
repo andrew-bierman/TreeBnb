@@ -1,156 +1,124 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react'
-import { NavLink, Route, useParams, useHistory } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+
+import Slider from "react-slick";
 
 // import { getOneSpot } from '../../store/spots';
-import { getCurrentUserReviews, deleteReview } from '../../store/reviews';
-import './CurrentUserReviews.css'
+import BulmaModal from "../BulmaModal";
 
-const CurrentUserReviewsComponent = () => {
-    const dispatch = useDispatch();
+import "./CurrentUserReviews.css";
+import DeleteReviewConfirmation from "./DeleteReviewConfirmation";
 
-    const history = useHistory()
+const CurrentUserReviewsComponent = ({ reviews }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-    let user = useSelector(state => {
-        // console.log(state)
+  const user = useSelector((state) => state.session.user);
 
-        return state.session.user
-    })
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: reviews.length === 1 ? 1 : 2,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1100,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          dots: true,
+          infinite: true,
+        },
+      },
+    ],
+  };
 
-    let reviews = useSelector(state => {
-        // console.log(state)
+  const handleEditSpotRoute = () => {
+    // history.push(`/spots/${spotId}/edit`);
+  };
 
-        return state.reviews.user
-    })
+  const handleCreateReviewRoute = () => {
+    // history.push(`/spots/${spotId}/reviews/create`);
+  };
+  // console.log('spot details ----', {spot})
+  // console.log('secondary images ----', secondaryImages, typeof secondaryImages)
 
-    useEffect(() => {
-        dispatch(getCurrentUserReviews());
-    }, [dispatch]);
+  // console.log('secondary images values ----', secondaryImagesValues, 'isarray', Array.isArray(secondaryImagesValues))
 
+  //   const confirmDelete = async (reviewId) => {
+  //     console.log(
+  //       "OUTPUT ~ file: index.js:51 ~ confirmDelete ~ reviewId:",
+  //       reviewId
+  //     );
+  //     // let deleteReviewResponse = await dispatch(deleteReview(reviewId));
+  //     // console.log(deleteReviewResponse);
+  //     // history.push("/user/current");
+  //   };
 
-    let reviewsValues;
+  // let reviewId
+  const handleEditReviewRoute = (reviewId) => {
+    // console.log('clicked')
+    history.push(`/reviews/${reviewId}/edit`);
+  };
 
-    if(reviews){
-        reviewsValues = Object.keys(reviews).map(e => reviews[e])
-    }
-
-    if(!reviews) {
-        return null
-    }
-
-    const handleEditSpotRoute = () =>{
-        // history.push(`/spots/${spotId}/edit`);
-    }
-
-    const handleCreateReviewRoute = () =>{
-        // history.push(`/spots/${spotId}/reviews/create`);
-    }
-    // console.log('spot details ----', {spot})
-    // console.log('secondary images ----', secondaryImages, typeof secondaryImages)
-
-    // console.log('secondary images values ----', secondaryImagesValues, 'isarray', Array.isArray(secondaryImagesValues))
-
-
-    let isLoggedIn
-    let isSpotOwner
-
-    if(!user){
-
-        isLoggedIn = false
-
-    } else {
-
-        isLoggedIn = true
-
-        // if(user.id === spot.ownerId){
-        //     isSpotOwner = true
-        // } else {
-        //     isSpotOwner = false
-        // }
-
-    }
-
-
-    const confirmDelete = async (reviewId) => {
-        if (window.confirm("Please confirm you would like to delete a review, this action cannot be undone.") == true) {
-          let deleteReviewResponse = await dispatch(deleteReview(reviewId))
-          console.log(deleteReviewResponse)
-          history.push('/user/current')
-        }
-      }
-
-
-    // let reviewId
-    const handleEditReviewRoute = (reviewId) =>{
-        // console.log('clicked')
-        history.push(`/reviews/${reviewId}/edit`);
-    }
-
-
-
-    return (
-
-        <div className='reviews-details'>
-
-            {user && (
-                <div className='reviews-details-comp'>
-                    <h2>Your Reviews</h2>
-
-                    <div className='reviews-container'>
-
-                        {reviewsValues && (
-                            reviewsValues.map(review => (
-                                <div className='review-container' key={review.id}>
-                                    <p>{review.Spot.name}</p>
-
-                                    <p>{review.Spot.city}, {review.Spot.state}</p>
-
-                                    <div className='review-stars'>
-                                        <i className="fas fa-solid fa-star"></i>
-                                        <p>
-                                            {
-                                                review.stars
-                                            }
-                                        </p>
-                                    </div>
-
-
-                                    <p>{review.review}</p>
-
-                                    { (review.ReviewImages !== []) && (review.ReviewImages.map(image => (
-                                        <div>
-                                            {/* <img alt='review-image' src={image.url}></img> */}
-                                        </div>
-                                        ))
-                                    )}
-
-                                    {/* { review.User.id && (
-                                        review.User.id
-                                    ) } */}
-
-                                    <button onClick={() => handleEditReviewRoute(review.id)}>Edit Review</button>
-
-                                    <button onClick={() => confirmDelete(review.id)}>Delete Review</button>
-
-                                    {/* { review.User.firstName && (
-                                        <p>{review.User.firstName}</p>
-                                    )} */}
-
-                                    {/* <p>{ review.review }</p> */}
-                                </div>
-                            ))
-                        )}
+  return (
+    <div className="mb-5 w-100">
+      <h3 className="title is-3 mt-6 centered">Your Reviews</h3>
+      <div className="columns">
+        <Slider
+          {...sliderSettings}
+          className="column is-three-fifths-desktop is-offset-one-fifth-desktop is-half-tablet is-offset-3-tablet"
+        >
+          {reviews &&
+            reviews.map((review) => (
+              <div className="p-2 pb-4" key={review.id}>
+                <div className="review-box box is-flex is-flex-direction-column is-justify-content-space-between w-100">
+                  <div>
+                    <h5 className="subtitle is-5 mb-2">{review.Spot.name}</h5>
+                    <div className="is-flex is-justify-content-space-between is-align-items-center mb-3">
+                      <h6 className="title is-6 m-0">
+                        {review.Spot.city}, {review.Spot.state}
+                      </h6>
+                      <div className="is-flex is-align-items-center font-14">
+                        <i className="fas fa-star mr-1"></i>
+                        <h5>{review.stars}</h5>
+                      </div>
                     </div>
+                    <h6 className="subtitle is-6 m-0 review-text">
+                      {review.review}
+                    </h6>
+                  </div>
+                  <div className="buttons is-justify-content-flex-end mt-5">
+                    <button
+                      className="button is-light"
+                      onClick={() => handleEditReviewRoute(review.id)}
+                    >
+                      Edit Review
+                    </button>
 
+                    <BulmaModal
+                      modalTitle="Delete Review"
+                      buttonTitle="Delete Review"
+                      content={(isActive) => (
+                        <DeleteReviewConfirmation
+                          reviewId={review.id}
+                          isActive={isActive}
+                        />
+                      )}
+                      save={() => console.log("saved")}
+                      buttonStyle="is-danger is-fullwidth"
+                    />
+                    {/* <button className="button is-danger" onClick={() => confirmDelete(review.id)}>Delete Review</button> */}
+                  </div>
                 </div>
+              </div>
+            ))}
+        </Slider>
+      </div>
+    </div>
+  );
+};
 
-            )}
-
-
-
-        </div>
-
-    );
-}
-
-export default CurrentUserReviewsComponent
+export default CurrentUserReviewsComponent;

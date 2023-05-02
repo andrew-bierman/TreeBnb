@@ -1,0 +1,12 @@
+footer {
+  border-top: 1px solid #ebebeb;
+}
+.footer-links a {
+  font-size: 18px;
+  color: rgb(112, 193, 179);
+  font-weight: bold;
+  transition: all 0.3s ease-in;
+}
+.footer-links a:hover {
+  color: rgba(112, 193, 179, 0.7);
+}
