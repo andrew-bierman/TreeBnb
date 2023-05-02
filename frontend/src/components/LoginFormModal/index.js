@@ -36,10 +36,6 @@ function LoginFormModal() {
 
     if (Object.values(errors).some((err) => err)) return;
 
-    console.log({
-      credential: formValues.credential,
-      password: formValues.password,
-    });
     return dispatch(
       sessionActions.login({
         credential: formValues.credential,

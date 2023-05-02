@@ -71,7 +71,7 @@ function SignupFormModal() {
     e.preventDefault();
 
     if (Object.values(errors).some((err) => err)) return;
-
+    
     return dispatch(
       sessionActions.signup({
         email: formValues.email,
